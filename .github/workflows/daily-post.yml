@@ -1,0 +1,29 @@
+name: Daily LinkedIn Post
+
+on:
+  schedule:
+    # 06:30 UTC = 12:00 PM IST, every day.
+    # GitHub cron runs on the DEFAULT branch only, and can be delayed a few
+    # minutes under load. Edit the time below if you want a different slot.
+    - cron: "30 6 * * *"
+  workflow_dispatch: {}   # lets you run it manually from the Actions tab
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Publish post
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+        run: python post.py
