@@ -99,7 +99,11 @@ def generate_post(client: genai.Client, topic: str) -> dict:
         - Be opinionated. Take a stance.
 
         Reply ONLY with JSON: {"commentary": "...", "image_prompt": "..."}
-        image_prompt = a brief description for a clean, modern visual. NO text in image.""")
+        image_prompt = a VIVID, CONCRETE visual that captures the post's core idea
+        or metaphor — a real scene, object, or moment a viewer instantly connects
+        to the message (e.g. for "shipping fast without feedback" -> a runner
+        sprinting blindfolded on a track). One clear subject, editorial and modern.
+        NO text, words, letters, charts, graphs, or logos anywhere in the image.""")
 
     resp = with_retry(lambda: client.models.generate_content(
         model=TEXT_MODEL,
@@ -152,9 +156,13 @@ def generate_image_gemini(client: genai.Client, image_prompt: str) -> bytes | No
 
 def generate_image_pollinations(image_prompt: str) -> bytes:
     """Keyless free image generator. Always works as a fallback."""
+    styled = (
+        f"{image_prompt}. Editorial photography, modern, cinematic, high detail, "
+        "soft natural lighting, shallow depth of field. No text, no words, no logos."
+    )
     url = (
-        f"https://image.pollinations.ai/prompt/{quote(image_prompt)}"
-        "?width=1024&height=1024&nologo=true"
+        f"https://image.pollinations.ai/prompt/{quote(styled)}"
+        "?width=1024&height=1024&nologo=true&model=flux&enhance=true"
     )
     r = httpx.get(url, timeout=120.0)
     r.raise_for_status()
