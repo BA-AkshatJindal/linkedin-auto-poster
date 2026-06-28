@@ -17,12 +17,14 @@ import os
 import json
 import base64
 import random
+import time
 from textwrap import dedent
 from urllib.parse import quote
 
 import httpx
 from google import genai
 from google.genai import types
+from google.genai import errors as genai_errors
 
 # ── Topic pool (edit freely) ─────────────────────────────────────────
 # No paid "trending" API. We rotate through these. Add/remove any you like.
@@ -41,6 +43,32 @@ TOPICS = [
 
 TEXT_MODEL = "gemini-2.5-flash"
 IMAGE_MODEL = "gemini-2.5-flash-image-preview"
+
+
+# ── Transient-error retry ────────────────────────────────────────────
+# Gemini's free tier often returns 503 UNAVAILABLE ("high demand") or 429
+# (rate limit). These are temporary, so we retry with exponential backoff
+# instead of letting one spike kill the whole run.
+
+def with_retry(fn, *, tries=5, base_delay=5.0):
+    """Call fn(), retrying on transient Gemini errors (5xx / 429)."""
+    last = None
+    for attempt in range(1, tries + 1):
+        try:
+            return fn()
+        except genai_errors.ServerError as e:        # 5xx incl. 503 UNAVAILABLE
+            last = e
+        except genai_errors.ClientError as e:        # 4xx; only retry 429
+            if getattr(e, "code", None) != 429:
+                raise
+            last = e
+        if attempt == tries:
+            raise last
+        delay = base_delay * (2 ** (attempt - 1))
+        code = getattr(last, "code", "?")
+        print(f"[retry] transient Gemini error ({code}); "
+              f"attempt {attempt}/{tries}, sleeping {delay:.0f}s")
+        time.sleep(delay)
 
 
 def pick_topic() -> str:
@@ -73,7 +101,7 @@ def generate_post(client: genai.Client, topic: str) -> dict:
         Reply ONLY with JSON: {"commentary": "...", "image_prompt": "..."}
         image_prompt = a brief description for a clean, modern visual. NO text in image.""")
 
-    resp = client.models.generate_content(
+    resp = with_retry(lambda: client.models.generate_content(
         model=TEXT_MODEL,
         contents=f"Write a LinkedIn post on: {topic}",
         config=types.GenerateContentConfig(
@@ -81,14 +109,14 @@ def generate_post(client: genai.Client, topic: str) -> dict:
             response_mime_type="application/json",
             temperature=0.9,
         ),
-    )
+    ))
     data = json.loads(resp.text)
     return {"commentary": data["commentary"].strip(), "image_prompt": data["image_prompt"].strip()}
 
 
 def evaluate_post(client: genai.Client, commentary: str) -> int:
     """Quick 1-10 quality score so we can retry a weak draft."""
-    resp = client.models.generate_content(
+    resp = with_retry(lambda: client.models.generate_content(
         model=TEXT_MODEL,
         contents=dedent(f"""\
             Rate this LinkedIn post 1-10 on hook, value, engagement, and how human it sounds.
@@ -98,7 +126,7 @@ def evaluate_post(client: genai.Client, commentary: str) -> int:
             {commentary}
             </post>"""),
         config=types.GenerateContentConfig(response_mime_type="application/json"),
-    )
+    ))
     try:
         return int(json.loads(resp.text)["score"])
     except Exception:
