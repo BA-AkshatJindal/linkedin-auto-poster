@@ -345,7 +345,7 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
         - NO bullet lists. NO numbered tips.
         - Start with a hook that stops the scroll.
         - End with a question that invites real discussion.
-        - 2-4 hashtags at the very end. NO emojis.
+        - 3-5 relevant hashtags at the very end (max 5) to maximize reach. NO emojis.
         - Be opinionated. Take a stance.
 
         Reply ONLY with JSON: {"commentary": "...", "image_prompt": "...", "first_comment": "..."}
@@ -394,8 +394,8 @@ def guardrail_check(text: str) -> list[str]:
     if "?" not in text[-160:]:
         issues.append("Doesn't end with a question that invites discussion.")
     tags = re.findall(r"#\w+", text)
-    if not (2 <= len(tags) <= 4):
-        issues.append(f"Use 2-4 hashtags (found {len(tags)}).")
+    if not (3 <= len(tags) <= 5):
+        issues.append(f"Use 3-5 hashtags (found {len(tags)}).")
     if EMOJI_RE.search(text):
         issues.append("Remove all emojis.")
     low = text.lower()
