@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 .env
 *.png
+# runtime artifacts (persisted via Actions cache / uploaded as artifacts)
+topics_cache.json
+out_post.txt

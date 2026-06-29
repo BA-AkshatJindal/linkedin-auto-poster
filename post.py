@@ -20,6 +20,7 @@ import base64
 import random
 import time
 import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
 from textwrap import dedent
 from urllib.parse import quote
 
@@ -94,6 +95,37 @@ TRENDS_RSS = [
 ]
 HN_SEARCH = "https://hn.algolia.com/api/v1/search?tags=story&query="
 HN_QUERIES = ("AI agents", "LLM", "AI product")
+
+# Trend-topic cache: generate a fresh pool at most once per ~20h, then reuse it
+# for every run in between (0 API hits for topic selection). Persisted across
+# GitHub Actions runs via actions/cache (see the workflow).
+TOPICS_CACHE_FILE = "topics_cache.json"
+TREND_CACHE_HOURS = 20.0
+
+
+def load_cached_topics():
+    """Return (topics, age_hours) if a fresh cache exists, else (None, None)."""
+    try:
+        with open(TOPICS_CACHE_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        gen = datetime.fromisoformat(data["generated"])
+        age = (datetime.now(timezone.utc) - gen).total_seconds() / 3600
+        if age < TREND_CACHE_HOURS and data.get("topics"):
+            return data["topics"], age
+    except Exception:
+        pass
+    return None, None
+
+
+def save_cached_topics(topics: list[str]) -> None:
+    try:
+        with open(TOPICS_CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(
+                {"generated": datetime.now(timezone.utc).isoformat(), "topics": topics},
+                f, indent=2,
+            )
+    except Exception as e:
+        print(f"[trends] could not write cache: {e}")
 
 # Each Gemini model has its OWN free-tier quota (~20 requests/day). We rotate
 # through a preference-ordered list: when the best model hits its daily 429, we
@@ -273,12 +305,20 @@ def pick_topic(client: genai.Client | None = None) -> str:
     if forced:
         return forced
     if client and os.environ.get("TRENDS_MODE", "true").strip().lower() in ("1", "true", "yes"):
+        # 1) reuse a fresh cached pool — zero API hits
+        cached, age = load_cached_topics()
+        if cached:
+            choice = random.choice(cached)
+            print(f"[trends] cache hit ({len(cached)} topics, age {age:.1f}h, 0 API calls); picked: {choice}")
+            return choice
+        # 2) cache stale/missing -> refresh once, then cache it
         try:
             signals = gather_trend_signals()
             topics = generate_trending_topics(client, signals)
             if topics:
+                save_cached_topics(topics)
                 choice = random.choice(topics)
-                print(f"[trends] picked: {choice}")
+                print(f"[trends] refreshed {len(topics)} topics (cached); picked: {choice}")
                 return choice
         except Exception as e:
             print(f"[trends] engine failed, using backup list: {e}")
