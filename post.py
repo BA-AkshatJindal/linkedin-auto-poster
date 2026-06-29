@@ -161,6 +161,7 @@ EMOJI_RE = re.compile(
     "[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F1E6-\U0001F1FF\U00002190-\U000021FF\U00002B00-\U00002BFF]"
 )
 QUALITY_BAR = 8.0  # avg rubric score needed to stop early
+HOOK_MIN = 8       # the hook must clear this on its own (reach depends on it)
 
 
 # ── Transient-error retry ────────────────────────────────────────────
@@ -343,7 +344,9 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
         - Short sentences. Some one-liners. Break lines often.
         - NO corporate jargon ("in today's landscape", "transformative", "leverage").
         - NO bullet lists. NO numbered tips.
-        - Start with a hook that stops the scroll.
+        - START WITH A SCROLL-STOPPING HOOK. The first line decides reach. Use a
+          bold/contrarian claim, a surprising number, a sharp one-liner, or real
+          tension. Make line 1 impossible to scroll past. NO throat-clearing.
         - End with a question that invites real discussion.
         - 3-5 relevant hashtags at the very end (max 5) to maximize reach. NO emojis.
         - Be opinionated. Take a stance.
@@ -595,12 +598,16 @@ def main() -> None:
 
         ev = evaluate_post(client, commentary)   # judge only clean drafts
         score = ev["overall"]
+        hook = ev["scores"].get("hook", 0)
         feedback = ev["feedback"]
-        print(f"[draft] attempt {attempt}: clean, rubric {ev['scores']} avg={score:.1f}")
+        if hook < HOOK_MIN:
+            feedback = (f"The opening hook scored {hook}/10 — rewrite the FIRST line "
+                        f"to be far more scroll-stopping. " + feedback)
+        print(f"[draft] attempt {attempt}: clean, rubric {ev['scores']} avg={score:.1f} hook={hook}")
 
         if best is None or score > best[0]:
             best = (score, post)
-        if score >= QUALITY_BAR:
+        if score >= QUALITY_BAR and hook >= HOOK_MIN:   # reach hinges on the hook
             break
 
     score, post = best
