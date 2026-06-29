@@ -356,7 +356,7 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
         RULES:
         - Write like a REAL PERSON, not a content marketer.
         - 80-150 words MAX. Short and punchy. Every word earns its place.
-        - First person. Personal stories, hot takes, unpopular opinions.
+        - First person, opinionated takes — but DO NOT invent personal stories.
         - Short sentences. Some one-liners. Break lines often.
         - NO corporate jargon ("in today's landscape", "transformative", "leverage").
         - NO bullet lists. NO numbered tips.
@@ -367,6 +367,13 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
         - 3-5 relevant hashtags at the very end (max 5) to maximize reach. NO emojis.
         - Be opinionated. Take a stance.
 
+        TRUTHFULNESS (critical — this is a REAL person's profile):
+        - NEVER invent personal anecdotes or events ("I once watched an AI delete a
+          production database" — NOT allowed if it didn't happen).
+        - NO fabricated metrics, statistics, names, companies, quotes, or case studies.
+        - Share genuine opinions, observations, and widely-true insights — not fiction.
+        - Hypotheticals are fine ONLY if clearly framed ("Imagine if…", "Picture a team that…").
+
         Reply ONLY with JSON: {"commentary": "...", "image_prompt": "...", "first_comment": "..."}
         image_prompt = a VIVID, CONCRETE visual that captures the post's core idea
         or metaphor — a real scene, object, or moment a viewer instantly connects
@@ -374,8 +381,8 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
         sprinting blindfolded on a track). One clear subject, editorial and modern.
         NO text, words, letters, charts, graphs, or logos anywhere in the image.
         first_comment = a SHORT (1-2 sentences) follow-up the author drops as the
-        FIRST comment on their own post to boost replies — a concrete example, a
-        resource angle, or a sharper provocation. Conversational. NO hashtags.""")
+        FIRST comment to boost replies — a sharper angle, a clarifying point, or a
+        direct question. Conversational. NO invented stories/facts. NO hashtags.""")
 
     user = f"Write a LinkedIn post on: {topic}"
     if feedback:
@@ -437,11 +444,16 @@ def evaluate_post(client: genai.Client, commentary: str) -> dict:
         - engagement: does the ending genuinely invite discussion?
         - originality: a fresh angle, not a cliche everyone has posted?
 
+        Also set "fabricated": true if the post presents ANY invented personal
+        anecdote, made-up event, fake metric/statistic, fake company/person/quote,
+        or specific claim stated as real fact that a ghostwriter couldn't verify.
+        Otherwise false.
+
         Then write ONE sentence of concrete, actionable feedback on the single
         biggest weakness (what to change to score higher).
 
         Reply ONLY with JSON:
-        {{"hook":int,"insight":int,"authenticity":int,"engagement":int,"originality":int,"feedback":"..."}}
+        {{"hook":int,"insight":int,"authenticity":int,"engagement":int,"originality":int,"fabricated":bool,"feedback":"..."}}
 
         <post>
         {commentary}
@@ -453,10 +465,12 @@ def evaluate_post(client: genai.Client, commentary: str) -> dict:
         d = json.loads(resp.text)
         scores = {k: int(d.get(k, 7)) for k in RUBRIC_DIMS}
         overall = sum(scores.values()) / len(RUBRIC_DIMS)
-        return {"scores": scores, "overall": overall, "feedback": str(d.get("feedback", "")).strip()}
+        return {"scores": scores, "overall": overall,
+                "fabricated": bool(d.get("fabricated", False)),
+                "feedback": str(d.get("feedback", "")).strip()}
     except Exception as e:
         print(f"[eval] judge failed, passing draft through: {e}")
-        return {"scores": {}, "overall": 7.0, "feedback": ""}
+        return {"scores": {}, "overall": 7.0, "fabricated": False, "feedback": ""}
 
 
 # ── Image generation ─────────────────────────────────────────────────
@@ -616,6 +630,17 @@ def main() -> None:
         score = ev["overall"]
         hook = ev["scores"].get("hook", 0)
         feedback = ev["feedback"]
+
+        # Hard reject fabricated content — never post invented stories/claims.
+        if ev.get("fabricated"):
+            feedback = ("The post contains an invented story or unverifiable claim — "
+                        "rewrite with ONLY truthful opinions and observations, no made-up "
+                        "anecdotes, metrics, or events. " + feedback)
+            print(f"[draft] attempt {attempt}: REJECTED (fabricated content) -> regenerate")
+            if best is None:                 # keep only as last-resort fallback
+                best = (0.0, post)
+            continue
+
         if hook < HOOK_MIN:
             feedback = (f"The opening hook scored {hook}/10 — rewrite the FIRST line "
                         f"to be far more scroll-stopping. " + feedback)
