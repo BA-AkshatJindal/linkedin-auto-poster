@@ -293,7 +293,8 @@ def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 
     for label, cfg in configs:
         try:
             resp = smart_generate(client, TEXT_MODELS, contents=prompt, config=cfg)
-            lines = [ln.strip(" -•\t").strip() for ln in (resp.text or "").splitlines()]
+            lines = [re.sub(r"^\s*\d+[.)]\s*", "", ln.strip(" -•*\t").strip())
+                     for ln in (resp.text or "").splitlines()]
             topics = [ln for ln in lines if len(ln.split()) >= 4 and not ln.startswith("#")]
             if len(topics) >= 10:
                 print(f"[trends] generated {len(topics)} topics ({label})")
@@ -656,11 +657,19 @@ def main() -> None:
     # First comment: drop the author's follow-up as the first comment to boost
     # reach. ON by default (no workflow env needed) — set FIRST_COMMENT_MODE=false to disable.
     if first_comment and os.environ.get("FIRST_COMMENT_MODE", "true").strip().lower() in ("1", "true", "yes"):
-        try:
-            curn = post_comment(li_token, person_urn, urn, first_comment)
-            print(f"[done] first comment posted: {curn}")
-        except Exception as e:
-            print(f"[warn] first comment failed (post still published): {e}")
+        # A freshly published post needs a few seconds to propagate before the
+        # social-actions endpoint accepts comments (else 404), so retry briefly.
+        for attempt in range(1, 5):
+            try:
+                curn = post_comment(li_token, person_urn, urn, first_comment)
+                print(f"[done] first comment posted: {curn}")
+                break
+            except Exception as e:
+                if attempt < 4:
+                    print(f"[retry] first comment attempt {attempt} ({e}); waiting 10s for post to propagate")
+                    time.sleep(10)
+                else:
+                    print(f"[warn] first comment failed after retries (post still published): {e}")
 
 
 if __name__ == "__main__":
