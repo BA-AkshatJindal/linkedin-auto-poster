@@ -95,10 +95,12 @@ TRENDS_RSS = [
 HN_SEARCH = "https://hn.algolia.com/api/v1/search?tags=story&query="
 HN_QUERIES = ("AI agents", "LLM", "AI product")
 
-TEXT_MODEL = "gemini-2.5-flash"
-IMAGE_MODEL = "gemini-2.5-flash-image-preview"
-# The "eval agent" judge. Swap to "gemini-2.5-pro" for a tougher critic.
-JUDGE_MODEL = "gemini-2.5-flash"
+# Newer models with fresh free-tier quota. Each model has its own 20 req/day
+# free limit, so writer and judge use SEPARATE quota buckets on purpose.
+TEXT_MODEL = "gemini-3.5-flash"
+IMAGE_MODEL = "gemini-2.5-flash-image-preview"  # 404s on this key -> Pollinations fallback
+# The "eval agent" judge — a different model so it doesn't share the writer's quota.
+JUDGE_MODEL = "gemini-3-flash-preview"
 
 # Deterministic guardrails (cheap pre-filter before the LLM judge).
 BANNED_PHRASES = [
@@ -539,8 +541,8 @@ def main() -> None:
     print(f"[done] published: {urn}")
 
     # First comment: drop the author's follow-up as the first comment to boost
-    # reach. On by default; set FIRST_COMMENT_MODE=false to disable.
-    if first_comment and os.environ.get("FIRST_COMMENT_MODE", "true").strip().lower() in ("1", "true", "yes"):
+    # reach. PARKED for now (off by default) — set FIRST_COMMENT_MODE=true to enable.
+    if first_comment and os.environ.get("FIRST_COMMENT_MODE", "false").strip().lower() in ("1", "true", "yes"):
         try:
             curn = post_comment(li_token, person_urn, urn, first_comment)
             print(f"[done] first comment posted: {curn}")
