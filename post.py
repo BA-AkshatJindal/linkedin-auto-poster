@@ -639,8 +639,8 @@ def main() -> None:
     print(f"[done] published: {urn}")
 
     # First comment: drop the author's follow-up as the first comment to boost
-    # reach. PARKED for now (off by default) — set FIRST_COMMENT_MODE=true to enable.
-    if first_comment and os.environ.get("FIRST_COMMENT_MODE", "false").strip().lower() in ("1", "true", "yes"):
+    # reach. ON by default (no workflow env needed) — set FIRST_COMMENT_MODE=false to disable.
+    if first_comment and os.environ.get("FIRST_COMMENT_MODE", "true").strip().lower() in ("1", "true", "yes"):
         try:
             curn = post_comment(li_token, person_urn, urn, first_comment)
             print(f"[done] first comment posted: {curn}")
