@@ -2,28 +2,38 @@ name: Daily LinkedIn Post
 
 on:
   schedule:
-    # 06:30 UTC = 12:00 PM IST, every day.
-    # GitHub cron runs on the DEFAULT branch only, and can be delayed a few
-    # minutes under load. Edit the time below if you want a different slot.
-    - cron: "30 6 * * *"
-  workflow_dispatch: {}   # lets you run it manually from the Actions tab
+    - cron: "30 3 * * *"   # 09:00 AM IST
+    - cron: "0 14 * * *"   # 07:30 PM IST
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Preview only: generate post + image, save as artifact, do NOT post"
+        type: boolean
+        default: false
 
 jobs:
   post:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install dependencies
         run: pip install -r requirements.txt
-
       - name: Publish post
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_
           LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: python post.py
+      - name: Upload generated post + image
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linkedin-post
+          path: |
+            out_image.png
+            out_post.txt
+          if-no-files-found: ignore
