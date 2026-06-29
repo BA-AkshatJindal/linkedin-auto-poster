@@ -189,7 +189,7 @@ def smart_generate(client: genai.Client, models: list[str], *, contents, config=
     raise last if last else RuntimeError("smart_generate: no models provided")
 
 
-def gather_trend_signals(max_each: int = 10) -> list[str]:
+def gather_trend_signals(max_each: int = 6) -> list[str]:
     """Pull recent AI/agents/product headlines from free, keyless sources."""
     signals: list[str] = []
 
@@ -225,10 +225,10 @@ def gather_trend_signals(max_each: int = 10) -> list[str]:
         if k not in seen:
             seen.add(k)
             out.append(s)
-    return out[:40]
+    return out[:24]
 
 
-def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 50) -> list[str]:
+def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 24) -> list[str]:
     """Turn live trends into ~n fresh LinkedIn topic angles in the niche.
 
     Tries Gemini WITH Google Search grounding first (truly current), then falls
@@ -433,7 +433,14 @@ def generate_image_pollinations(image_prompt: str) -> bytes:
 
 
 def generate_image(client: genai.Client, image_prompt: str) -> bytes:
-    return generate_image_gemini(client, image_prompt) or generate_image_pollinations(image_prompt)
+    # The Gemini image model 404s on this key, so we skip that wasted API hit and
+    # go straight to the free Pollinations generator. Set GEMINI_IMAGE=true to try
+    # Gemini first (e.g. if you move to a key that has image access).
+    if os.environ.get("GEMINI_IMAGE", "false").strip().lower() in ("1", "true", "yes"):
+        img = generate_image_gemini(client, image_prompt)
+        if img:
+            return img
+    return generate_image_pollinations(image_prompt)
 
 
 # ── LinkedIn publishing ──────────────────────────────────────────────
@@ -528,30 +535,32 @@ def main() -> None:
     # Eval agent: up to 3 tries. Each draft is checked by deterministic
     # guardrails + an LLM rubric judge; the judge's feedback is fed into the
     # next draft (reflexion). We keep the BEST-scoring draft, not the first pass.
+    # Token/hit saver: deterministic guardrails (free) run FIRST. We only spend
+    # an LLM judge call on a draft that already passes guardrails — a malformed
+    # draft is regenerated using the free feedback, no judge hit wasted.
     best = None  # (score, post_dict)
     feedback = ""
-    for attempt in range(1, 4):
+    attempts = max(1, int(os.environ.get("MAX_ATTEMPTS", "3")))
+    for attempt in range(1, attempts + 1):
         post = generate_post(client, topic, feedback=feedback)
         commentary = post["commentary"]
 
         issues = guardrail_check(commentary)
-        ev = evaluate_post(client, commentary)
-        # guardrail violations cost real points
-        score = ev["overall"] - (1.5 if issues else 0.0)
-
-        parts = []
         if issues:
-            parts.append("Format: " + " ".join(issues))
-        if ev["feedback"]:
-            parts.append(ev["feedback"])
-        feedback = " ".join(parts)
+            feedback = "Fix these format issues: " + " ".join(issues)
+            print(f"[draft] attempt {attempt}: guardrail fail {issues} -> regenerate (no judge call)")
+            if best is None:           # keep a fallback so we always have something
+                best = (0.0, post)
+            continue
 
-        print(f"[draft] attempt {attempt}: rubric {ev['scores']} "
-              f"avg={ev['overall']:.1f} guardrails={len(issues)} -> score {score:.1f}")
+        ev = evaluate_post(client, commentary)   # judge only clean drafts
+        score = ev["overall"]
+        feedback = ev["feedback"]
+        print(f"[draft] attempt {attempt}: clean, rubric {ev['scores']} avg={score:.1f}")
 
         if best is None or score > best[0]:
             best = (score, post)
-        if score >= QUALITY_BAR and not issues:
+        if score >= QUALITY_BAR:
             break
 
     score, post = best
