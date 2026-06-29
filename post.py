@@ -18,7 +18,6 @@ import json
 import base64
 import random
 import time
-import xml.etree.ElementTree as ET
 from textwrap import dedent
 from urllib.parse import quote
 
@@ -44,27 +43,6 @@ TOPICS = [
 
 TEXT_MODEL = "gemini-2.5-flash"
 IMAGE_MODEL = "gemini-2.5-flash-image-preview"
-
-# ── World news source (free, keyless) ────────────────────────────────
-# Google News RSS for the WORLD topic. NEWS_MODE (default on) makes each
-# post react to a fresh, real headline instead of the static TOPICS pool.
-NEWS_RSS = "https://news.google.com/rss/headlines/section/topic/WORLD?hl=en-US&gl=US&ceid=US:en"
-
-
-def fetch_headlines(n: int = 12) -> list[str]:
-    """Return up to n recent world headlines (titles), newest first."""
-    r = httpx.get(NEWS_RSS, timeout=30.0, follow_redirects=True)
-    r.raise_for_status()
-    root = ET.fromstring(r.text)
-    heads = []
-    for item in root.findall(".//item")[:n]:
-        title = (item.findtext("title") or "").strip()
-        # Google News titles end with " - Publisher"; drop that for a clean topic.
-        if " - " in title:
-            title = title.rsplit(" - ", 1)[0].strip()
-        if title:
-            heads.append(title)
-    return heads
 
 
 # ── Transient-error retry ────────────────────────────────────────────
@@ -94,19 +72,10 @@ def with_retry(fn, *, tries=5, base_delay=5.0):
 
 
 def pick_topic() -> str:
-    """TOPIC override > a fresh world headline (NEWS_MODE) > static pool."""
+    """Use TOPIC env override, else a random topic from the pool."""
     forced = os.environ.get("TOPIC", "").strip()
     if forced:
         return forced
-    if os.environ.get("NEWS_MODE", "true").strip().lower() in ("1", "true", "yes"):
-        try:
-            heads = fetch_headlines()
-            if heads:
-                choice = random.choice(heads)
-                print(f"[news] reacting to headline: {choice}")
-                return choice
-        except Exception as e:
-            print(f"[news] fetch failed, using static topic list: {e}")
     return random.choice(TOPICS)
 
 
@@ -115,31 +84,19 @@ def pick_topic() -> str:
 def generate_post(client: genai.Client, topic: str) -> dict:
     """Return {'commentary': str, 'image_prompt': str}."""
     system = dedent("""\
-        You are ghostwriting LinkedIn posts for a sharp professional (AI / Product /
-        Engineering background) who shares timely takes on world news and current affairs.
-
-        You'll be given a real, recent news headline (or a topic). Write a thoughtful,
-        professional reaction to it — your perspective, what it means, why it matters.
+        You are ghostwriting LinkedIn posts for a real founder/BA who posts about Product + AI.
 
         RULES:
         - Write like a REAL PERSON, not a content marketer.
         - 80-150 words MAX. Short and punchy. Every word earns its place.
-        - First person. A clear point of view.
+        - First person. Personal stories, hot takes, unpopular opinions.
         - Short sentences. Some one-liners. Break lines often.
         - NO corporate jargon ("in today's landscape", "transformative", "leverage").
         - NO bullet lists. NO numbered tips.
         - Start with a hook that stops the scroll.
         - End with a question that invites real discussion.
         - 2-4 hashtags at the very end. NO emojis.
-
-        NEWS GUARDRAILS (important — this posts publicly):
-        - Stay NON-PARTISAN. Do not take political sides or push an agenda.
-        - For tragic, violent, or sensitive events: be measured, humane, and respectful.
-          Never sensationalize, joke about, or exploit human suffering.
-        - Connect the news to a broader professional/human lesson (leadership, technology,
-          society, resilience, how we work) so it fits a professional audience.
-        - If the headline is too graphic or purely partisan, pivot to the underlying
-          theme rather than the inflammatory specifics.
+        - Be opinionated. Take a stance.
 
         Reply ONLY with JSON: {"commentary": "...", "image_prompt": "..."}
         image_prompt = a VIVID, CONCRETE visual that captures the post's core idea
@@ -150,7 +107,7 @@ def generate_post(client: genai.Client, topic: str) -> dict:
 
     resp = with_retry(lambda: client.models.generate_content(
         model=TEXT_MODEL,
-        contents=f"Write a LinkedIn post reacting to this news/topic: {topic}",
+        contents=f"Write a LinkedIn post on: {topic}",
         config=types.GenerateContentConfig(
             system_instruction=system,
             response_mime_type="application/json",
