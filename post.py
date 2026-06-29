@@ -18,6 +18,7 @@ import json
 import base64
 import random
 import time
+import xml.etree.ElementTree as ET
 from textwrap import dedent
 from urllib.parse import quote
 
@@ -26,20 +27,72 @@ from google import genai
 from google.genai import types
 from google.genai import errors as genai_errors
 
-# ── Topic pool (edit freely) ─────────────────────────────────────────
-# No paid "trending" API. We rotate through these. Add/remove any you like.
+# The niche this account posts about.
+CORE_THEMES = "AI, AI agents, agentic systems, LLMs, and product building"
+
+# ── Static backup topics (50) ────────────────────────────────────────
+# Used ONLY if the live trend engine fails. Keep them on-brand: AI / agents
+# / products. The live engine (below) is what normally drives topics.
 TOPICS = [
-    "Why most AI features in products are solving the wrong problem",
-    "The real cost of shipping fast without a feedback loop",
+    "Why most AI agents fail in production, not in demos",
+    "The real reason 'AI-first' products lose users",
+    "What nobody tells you about building reliable LLM apps",
+    "Why your AI agent needs guardrails before features",
+    "Agentic workflows are quietly eating traditional SaaS",
+    "The hidden cost of context windows in agent design",
+    "Why evals matter more than your model choice",
+    "RAG isn't dead — you're just doing it wrong",
+    "A product manager's guide to shipping AI that sticks",
+    "Why prompt engineering is becoming product engineering",
+    "Multi-agent systems: real power or expensive complexity?",
     "What founders get wrong about 'AI-first' product strategy",
-    "Why your roadmap should be a list of bets, not features",
-    "The underrated skill of saying no to good ideas",
-    "How small teams out-ship big ones (and where they stall)",
-    "Why 'we'll fix it later' is the most expensive sentence in tech",
-    "The gap between a demo that wows and a product that lasts",
-    "What I learned cutting a feature nobody used",
-    "Why talking to 5 users beats reading 50 dashboards",
+    "Why human-in-the-loop still beats full autonomy",
+    "The skill gap that's killing AI product teams",
+    "How to price an AI product without burning margins",
+    "Why most AI features solve the wrong problem",
+    "The case for boring, reliable AI over flashy demos",
+    "What AI agent startups get wrong about retention",
+    "Tool-calling is the real unlock, not bigger models",
+    "Why your AI roadmap should be bets, not features",
+    "The underrated power of small, specialized models",
+    "How agent memory changes product design forever",
+    "Why latency, not accuracy, kills AI adoption",
+    "The truth about AI moats (most don't have one)",
+    "Designing trust into autonomous AI systems",
+    "Why 'ship fast' breaks differently with AI products",
+    "The feedback loop every AI product is missing",
+    "What I learned debugging a misbehaving AI agent",
+    "Why context engineering beats prompt engineering",
+    "The quiet rise of vertical AI agents",
+    "How to know if your problem actually needs an agent",
+    "Why AI UX is harder than AI infrastructure",
+    "The metrics that actually predict AI product success",
+    "Building AI products users don't have to babysit",
+    "Why most 'autonomous' agents are just glorified scripts",
+    "The coming shift from chatbots to agentic interfaces",
+    "What makes an AI product feel magical vs frustrating",
+    "Why your eval set is your real competitive advantage",
+    "The hard part of agents isn't reasoning, it's reliability",
+    "How to scope an AI MVP that won't embarrass you",
+    "Why data quality decides your AI product's ceiling",
+    "The myth of the fully autonomous enterprise agent",
+    "When to fine-tune vs when to just prompt better",
+    "Why AI products need a 'confidence' UX layer",
+    "The real ROI question every AI feature must answer",
+    "How agent orchestration is becoming the new backend",
+    "Why observability is non-negotiable for AI agents",
+    "The product lessons hiding in failed AI launches",
+    "Why saying no to AI features is a superpower",
+    "What the next wave of AI-native products will look like",
 ]
+
+# ── Live trend sources (free, keyless) ───────────────────────────────
+TRENDS_RSS = [
+    "https://news.google.com/rss/search?q=AI%20agents%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22AI%20product%22%20OR%20LLM%20when:7d&hl=en-US&gl=US&ceid=US:en",
+]
+HN_SEARCH = "https://hn.algolia.com/api/v1/search?tags=story&query="
+HN_QUERIES = ("AI agents", "LLM", "AI product")
 
 TEXT_MODEL = "gemini-2.5-flash"
 IMAGE_MODEL = "gemini-2.5-flash-image-preview"
@@ -71,11 +124,100 @@ def with_retry(fn, *, tries=5, base_delay=5.0):
         time.sleep(delay)
 
 
-def pick_topic() -> str:
-    """Use TOPIC env override, else a random topic from the pool."""
+def gather_trend_signals(max_each: int = 10) -> list[str]:
+    """Pull recent AI/agents/product headlines from free, keyless sources."""
+    signals: list[str] = []
+
+    for url in TRENDS_RSS:
+        try:
+            r = httpx.get(url, timeout=20.0, follow_redirects=True)
+            r.raise_for_status()
+            root = ET.fromstring(r.text)
+            for item in root.findall(".//item")[:max_each]:
+                t = (item.findtext("title") or "").strip()
+                if " - " in t:  # drop "... - Publisher" suffix
+                    t = t.rsplit(" - ", 1)[0].strip()
+                if t:
+                    signals.append(t)
+        except Exception as e:
+            print(f"[trends] Google News fetch failed: {e}")
+
+    for q in HN_QUERIES:
+        try:
+            r = httpx.get(HN_SEARCH + quote(q), timeout=20.0)
+            r.raise_for_status()
+            for hit in r.json().get("hits", [])[:max_each]:
+                t = (hit.get("title") or "").strip()
+                if t:
+                    signals.append(t)
+        except Exception as e:
+            print(f"[trends] Hacker News fetch failed: {e}")
+
+    # de-dupe (case-insensitive), keep order, cap the list
+    seen, out = set(), []
+    for s in signals:
+        k = s.lower()
+        if k not in seen:
+            seen.add(k)
+            out.append(s)
+    return out[:40]
+
+
+def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 50) -> list[str]:
+    """Turn live trends into ~n fresh LinkedIn topic angles in the niche.
+
+    Tries Gemini WITH Google Search grounding first (truly current), then falls
+    back to a plain call using the fetched signals + the model's knowledge.
+    """
+    sig_text = "\n".join(f"- {s}" for s in signals) if signals else "(no feed signals available)"
+    prompt = dedent(f"""\
+        You curate LinkedIn post topics for a builder who posts about {CORE_THEMES}.
+        Use the LATEST real trends and these recent headlines as inspiration:
+        {sig_text}
+
+        Produce {n} specific, fresh, opinionated LinkedIn POST TOPICS in this niche.
+        - One topic per line, 6-14 words, a clear angle or hot take (don't copy headlines).
+        - Center on AI, AI agents / agentic systems, LLMs, and product building.
+        - Mix timely (tied to current trends) with sharp evergreen angles.
+        - No numbering, no hashtags, no quotes. Just one topic per line.""")
+
+    configs = []
+    try:  # grounded variant (current web trends)
+        configs.append(("grounded", types.GenerateContentConfig(
+            tools=[types.Tool(google_search=types.GoogleSearch())], temperature=1.0)))
+    except Exception:
+        pass
+    configs.append(("plain", types.GenerateContentConfig(temperature=1.0)))
+
+    for label, cfg in configs:
+        try:
+            resp = with_retry(lambda: client.models.generate_content(
+                model=TEXT_MODEL, contents=prompt, config=cfg))
+            lines = [ln.strip(" -•\t").strip() for ln in (resp.text or "").splitlines()]
+            topics = [ln for ln in lines if len(ln.split()) >= 4 and not ln.startswith("#")]
+            if len(topics) >= 10:
+                print(f"[trends] generated {len(topics)} topics ({label})")
+                return topics
+        except Exception as e:
+            print(f"[trends] topic generation failed ({label}): {e}")
+    return []
+
+
+def pick_topic(client: genai.Client | None = None) -> str:
+    """TOPIC override > live trend-generated topic > static backup pool."""
     forced = os.environ.get("TOPIC", "").strip()
     if forced:
         return forced
+    if client and os.environ.get("TRENDS_MODE", "true").strip().lower() in ("1", "true", "yes"):
+        try:
+            signals = gather_trend_signals()
+            topics = generate_trending_topics(client, signals)
+            if topics:
+                choice = random.choice(topics)
+                print(f"[trends] picked: {choice}")
+                return choice
+        except Exception as e:
+            print(f"[trends] engine failed, using backup list: {e}")
     return random.choice(TOPICS)
 
 
@@ -240,7 +382,7 @@ def main() -> None:
     li_token = os.environ["LINKEDIN_ACCESS_TOKEN"]
     client = genai.Client(api_key=gemini_key)
 
-    topic = pick_topic()
+    topic = pick_topic(client)
     print(f"[topic] {topic}")
 
     # generate, with up to 3 tries to clear a quality bar
