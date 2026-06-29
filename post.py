@@ -14,6 +14,7 @@ Optional:
 """
 
 import os
+import re
 import json
 import base64
 import random
@@ -96,6 +97,19 @@ HN_QUERIES = ("AI agents", "LLM", "AI product")
 
 TEXT_MODEL = "gemini-2.5-flash"
 IMAGE_MODEL = "gemini-2.5-flash-image-preview"
+# The "eval agent" judge. Swap to "gemini-2.5-pro" for a tougher critic.
+JUDGE_MODEL = "gemini-2.5-flash"
+
+# Deterministic guardrails (cheap pre-filter before the LLM judge).
+BANNED_PHRASES = [
+    "leverage", "in today's landscape", "transformative", "game-changer",
+    "game changer", "synergy", "delve", "tapestry", "unlock the power",
+    "in conclusion", "elevate your", "supercharge",
+]
+EMOJI_RE = re.compile(
+    "[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F1E6-\U0001F1FF\U00002190-\U000021FF\U00002B00-\U00002BFF]"
+)
+QUALITY_BAR = 8.0  # avg rubric score needed to stop early
 
 
 # ── Transient-error retry ────────────────────────────────────────────
@@ -223,8 +237,12 @@ def pick_topic(client: genai.Client | None = None) -> str:
 
 # ── Gemini: write the post ───────────────────────────────────────────
 
-def generate_post(client: genai.Client, topic: str) -> dict:
-    """Return {'commentary': str, 'image_prompt': str}."""
+def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
+    """Return {'commentary': str, 'image_prompt': str}.
+
+    If `feedback` is given (from the eval agent), the model must fix those
+    specific weaknesses in this draft — this is the reflexion loop.
+    """
     system = dedent("""\
         You are ghostwriting LinkedIn posts for a real founder/BA who posts about Product + AI.
 
@@ -240,16 +258,27 @@ def generate_post(client: genai.Client, topic: str) -> dict:
         - 2-4 hashtags at the very end. NO emojis.
         - Be opinionated. Take a stance.
 
-        Reply ONLY with JSON: {"commentary": "...", "image_prompt": "..."}
+        Reply ONLY with JSON: {"commentary": "...", "image_prompt": "...", "first_comment": "..."}
         image_prompt = a VIVID, CONCRETE visual that captures the post's core idea
         or metaphor — a real scene, object, or moment a viewer instantly connects
         to the message (e.g. for "shipping fast without feedback" -> a runner
         sprinting blindfolded on a track). One clear subject, editorial and modern.
-        NO text, words, letters, charts, graphs, or logos anywhere in the image.""")
+        NO text, words, letters, charts, graphs, or logos anywhere in the image.
+        first_comment = a SHORT (1-2 sentences) follow-up the author drops as the
+        FIRST comment on their own post to boost replies — a concrete example, a
+        resource angle, or a sharper provocation. Conversational. NO hashtags.""")
+
+    user = f"Write a LinkedIn post on: {topic}"
+    if feedback:
+        user += dedent(f"""
+
+            Your previous draft was rejected. FIX THESE SPECIFIC PROBLEMS:
+            {feedback}
+            Keep what worked; rewrite to fix the above.""")
 
     resp = with_retry(lambda: client.models.generate_content(
         model=TEXT_MODEL,
-        contents=f"Write a LinkedIn post on: {topic}",
+        contents=user,
         config=types.GenerateContentConfig(
             system_instruction=system,
             response_mime_type="application/json",
@@ -257,26 +286,74 @@ def generate_post(client: genai.Client, topic: str) -> dict:
         ),
     ))
     data = json.loads(resp.text)
-    return {"commentary": data["commentary"].strip(), "image_prompt": data["image_prompt"].strip()}
+    return {
+        "commentary": data["commentary"].strip(),
+        "image_prompt": data["image_prompt"].strip(),
+        "first_comment": str(data.get("first_comment", "")).strip(),
+    }
 
 
-def evaluate_post(client: genai.Client, commentary: str) -> int:
-    """Quick 1-10 quality score so we can retry a weak draft."""
-    resp = with_retry(lambda: client.models.generate_content(
-        model=TEXT_MODEL,
-        contents=dedent(f"""\
-            Rate this LinkedIn post 1-10 on hook, value, engagement, and how human it sounds.
-            Reply ONLY with JSON: {{"score": <int>}}
+RUBRIC_DIMS = ["hook", "insight", "authenticity", "engagement", "originality"]
 
-            <post>
-            {commentary}
-            </post>"""),
-        config=types.GenerateContentConfig(response_mime_type="application/json"),
-    ))
+
+def guardrail_check(text: str) -> list[str]:
+    """Deterministic format checks. Returns a list of issues (empty = clean)."""
+    issues = []
+    words = len(text.split())
+    if words < 60:
+        issues.append(f"Too short ({words} words; aim for 80-150).")
+    elif words > 180:
+        issues.append(f"Too long ({words} words; aim for 80-150).")
+    if "?" not in text[-160:]:
+        issues.append("Doesn't end with a question that invites discussion.")
+    tags = re.findall(r"#\w+", text)
+    if not (2 <= len(tags) <= 4):
+        issues.append(f"Use 2-4 hashtags (found {len(tags)}).")
+    if EMOJI_RE.search(text):
+        issues.append("Remove all emojis.")
+    low = text.lower()
+    found = [p for p in BANNED_PHRASES if p in low]
+    if found:
+        issues.append("Remove corporate jargon: " + ", ".join(found))
+    return issues
+
+
+def evaluate_post(client: genai.Client, commentary: str) -> dict:
+    """The eval agent: multi-dimension rubric score + actionable feedback.
+
+    Returns {'scores': {dim:int}, 'overall': float, 'feedback': str}.
+    """
+    rubric = dedent(f"""\
+        You are a tough LinkedIn content editor. Rate this post 1-10 on EACH:
+        - hook: does the FIRST line stop the scroll?
+        - insight: is there a real, specific idea (not generic advice)?
+        - authenticity: does it sound like a real person, not AI/marketing?
+        - engagement: does the ending genuinely invite discussion?
+        - originality: a fresh angle, not a cliche everyone has posted?
+
+        Then write ONE sentence of concrete, actionable feedback on the single
+        biggest weakness (what to change to score higher).
+
+        Reply ONLY with JSON:
+        {{"hook":int,"insight":int,"authenticity":int,"engagement":int,"originality":int,"feedback":"..."}}
+
+        <post>
+        {commentary}
+        </post>""")
     try:
-        return int(json.loads(resp.text)["score"])
-    except Exception:
-        return 7  # don't block publishing on a flaky eval
+        resp = with_retry(lambda: client.models.generate_content(
+            model=JUDGE_MODEL,
+            contents=rubric,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json", temperature=0.3),
+        ))
+        d = json.loads(resp.text)
+        scores = {k: int(d.get(k, 7)) for k in RUBRIC_DIMS}
+        overall = sum(scores.values()) / len(RUBRIC_DIMS)
+        return {"scores": scores, "overall": overall, "feedback": str(d.get("feedback", "")).strip()}
+    except Exception as e:
+        print(f"[eval] judge failed, passing draft through: {e}")
+        return {"scores": {}, "overall": 7.0, "feedback": ""}
 
 
 # ── Image generation ─────────────────────────────────────────────────
@@ -375,6 +452,25 @@ def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: byt
         return resp.headers.get("x-restli-id", "")
 
 
+def post_comment(token: str, person_urn: str, object_urn: str, text: str) -> str:
+    """Add a comment (e.g. the author's first comment) to a post. Returns the
+    comment URN. Uses the Social Actions API, which w_member_social allows."""
+    enc = quote(object_urn, safe="")
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "Content-Type": "application/json",
+    }
+    r = httpx.post(
+        f"https://api.linkedin.com/v2/socialActions/{enc}/comments",
+        headers=headers,
+        json={"actor": person_urn, "object": object_urn, "message": {"text": text}},
+        timeout=30.0,
+    )
+    r.raise_for_status()
+    return r.json().get("$URN", "")
+
+
 # ── Main ─────────────────────────────────────────────────────────────
 
 def main() -> None:
@@ -385,16 +481,39 @@ def main() -> None:
     topic = pick_topic(client)
     print(f"[topic] {topic}")
 
-    # generate, with up to 3 tries to clear a quality bar
-    commentary, image_prompt = "", ""
+    # Eval agent: up to 3 tries. Each draft is checked by deterministic
+    # guardrails + an LLM rubric judge; the judge's feedback is fed into the
+    # next draft (reflexion). We keep the BEST-scoring draft, not the first pass.
+    best = None  # (score, post_dict)
+    feedback = ""
     for attempt in range(1, 4):
-        post = generate_post(client, topic)
-        commentary, image_prompt = post["commentary"], post["image_prompt"]
-        score = evaluate_post(client, commentary)
-        print(f"[draft] attempt {attempt}, score {score}/10")
-        if score >= 7:
+        post = generate_post(client, topic, feedback=feedback)
+        commentary = post["commentary"]
+
+        issues = guardrail_check(commentary)
+        ev = evaluate_post(client, commentary)
+        # guardrail violations cost real points
+        score = ev["overall"] - (1.5 if issues else 0.0)
+
+        parts = []
+        if issues:
+            parts.append("Format: " + " ".join(issues))
+        if ev["feedback"]:
+            parts.append(ev["feedback"])
+        feedback = " ".join(parts)
+
+        print(f"[draft] attempt {attempt}: rubric {ev['scores']} "
+              f"avg={ev['overall']:.1f} guardrails={len(issues)} -> score {score:.1f}")
+
+        if best is None or score > best[0]:
+            best = (score, post)
+        if score >= QUALITY_BAR and not issues:
             break
 
+    score, post = best
+    commentary, image_prompt = post["commentary"], post["image_prompt"]
+    first_comment = post.get("first_comment", "")
+    print(f"[draft] using best draft (score {score:.1f})")
     print(f"[post]\n{commentary}\n")
 
     image = generate_image(client, image_prompt)
@@ -405,17 +524,28 @@ def main() -> None:
     with open("out_image.png", "wb") as f:
         f.write(image)
     with open("out_post.txt", "w", encoding="utf-8") as f:
-        f.write(f"TOPIC: {topic}\n\n{commentary}\n\nIMAGE PROMPT: {image_prompt}\n")
+        f.write(f"TOPIC: {topic}\n\n{commentary}\n\n"
+                f"FIRST COMMENT: {first_comment}\n\nIMAGE PROMPT: {image_prompt}\n")
 
     # Preview mode: generate everything but skip publishing to LinkedIn.
     if os.environ.get("DRY_RUN", "").strip().lower() in ("1", "true", "yes"):
         print("[dry-run] preview only — NOT posting to LinkedIn. "
               "Image saved to out_image.png (download it from the Actions artifact).")
+        print(f"[dry-run] first comment would be: {first_comment}")
         return
 
     person_urn = get_person_urn(li_token)
     urn = publish_to_linkedin(li_token, person_urn, commentary, image)
     print(f"[done] published: {urn}")
+
+    # First comment: drop the author's follow-up as the first comment to boost
+    # reach. On by default; set FIRST_COMMENT_MODE=false to disable.
+    if first_comment and os.environ.get("FIRST_COMMENT_MODE", "true").strip().lower() in ("1", "true", "yes"):
+        try:
+            curn = post_comment(li_token, person_urn, urn, first_comment)
+            print(f"[done] first comment posted: {curn}")
+        except Exception as e:
+            print(f"[warn] first comment failed (post still published): {e}")
 
 
 if __name__ == "__main__":
