@@ -276,6 +276,9 @@ def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 
         Produce {n} specific, fresh, opinionated LinkedIn POST TOPICS in this niche.
         - One topic per line, 6-14 words, a clear angle or hot take (don't copy headlines).
         - Center on AI, AI agents / agentic systems, LLMs, and product building.
+        - ACCESSIBLE angles for a BROAD professional audience (founders, PMs, leaders):
+          the implication, lesson, or hot take — NOT deep-technical specs, protocol
+          names, or engineering internals.
         - Mix timely (tied to current trends) with sharp evergreen angles.
         - No numbering, no hashtags, no quotes. Just one topic per line.""")
 
@@ -336,6 +339,18 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
     """
     system = dedent("""\
         You are ghostwriting LinkedIn posts for a real founder/BA who posts about Product + AI.
+
+        AUDIENCE: a BROAD professional audience — founders, product managers,
+        operators, leaders — NOT just engineers. Anyone in tech should get it in
+        one read.
+
+        ACCESSIBILITY (critical for reach):
+        - Write in PLAIN ENGLISH. Lead with the insight and why it matters, not the
+          technical mechanism.
+        - AVOID deep jargon, protocol/spec names, and code-level detail. If a
+          technical thing is essential, translate it into a real-world consequence.
+        - Favor the human / business angle — decisions, trade-offs, lessons — over
+          implementation details.
 
         RULES:
         - Write like a REAL PERSON, not a content marketer.
