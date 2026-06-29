@@ -95,12 +95,29 @@ TRENDS_RSS = [
 HN_SEARCH = "https://hn.algolia.com/api/v1/search?tags=story&query="
 HN_QUERIES = ("AI agents", "LLM", "AI product")
 
-# Newer models with fresh free-tier quota. Each model has its own 20 req/day
-# free limit, so writer and judge use SEPARATE quota buckets on purpose.
-TEXT_MODEL = "gemini-3.5-flash"
+# Each Gemini model has its OWN free-tier quota (~20 requests/day). We rotate
+# through a preference-ordered list: when the best model hits its daily 429, we
+# fall through to the next — multiplying free capacity (~5x) and degrading
+# quality gracefully only when forced to.
+TEXT_MODELS = [
+    "gemini-3.5-flash",
+    "gemini-3-flash-preview",
+    "gemini-2.5-flash",
+    "gemini-2.0-flash",
+    "gemini-2.5-flash-lite",
+]
+# Judge uses a different order so the writer and judge don't drain the same
+# bucket first.
+JUDGE_MODELS = [
+    "gemini-3-flash-preview",
+    "gemini-2.5-flash",
+    "gemini-2.0-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-3.5-flash",
+]
+TEXT_MODEL = TEXT_MODELS[0]   # back-compat for any direct reference
+JUDGE_MODEL = JUDGE_MODELS[0]
 IMAGE_MODEL = "gemini-2.5-flash-image-preview"  # 404s on this key -> Pollinations fallback
-# The "eval agent" judge — a different model so it doesn't share the writer's quota.
-JUDGE_MODEL = "gemini-3-flash-preview"
 
 # Deterministic guardrails (cheap pre-filter before the LLM judge).
 BANNED_PHRASES = [
@@ -119,8 +136,12 @@ QUALITY_BAR = 8.0  # avg rubric score needed to stop early
 # (rate limit). These are temporary, so we retry with exponential backoff
 # instead of letting one spike kill the whole run.
 
-def with_retry(fn, *, tries=5, base_delay=5.0):
-    """Call fn(), retrying on transient Gemini errors (5xx / 429)."""
+def with_retry(fn, *, tries=5, base_delay=5.0, retry_429=True):
+    """Call fn(), retrying on transient Gemini errors (5xx, and 429 if retry_429).
+
+    Set retry_429=False when a caller wants to handle daily-quota 429 itself
+    (e.g. by switching to a different model) instead of waiting out a backoff.
+    """
     last = None
     for attempt in range(1, tries + 1):
         try:
@@ -128,7 +149,7 @@ def with_retry(fn, *, tries=5, base_delay=5.0):
         except genai_errors.ServerError as e:        # 5xx incl. 503 UNAVAILABLE
             last = e
         except genai_errors.ClientError as e:        # 4xx; only retry 429
-            if getattr(e, "code", None) != 429:
+            if getattr(e, "code", None) != 429 or not retry_429:
                 raise
             last = e
         if attempt == tries:
@@ -138,6 +159,34 @@ def with_retry(fn, *, tries=5, base_delay=5.0):
         print(f"[retry] transient Gemini error ({code}); "
               f"attempt {attempt}/{tries}, sleeping {delay:.0f}s")
         time.sleep(delay)
+
+
+def smart_generate(client: genai.Client, models: list[str], *, contents, config=None):
+    """Generate content, rotating across models on daily-quota exhaustion.
+
+    Tries each model in order. A transient 5xx retries (with backoff) on the
+    SAME model; a daily-quota 429 immediately falls through to the NEXT model,
+    so one exhausted bucket never blocks the run.
+    """
+    last = None
+    for model in models:
+        try:
+            return with_retry(
+                lambda m=model: client.models.generate_content(
+                    model=m, contents=contents, config=config),
+                retry_429=False,
+            )
+        except genai_errors.ClientError as e:
+            if getattr(e, "code", None) == 429:
+                print(f"[model] {model} hit daily quota (429) -> trying next model")
+                last = e
+                continue
+            raise
+        except genai_errors.ServerError as e:
+            print(f"[model] {model} unavailable after retries -> trying next model")
+            last = e
+            continue
+    raise last if last else RuntimeError("smart_generate: no models provided")
 
 
 def gather_trend_signals(max_each: int = 10) -> list[str]:
@@ -207,8 +256,7 @@ def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 
 
     for label, cfg in configs:
         try:
-            resp = with_retry(lambda: client.models.generate_content(
-                model=TEXT_MODEL, contents=prompt, config=cfg))
+            resp = smart_generate(client, TEXT_MODELS, contents=prompt, config=cfg)
             lines = [ln.strip(" -•\t").strip() for ln in (resp.text or "").splitlines()]
             topics = [ln for ln in lines if len(ln.split()) >= 4 and not ln.startswith("#")]
             if len(topics) >= 10:
@@ -278,15 +326,12 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
             {feedback}
             Keep what worked; rewrite to fix the above.""")
 
-    resp = with_retry(lambda: client.models.generate_content(
-        model=TEXT_MODEL,
-        contents=user,
+    resp = smart_generate(client, TEXT_MODELS, contents=user,
         config=types.GenerateContentConfig(
             system_instruction=system,
             response_mime_type="application/json",
             temperature=0.9,
-        ),
-    ))
+        ))
     data = json.loads(resp.text)
     return {
         "commentary": data["commentary"].strip(),
@@ -343,12 +388,9 @@ def evaluate_post(client: genai.Client, commentary: str) -> dict:
         {commentary}
         </post>""")
     try:
-        resp = with_retry(lambda: client.models.generate_content(
-            model=JUDGE_MODEL,
-            contents=rubric,
+        resp = smart_generate(client, JUDGE_MODELS, contents=rubric,
             config=types.GenerateContentConfig(
-                response_mime_type="application/json", temperature=0.3),
-        ))
+                response_mime_type="application/json", temperature=0.3))
         d = json.loads(resp.text)
         scores = {k: int(d.get(k, 7)) for k in RUBRIC_DIMS}
         overall = sum(scores.values()) / len(RUBRIC_DIMS)

@@ -51,11 +51,9 @@ def write_take(client: genai.Client, context: str) -> str:
         "post. First person, a clear point of view, conversational, no fluff. "
         "End with a light question or call to engage. 1-2 hashtags max. No emojis."
     )
-    resp = post.with_retry(lambda: client.models.generate_content(
-        model=post.TEXT_MODEL,
+    resp = post.smart_generate(client, post.TEXT_MODELS,
         contents=f"Reshare this post. Add your take:\n\n{context}",
-        config=types.GenerateContentConfig(system_instruction=sys_msg, temperature=0.9),
-    ))
+        config=types.GenerateContentConfig(system_instruction=sys_msg, temperature=0.9))
     return (resp.text or "").strip()
 
 
