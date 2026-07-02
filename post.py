@@ -491,14 +491,13 @@ def generate_image_gemini(client: genai.Client, image_prompt: str) -> bytes | No
 
 
 def generate_image_pollinations(image_prompt: str) -> bytes:
-    """Keyless free image generator. Always works as a fallback."""
-    styled = (
-        f"{image_prompt}. Editorial photography, modern, cinematic, high detail, "
-        "soft natural lighting, shallow depth of field. No text, no words, no logos."
-    )
+    """Keyless free image generator (FLUX). The prompt should already be crafted;
+    we only reinforce no-text. `enhance` is OFF so the crafted prompt renders
+    faithfully (enhance tends to inject captions/text)."""
+    styled = f"{image_prompt} No text, no words, no letters, no logos, no watermark."
     url = (
         f"https://image.pollinations.ai/prompt/{quote(styled)}"
-        "?width=1024&height=1024&nologo=true&model=flux&enhance=true"
+        "?width=1024&height=1024&nologo=true&model=flux"
     )
     r = httpx.get(url, timeout=120.0)
     r.raise_for_status()
@@ -514,6 +513,56 @@ def generate_image(client: genai.Client, image_prompt: str) -> bytes:
         if img:
             return img
     return generate_image_pollinations(image_prompt)
+
+
+# ── Image-prompt agent ───────────────────────────────────────────────
+
+def craft_image_prompt(client: genai.Client, topic: str, commentary: str = "") -> str | None:
+    """Dedicated prompt-engineering agent for the image generator.
+
+    The writer's inline image idea is often too abstract/crowded for FLUX, which
+    produces muddy images. This agent rewrites it into ONE concrete, photographic,
+    single-subject prompt that FLUX renders cleanly. Returns None on failure so
+    the caller can fall back to the writer's original image_prompt.
+    """
+    sys_msg = dedent("""\
+        You are an elite prompt engineer for the FLUX text-to-image model. Turn the
+        LinkedIn post below into ONE image prompt that yields a striking, clean,
+        professional, scroll-stopping image.
+
+        HARD RULES:
+        - ONE clear single subject. Describe a CONCRETE, literal real-world scene,
+          person, or object. FLUX renders literal scenes far better than abstract
+          ideas — translate the concept into a real, physical metaphor a photographer
+          could actually shoot.
+        - Keep it SIMPLE and bold. Avoid crowded multi-object scenes or several
+          competing metaphors — they turn to visual mush.
+        - Always specify: subject + setting, composition/framing, lighting, mood,
+          and a photographic style (e.g. "editorial photograph, 35mm, shallow depth
+          of field, soft rim light, muted color palette, cinematic").
+        - NEVER include any text, words, letters, numbers, charts, graphs, diagrams,
+          screens with UI, logos, or watermarks.
+        - Under 55 words. Output ONLY the final prompt — no preamble, no quotes.
+
+        Example of the transformation:
+        Concept: "the hidden cost of technical debt slowing a team down"
+        Prompt: "Editorial photograph of a lone runner sprinting on a track while
+        dragging a heavy rusted anchor by a rope, early morning light, dramatic long
+        shadow, shallow depth of field, muted cinematic color, sense of strain and
+        determination."
+    """)
+    content = f"TOPIC: {topic}\n\nPOST:\n{commentary}".strip()
+    try:
+        resp = smart_generate(
+            client, TEXT_MODELS, contents=content,
+            config=types.GenerateContentConfig(
+                system_instruction=sys_msg, temperature=0.85),
+        )
+        prompt = (resp.text or "").strip().strip('"').strip()
+        return prompt or None
+    except Exception as e:
+        print(f"[image-prompt] agent failed, using writer's prompt: {e}")
+        return None
 
 
 # ── LinkedIn publishing ──────────────────────────────────────────────
@@ -657,6 +706,12 @@ def main() -> None:
     print(f"[draft] using best draft (score {score:.1f})")
     print(f"[post]\n{commentary}\n")
 
+    # Image-prompt agent: rewrite the writer's rough idea into a clean, concrete,
+    # FLUX-optimized prompt (falls back to the writer's prompt if the agent fails).
+    crafted = craft_image_prompt(client, topic, commentary)
+    if crafted:
+        print(f"[image-prompt] {crafted}")
+        image_prompt = crafted
     image = generate_image(client, image_prompt)
     print(f"[image] {len(image)} bytes")
 
