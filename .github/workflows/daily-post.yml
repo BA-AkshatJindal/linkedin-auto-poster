@@ -1,4 +1,4 @@
-  name: Daily LinkedIn Post
+name: Daily LinkedIn Post
 
 on:
   workflow_dispatch:
