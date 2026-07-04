@@ -1,9 +1,6 @@
-name: Daily LinkedIn Post
+  name: Daily LinkedIn Post
 
 on:
-  schedule:
-    - cron: "30 3 * * *"   # 09:00 AM IST
-    - cron: "0 14 * * *"   # 07:30 PM IST
   workflow_dispatch:
     inputs:
       dry_run:
