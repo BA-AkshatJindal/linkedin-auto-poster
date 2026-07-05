@@ -396,14 +396,40 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
         config=types.GenerateContentConfig(
             system_instruction=system,
             response_mime_type="application/json",
+            response_schema=types.Schema(
+                type=types.Type.OBJECT,
+                properties={
+                    "commentary": types.Schema(type=types.Type.STRING),
+                    "image_prompt": types.Schema(type=types.Type.STRING),
+                    "first_comment": types.Schema(type=types.Type.STRING),
+                },
+                required=["commentary", "image_prompt", "first_comment"],
+            ),
             temperature=0.9,
         ))
-    data = json.loads(resp.text)
+    data = _extract_json(resp.text)
     return {
-        "commentary": data["commentary"].strip(),
-        "image_prompt": data["image_prompt"].strip(),
+        "commentary": str(data["commentary"]).strip(),
+        "image_prompt": str(data["image_prompt"]).strip(),
         "first_comment": str(data.get("first_comment", "")).strip(),
     }
+
+
+def _extract_json(text: str) -> dict:
+    """Parse the model's JSON reply, tolerating stray markdown fences or prose
+    around the object. Raises (JSONDecodeError/ValueError) if nothing parses, so
+    the caller treats it as a failed draft and regenerates — never a crash."""
+    t = (text or "").strip()
+    if t.startswith("```"):
+        t = re.sub(r"^```[a-zA-Z]*\s*", "", t)
+        t = re.sub(r"\s*```$", "", t).strip()
+    try:
+        return json.loads(t)
+    except json.JSONDecodeError:
+        start, end = t.find("{"), t.rfind("}")
+        if start != -1 and end > start:
+            return json.loads(t[start:end + 1])   # outermost object span
+        raise
 
 
 RUBRIC_DIMS = ["hook", "insight", "authenticity", "engagement", "originality"]
@@ -664,7 +690,14 @@ def main() -> None:
     feedback = ""
     attempts = max(1, int(os.environ.get("MAX_ATTEMPTS", "3")))
     for attempt in range(1, attempts + 1):
-        post = generate_post(client, topic, feedback=feedback)
+        try:
+            post = generate_post(client, topic, feedback=feedback)
+        except Exception as e:
+            # A malformed model reply must never kill the whole run — just retry.
+            print(f"[draft] attempt {attempt}: generation/parse failed ({type(e).__name__}: {e}) -> regenerate")
+            feedback = ("Return STRICTLY valid minified JSON with exactly the keys "
+                        "commentary, image_prompt, first_comment and nothing else.")
+            continue
         commentary = post["commentary"]
 
         issues = guardrail_check(commentary)
@@ -700,6 +733,8 @@ def main() -> None:
         if score >= QUALITY_BAR and hook >= HOOK_MIN:   # reach hinges on the hook
             break
 
+    if best is None:
+        raise SystemExit("[fatal] no valid draft after all attempts — nothing posted")
     score, post = best
     commentary, image_prompt = post["commentary"], post["image_prompt"]
     first_comment = post.get("first_comment", "")
