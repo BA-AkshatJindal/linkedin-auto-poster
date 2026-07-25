@@ -527,9 +527,21 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         FIRST comment to boost replies — a sharper angle, a clarifying point, or a
         direct question. Conversational. NO invented stories/facts. NO hashtags.""")
 
-    user = f"Write a LinkedIn post on: {topic}"
+    user = dedent(f"""\
+        Write a LinkedIn post anchored in your core niche ({CORE_THEMES}).
+
+        USER INPUT SPARK / REFERENCE ANGLE:
+        Topic / Angle: {topic}""")
     if context:
-        user += f"\n\nKey context / background notes / specific angle to include:\n{context}"
+        user += f"\nBackground context / specific note: {context}"
+
+    user += dedent("""
+
+        CRITICAL DIRECTION:
+        - Do NOT write a narrow or isolated post solely about this specific topic in a vacuum.
+        - Treat the topic/note as a concrete real-world SPARK, REFERENCE, or EXAMPLE under the broader umbrella of AI products, LLM reliability, and building tech products that stick.
+        - Connect this specific reference back to the bigger picture, business lesson, or product strategy that tech leaders, PMs, and founders care about.""")
+
     if feedback:
         user += dedent(f"""
 
