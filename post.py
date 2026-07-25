@@ -852,7 +852,7 @@ def generate_image_pollinations(image_prompt: str) -> bytes:
 
 
 def generate_image(client: genai.Client, image_prompt: str, topic: str = "", commentary: str = "") -> bytes:
-    mode = os.environ.get("IMAGE_MODE", "none").strip().lower()
+    mode = os.environ.get("IMAGE_MODE", "ai").strip().lower()
     if mode in ("none", "off", "text", "false", "0"):
         print("[image-gen] IMAGE_MODE=none -> text-only post (no image attached)")
         return b""

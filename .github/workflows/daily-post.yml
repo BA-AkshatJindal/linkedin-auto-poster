@@ -18,13 +18,13 @@ on:
         type: string
         required: false
       image_mode:
-        description: "Image Mode: 'none' (text-only, recommended), 'ai' (DALL-E 3 / Recraft V3 / FLUX), or 'card' (minimalist banner)"
+        description: "Image Mode: 'ai' (DALL-E 3 / Recraft V3 / FLUX-Realism studio photo), 'none' (text-only), or 'card' (minimalist banner)"
         type: choice
         options:
-          - none
           - ai
+          - none
           - card
-        default: none
+        default: ai
       dry_run:
         description: "Preview only: generate post + image, save as artifact, do NOT post"
         type: boolean
@@ -65,7 +65,7 @@ jobs:
           TOPIC: ${{ inputs.topic }}
           PERSONA: ${{ inputs.persona }}
           CONTEXT: ${{ inputs.context }}
-          IMAGE_MODE: ${{ inputs.image_mode || 'none' }}
+          IMAGE_MODE: ${{ inputs.image_mode || 'ai' }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: python post.py
 
