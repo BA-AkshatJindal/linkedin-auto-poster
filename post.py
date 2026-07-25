@@ -336,6 +336,23 @@ def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 
     return []
 
 
+def extract_linkedin_urn(url_or_urn: str) -> str:
+    """Extract urn:li:activity:12345 or urn:li:ugcPost:12345 from LinkedIn URL or string."""
+    if not url_or_urn:
+        return ""
+    if "urn:li:" in url_or_urn:
+        m = re.search(r"(urn:li:(?:activity|ugcPost|share):\d+)", url_or_urn)
+        if m:
+            return m.group(1)
+    m = re.search(r"activity-(\d+)", url_or_urn)
+    if m:
+        return f"urn:li:activity:{m.group(1)}"
+    m = re.search(r"(\d{18,20})", url_or_urn)
+    if m:
+        return f"urn:li:activity:{m.group(1)}"
+    return ""
+
+
 def fetch_github_issue_spec() -> dict | None:
     """Fetch the oldest open GitHub issue to use as post topic, persona, and context."""
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
@@ -367,6 +384,7 @@ def fetch_github_issue_spec() -> dict | None:
 
                     persona = ""
                     context = body
+                    reshare_urn = ""
 
                     m_persona = re.search(r"(?:persona|agent|role):\s*([^\n]+)", body, re.IGNORECASE)
                     if m_persona:
@@ -376,12 +394,17 @@ def fetch_github_issue_spec() -> dict | None:
                     if m_context:
                         context = m_context.group(1).strip()
 
+                    if title.lower().startswith("reshare:") or title.lower().startswith("repost:"):
+                        reshare_urn = extract_linkedin_urn(title + " " + body)
+                        print(f"[github-issue] Detected Reshare URN: {reshare_urn}")
+
                     print(f"[github-issue] Found open issue #{issue['number']}: '{title}'")
                     return {
                         "topic": title,
                         "persona": persona,
                         "context": context,
                         "issue_number": issue["number"],
+                        "reshare_urn": reshare_urn,
                     }
         except Exception as e:
             print(f"[github-issue] Error fetching issues: {e}")
@@ -1433,7 +1456,7 @@ def generate_poll_data(client: genai.Client, topic: str, commentary: str = "") -
         }
 
 
-def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: bytes, is_pdf: bool = False, poll_data: dict | None = None) -> str:
+def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: bytes, is_pdf: bool = False, poll_data: dict | None = None, reshare_urn: str = "") -> str:
     headers = {
         "Authorization": f"Bearer {token}",
         "X-Restli-Protocol-Version": "2.0.0",
@@ -1454,7 +1477,10 @@ def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: byt
             "isReshareDisabledByAuthor": False,
         }
 
-        if poll_data:
+        if reshare_urn:
+            payload["resharedShare"] = reshare_urn
+            print(f"[linkedin-publish] Quote Resharing target URN: {reshare_urn}")
+        elif poll_data:
             payload["content"] = {
                 "poll": {
                     "question": poll_data["question"],
@@ -1632,7 +1658,11 @@ def main() -> None:
     if mode_check == "poll" or (datetime.now(timezone.utc).weekday() in (2, 6) and mode_check in ("", "auto", "ai")):
         poll_data = generate_poll_data(client, topic, commentary)
 
-    urn = publish_to_linkedin(li_token, person_urn, commentary, image, is_pdf=is_pdf, poll_data=poll_data)
+    reshare_urn = spec.get("reshare_urn") or os.environ.get("RESHARE_URN", "").strip()
+    if reshare_urn:
+        reshare_urn = extract_linkedin_urn(reshare_urn)
+
+    urn = publish_to_linkedin(li_token, person_urn, commentary, image, is_pdf=is_pdf, poll_data=poll_data, reshare_urn=reshare_urn)
     print(f"[done] published: {urn}")
 
     # Save post URN to local history file for future performance tracking
