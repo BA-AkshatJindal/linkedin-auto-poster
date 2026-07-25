@@ -552,6 +552,10 @@ POST_FORMATS = [
         "name": "Fresher & Aspirant Career Guide",
         "instruction": "Structure the post as supportive, highly practical career advice for freshers, students, and early-career tech aspirants. Share a real lesson from your 3 years of hands-on experience on how to build high-signal skills, portfolios, or break into product/BA roles.",
     },
+    {
+        "name": "Industry Trend Reaction",
+        "instruction": "Structure the post as a real-time reaction to a breaking industry trend or headline. State the news context upfront and provide your pragmatic 3-year practitioner take on what this means for product builders, BAs, and freshers.",
+    },
 ]
 
 
