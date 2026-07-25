@@ -1381,7 +1381,46 @@ def get_person_urn(token: str) -> str:
     return f"urn:li:person:{r.json()['sub']}"
 
 
-def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: bytes, is_pdf: bool = False) -> str:
+def generate_poll_data(client: genai.Client, topic: str, commentary: str = "") -> dict:
+    """Generate a sharp, 140-char max poll question and 2-4 distinct options (under 30 chars each)
+    for LinkedIn Polls API."""
+    prompt = dedent(f"""\
+        You are a LinkedIn content strategist. Create a sharp, debatable 1-question poll
+        and 2-4 distinct voting options based on this post:
+
+        Topic: {topic}
+        Post: {commentary}
+
+        HARD RULES:
+        - Question must be under 140 characters, highly relatable to tech/product builders.
+        - Produce 2 to 4 options. Each option text MUST be under 30 characters MAX.
+        - Options must represent real, distinct choices or trade-offs people disagree on.
+
+        Reply ONLY with JSON:
+        {{"question": "...", "options": ["Option 1", "Option 2", "Option 3"]}}
+    """)
+    try:
+        resp = smart_generate(
+            client, TEXT_MODELS, contents=prompt,
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json", temperature=0.7),
+        )
+        d = json.loads(resp.text)
+        q = str(d.get("question", topic)).strip()[:140]
+        opts = [str(o).strip()[:30] for o in d.get("options", []) if str(o).strip()]
+        if len(opts) < 2:
+            opts = ["Agree with perspective", "Prefer classic approach", "Depends on scale"]
+        print(f"[poll-gen] generated poll: '{q}' | options: {opts[:4]}")
+        return {"question": q, "options": opts[:4]}
+    except Exception as e:
+        print(f"[poll-gen] fallback poll data: {e}")
+        return {
+            "question": f"What is your biggest bottleneck with {topic}?",
+            "options": ["Tool reliability", "Team alignment", "Measuring ROI", "Scaling friction"]
+        }
+
+
+def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: bytes, is_pdf: bool = False, poll_data: dict | None = None) -> str:
     headers = {
         "Authorization": f"Bearer {token}",
         "X-Restli-Protocol-Version": "2.0.0",
@@ -1402,7 +1441,17 @@ def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: byt
             "isReshareDisabledByAuthor": False,
         }
 
-        if image:
+        if poll_data:
+            payload["content"] = {
+                "poll": {
+                    "question": poll_data["question"],
+                    "options": [{"text": opt} for opt in poll_data["options"][:4]],
+                    "settings": {
+                        "duration": "THREE_DAYS"
+                    }
+                }
+            }
+        elif image:
             if is_pdf:
                 # 1) reserve a document upload slot for PDF Carousel
                 init = client.post(
@@ -1565,7 +1614,12 @@ def main() -> None:
             close_github_issue(issue_number, f"✅ [DRY RUN] Generated preview post for topic: **{topic}**")
         return
 
-    urn = publish_to_linkedin(li_token, person_urn, commentary, image, is_pdf=is_pdf)
+    poll_data = None
+    mode_check = os.environ.get("IMAGE_MODE", "").strip().lower()
+    if mode_check == "poll" or (datetime.now(timezone.utc).weekday() in (2, 6) and mode_check in ("", "auto", "ai")):
+        poll_data = generate_poll_data(client, topic, commentary)
+
+    urn = publish_to_linkedin(li_token, person_urn, commentary, image, is_pdf=is_pdf, poll_data=poll_data)
     print(f"[done] published: {urn}")
 
     # Save post URN to local history file for future performance tracking
