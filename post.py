@@ -511,52 +511,29 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
     print(f"[format] selected style: {post_format['name']}")
 
     system = dedent(f"""\
-        You are ghostwriting LinkedIn posts for {author_desc} who posts about Product + AI.
+        You are a senior tech practitioner, founder, and product strategist writing a LinkedIn post.
 
-        AUDIENCE: a BROAD professional audience — founders, product managers,
-        operators, leaders — NOT just engineers. Anyone in tech should get it in
-        one read.
+        AUTHENTIC HUMAN VOICE (CRITICAL FOR TRUST & ORGANIC REPOSTS):
+        - Write like an experienced colleague sending a thought-provoking note to peers.
+        - ZERO AI BUBBLEGUM / ZERO MARKETING FLUFF. Never sound like a social media manager or a ChatGPT bot trying to be deep.
+        - NO CHEESY RHETORICAL OPENERS ("Does X measure that anymore?", "Is Y dead?", "Let that sink in").
+        - NO FORCED ENGAGEMENT BAIT ("Repost if you agree!", "What do you think? Drop a comment!").
+        - People repost when a post articulates a truth they have felt deeply in their own career, but couldn't put into words. Speak the unspoken reality of building tech products with quiet conviction.
 
-        ACCESSIBILITY & RELATABILITY (critical for reach & reposts):
-        - Write in PLAIN ENGLISH. Lead with the insight and why it matters, not the
-          technical mechanism.
-        - HIGH RELATABILITY: Focus on universal human experiences in tech (over-engineering exhaustion, simple fixes that saved hours, hard lessons everyone secretly agrees with).
-        - REPOST VALUE: Make the central takeaway so clear, punchy, and valuable that a reader immediately wants to hit 'Repost' to share it with their network.
-        - REACTION MAGNET: Use a bold, relatable stance or a memorable real-world analogy that makes readers nod along and hit Like / Celebrate / Insightful.
-        - AVOID deep jargon, protocol/spec names, and code-level detail. Translate technical concepts into real-world consequences.
-        - Favor the human / business angle — decisions, trade-offs, lessons — over
-          implementation details.
+        TONE & FORMAT:
+        - Grounded, pragmatic, and opinionated observations.
+        - 80-140 words MAX. Concise, crisp, impactful. Every word earns its place.
+        - Short sentences, natural line breaks, human conversational rhythm.
+        - NO bullet lists. NO numbered tips. NO emojis.
+        - 3-5 clean, relevant hashtags at the very end.
 
-        RULES:
-        - Write like a REAL PERSON, not a content marketer.
-        - 80-150 words MAX. Short and punchy. Every word earns its place.
-        - First person, opinionated takes — but DO NOT invent personal stories.
-        - Short sentences. Some one-liners. Break lines often.
-        - NO corporate jargon ("in today's landscape", "transformative", "leverage").
-        - NO bullet lists. NO numbered tips.
-        - START WITH A SCROLL-STOPPING HOOK. The first line decides reach. Use a
-          bold/contrarian claim, a surprising number, a sharp one-liner, or real
-          tension. Make line 1 impossible to scroll past. NO throat-clearing.
-        - End with a question that invites real discussion.
-        - 3-5 relevant hashtags at the very end (max 5) to maximize reach. NO emojis.
-        - Be opinionated. Take a stance.
-
-        TRUTHFULNESS (critical — this is a REAL person's profile):
-        - NEVER invent personal anecdotes or events ("I once watched an AI delete a
-          production database" — NOT allowed if it didn't happen).
-        - NO fabricated metrics, statistics, names, companies, quotes, or case studies.
-        - Share genuine opinions, observations, and widely-true insights — not fiction.
-        - Hypotheticals are fine ONLY if clearly framed ("Imagine if…", "Picture a team that…").
+        TRUTHFULNESS:
+        - Share genuine opinions, observations, and widely-true insights.
+        - NEVER invent fake personal anecdotes ("Last week my team deleted production..."), fake metrics, or fake statistics.
 
         Reply ONLY with JSON: {{"commentary": "...", "image_prompt": "...", "first_comment": "..."}}
-        image_prompt = a VIVID, CONCRETE visual that captures the post's core idea
-        or metaphor — a real scene, object, or moment a viewer instantly connects
-        to the message (e.g. for "shipping fast without feedback" -> a runner
-        sprinting blindfolded on a track). One clear subject, editorial and modern.
-        NO text, words, letters, charts, graphs, or logos anywhere in the image.
         first_comment = a SHORT (1-2 sentences) follow-up the author drops as the
-        FIRST comment to boost replies — a sharper angle, a clarifying point, or a
-        direct question. Conversational. NO invented stories/facts. NO hashtags.""")
+        FIRST comment — a sharper angle or clarifying thought. Conversational.""")
 
     user = dedent(f"""\
         Write a LinkedIn post anchored in your core niche ({CORE_THEMES}).
@@ -826,15 +803,20 @@ def generate_image_pollinations(image_prompt: str) -> bytes:
 
 
 def generate_image(client: genai.Client, image_prompt: str, topic: str = "", commentary: str = "") -> bytes:
-    mode = os.environ.get("IMAGE_MODE", "card").strip().lower()
+    mode = os.environ.get("IMAGE_MODE", "none").strip().lower()
+    if mode in ("none", "off", "text", "false", "0"):
+        print("[image-gen] IMAGE_MODE=none -> text-only post (no image attached)")
+        return b""
     if mode in ("ai", "flux"):
         if os.environ.get("GEMINI_IMAGE", "false").strip().lower() in ("1", "true", "yes"):
             img = generate_image_gemini(client, image_prompt)
             if img:
                 return img
         return generate_image_pollinations(image_prompt)
-    print("[image-gen] generating high-end dark-mode graphic card (Pillow)")
-    return generate_graphic_card(topic, commentary)
+    if mode == "card":
+        print("[image-gen] generating graphic card (Pillow)")
+        return generate_graphic_card(topic, commentary)
+    return b""
 
 
 # ── Image-prompt agent ───────────────────────────────────────────────
@@ -909,38 +891,37 @@ def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: byt
         "Content-Type": "application/json",
     }
     with httpx.Client(timeout=60.0) as client:
-        # 1) reserve an image upload slot
-        init = client.post(
-            "https://api.linkedin.com/rest/images?action=initializeUpload",
-            headers=headers,
-            json={"initializeUploadRequest": {"owner": person_urn}},
-        )
-        init.raise_for_status()
-        val = init.json()["value"]
-
-        # 2) upload the bytes
-        client.put(
-            val["uploadUrl"], content=image, headers={"Content-Type": "image/png"}
-        ).raise_for_status()
-
-        # 3) create the post
-        resp = client.post(
-            "https://api.linkedin.com/rest/posts",
-            headers=headers,
-            json={
-                "author": person_urn,
-                "commentary": commentary,
-                "visibility": "PUBLIC",
-                "distribution": {
-                    "feedDistribution": "MAIN_FEED",
-                    "targetEntities": [],
-                    "thirdPartyDistributionChannels": [],
-                },
-                "content": {"media": {"id": val["image"], "altText": "AI-generated image"}},
-                "lifecycleState": "PUBLISHED",
-                "isReshareDisabledByAuthor": False,
+        payload = {
+            "author": person_urn,
+            "commentary": commentary,
+            "visibility": "PUBLIC",
+            "distribution": {
+                "feedDistribution": "MAIN_FEED",
+                "targetEntities": [],
+                "thirdPartyDistributionChannels": [],
             },
-        )
+            "lifecycleState": "PUBLISHED",
+            "isReshareDisabledByAuthor": False,
+        }
+
+        if image:
+            # 1) reserve an image upload slot
+            init = client.post(
+                "https://api.linkedin.com/rest/images?action=initializeUpload",
+                headers=headers,
+                json={"initializeUploadRequest": {"owner": person_urn}},
+            )
+            init.raise_for_status()
+            val = init.json()["value"]
+
+            # 2) upload the bytes
+            client.put(
+                val["uploadUrl"], content=image, headers={"Content-Type": "image/png"}
+            ).raise_for_status()
+
+            payload["content"] = {"media": {"id": val["image"], "altText": "Visual"}}
+
+        resp = client.post("https://api.linkedin.com/rest/posts", headers=headers, json=payload)
         if resp.status_code != 201:
             resp.raise_for_status()
         return resp.headers.get("x-restli-id", "")
