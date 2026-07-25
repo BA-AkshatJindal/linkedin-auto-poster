@@ -556,7 +556,7 @@ def load_post_history(filepath: str = "history_posts.json", limit: int = 15) -> 
     return []
 
 
-def save_post_history(topic: str, commentary: str, filepath: str = "history_posts.json", limit: int = 15):
+def save_post_history(topic: str, commentary: str, urn: str = "", filepath: str = "history_posts.json", limit: int = 15):
     """Append the newly published post to the history file, capping at `limit` items."""
     history = load_post_history(filepath, limit=100)
     lines = [line.strip() for line in commentary.split("\n") if line.strip() and not line.strip().startswith("#")]
@@ -566,6 +566,10 @@ def save_post_history(topic: str, commentary: str, filepath: str = "history_post
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "topic": topic,
         "hook": hook,
+        "urn": urn,
+        "likes": 0,
+        "comments": 0,
+        "engagement": 0,
     }
     history.append(entry)
     history = history[-limit:]
@@ -576,6 +580,49 @@ def save_post_history(topic: str, commentary: str, filepath: str = "history_post
         print(f"[history] saved post history to {filepath} ({len(history)} total entries)")
     except Exception as e:
         print(f"[history] error writing {filepath}: {e}")
+
+
+def fetch_and_update_post_performance(token: str, filepath: str = "history_posts.json"):
+    """Fetch real-time engagement metrics (likes & comments) from LinkedIn API for past posts
+    and update history_posts.json so the AI generator learns what performs best."""
+    if not token or not os.path.exists(filepath):
+        return
+
+    history = load_post_history(filepath, limit=100)
+    updated = False
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "X-Restli-Protocol-Version": "2.0.0",
+    }
+
+    with httpx.Client(timeout=15.0) as client:
+        for entry in history:
+            urn = entry.get("urn")
+            if not urn:
+                continue
+            try:
+                enc = quote(urn, safe="")
+                r = client.get(f"https://api.linkedin.com/v2/socialActions/{enc}", headers=headers)
+                if r.status_code == 200:
+                    data = r.json()
+                    likes = data.get("likesSummary", {}).get("totalLikes", 0)
+                    comments = data.get("commentsSummary", {}).get("totalComments", 0)
+                    entry["likes"] = likes
+                    entry["comments"] = comments
+                    entry["engagement"] = likes + (comments * 2)
+                    updated = True
+                    print(f"[analytics] URN {urn[:30]}... -> {likes} likes, {comments} comments")
+            except Exception as e:
+                print(f"[analytics] error fetching metrics for {urn}: {e}")
+
+    if updated:
+        try:
+            with open(filepath, "w", encoding="utf-8") as f:
+                json.dump(history, f, indent=2)
+            print(f"[analytics] updated performance metrics in {filepath}")
+        except Exception as e:
+            print(f"[analytics] error saving metrics: {e}")
 
 
 # ── Gemini: write the post ───────────────────────────────────────────
@@ -651,6 +698,20 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
             DEDUPLICATION DIRECTIVE:
             - Ensure your new post explores a FRESH, DISTINCT angle or unique insight.
             - Do NOT rehash or repeat the same arguments, conclusions, or core points used in the recent posts above.""")
+
+        # Self-Learning Feedback Loop: Identify top-performing posts by engagement
+        top_posts = sorted([item for item in history if item.get("engagement", 0) > 0], key=lambda x: x.get("engagement", 0), reverse=True)[:3]
+        if top_posts:
+            top_summary = "\n".join([f"- High-Engagement Post: Topic '{item['topic']}' | Hook: '{item['hook']}' ({item['likes']} likes, {item['comments']} comments)" for item in top_posts])
+            user += dedent(f"""
+
+                TOP PERFORMING POSTS ON THIS ACCOUNT (MIRROR THIS HIGH-ENGAGEMENT STYLE):
+                The following posts earned the highest audience engagement on your profile:
+                {top_summary}
+
+                SELF-LEARNING STYLE DIRECTIVE:
+                - Analyze why the top posts above resonated strongly with your audience.
+                - Mirror the depth, high conviction, and trench-builder clarity of those top-performing posts.""")
 
     if feedback:
         user += dedent(f"""
@@ -1109,6 +1170,9 @@ def main() -> None:
     li_token = os.environ["LINKEDIN_ACCESS_TOKEN"]
     client = genai.Client(api_key=gemini_key)
 
+    # 1) Fetch real-time analytics for past posts to update history_posts.json metrics
+    fetch_and_update_post_performance(li_token)
+
     spec = pick_post_spec(client)
     topic = spec["topic"]
     persona = spec["persona"]
@@ -1192,9 +1256,6 @@ def main() -> None:
         f.write(f"TOPIC: {topic}\n\n{commentary}\n\n"
                 f"FIRST COMMENT: {first_comment}\n\nIMAGE PROMPT: {image_prompt}\n")
 
-    # Save post to local history file for topic deduplication across runs
-    save_post_history(topic, commentary)
-
     # Preview mode: generate everything but skip publishing to LinkedIn.
     if os.environ.get("DRY_RUN", "").strip().lower() in ("1", "true", "yes"):
         print("[dry-run] preview only — NOT posting to LinkedIn. "
@@ -1207,6 +1268,9 @@ def main() -> None:
     person_urn = get_person_urn(li_token)
     urn = publish_to_linkedin(li_token, person_urn, commentary, image)
     print(f"[done] published: {urn}")
+
+    # Save post URN to local history file for future performance tracking
+    save_post_history(topic, commentary, urn=urn)
 
     # First comment: drop the author's follow-up as the first comment to boost
     # reach. ON by default (no workflow env needed) — set FIRST_COMMENT_MODE=false to disable.
