@@ -1271,8 +1271,27 @@ def generate_image_pollinations(image_prompt: str) -> bytes:
 
 
 def generate_image(client: genai.Client, image_prompt: str, topic: str = "", commentary: str = "") -> tuple[bytes, bool]:
-    """Returns tuple of (media_bytes, is_pdf)."""
-    mode = os.environ.get("IMAGE_MODE", "ai").strip().lower()
+    """Returns tuple of (media_bytes, is_pdf). Automatically picks optimal format based on day of week if default:
+    - Wednesday: Interactive Poll
+    - Monday / Thursday: PDF Carousel
+    - Other days: FLUX / DALL-E 3 Studio Photo
+    """
+    raw_mode = os.environ.get("IMAGE_MODE", "auto").strip().lower()
+    
+    # Auto day-of-week schedule rotation if IMAGE_MODE is 'auto' or default 'ai'
+    weekday = datetime.now(timezone.utc).weekday() # 0=Mon, 2=Wed, 3=Thu
+    if raw_mode in ("auto", "ai") and not os.environ.get("EXPLICIT_IMAGE_MODE"):
+        if weekday == 2: # Wednesday
+            print("[schedule] Wednesday detected -> Auto-scheduling Interactive LinkedIn Poll")
+            mode = "poll"
+        elif weekday in (0, 3): # Monday, Thursday
+            print("[schedule] Monday/Thursday detected -> Auto-scheduling 3-Slide PDF Carousel")
+            mode = "carousel"
+        else:
+            mode = "ai"
+    else:
+        mode = raw_mode
+
     if mode in ("none", "off", "text", "false", "0"):
         print("[image-gen] IMAGE_MODE=none -> text-only post (no image attached)")
         return b"", False
