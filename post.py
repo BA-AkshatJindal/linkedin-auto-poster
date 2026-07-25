@@ -787,16 +787,65 @@ IMAGE_AESTHETIC_STYLES = [
 ]
 
 
+def generate_image_openai(image_prompt: str) -> bytes | None:
+    """Generate high-end DALL-E 3 image if OPENAI_API_KEY is present."""
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return None
+    try:
+        headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+        payload = {
+            "model": "dall-e-3",
+            "prompt": f"{image_prompt}. High-end editorial photo, modern tech aesthetic. Absolutely no text, no letters, no words.",
+            "n": 1,
+            "size": "1024x1024",
+            "quality": "hd",
+        }
+        r = httpx.post("https://api.openai.com/v1/images/generations", headers=headers, json=payload, timeout=60.0)
+        r.raise_for_status()
+        img_url = r.json()["data"][0]["url"]
+        img_resp = httpx.get(img_url, timeout=60.0)
+        img_resp.raise_for_status()
+        print("[image-gen] Successfully generated DALL-E 3 image")
+        return img_resp.content
+    except Exception as e:
+        print(f"[image-gen] DALL-E 3 failed: {e}")
+        return None
+
+
+def generate_image_recraft(image_prompt: str) -> bytes | None:
+    """Generate high-end Recraft V3 image if RECRAFT_API_KEY is present."""
+    api_key = os.environ.get("RECRAFT_API_KEY", "").strip()
+    if not api_key:
+        return None
+    try:
+        headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+        payload = {
+            "prompt": f"{image_prompt}. Absolutely no text, no words.",
+            "style": "digital_illustration",
+            "size": "1024x1024",
+        }
+        r = httpx.post("https://api.recraft.ai/v1/images/generations", headers=headers, json=payload, timeout=60.0)
+        r.raise_for_status()
+        img_url = r.json()["data"][0]["url"]
+        img_resp = httpx.get(img_url, timeout=60.0)
+        img_resp.raise_for_status()
+        print("[image-gen] Successfully generated Recraft V3 image")
+        return img_resp.content
+    except Exception as e:
+        print(f"[image-gen] Recraft V3 failed: {e}")
+        return None
+
+
 def generate_image_pollinations(image_prompt: str) -> bytes:
-    """Keyless free image generator (FLUX). Uses seed randomization and model=flux
-    for crisp, vibrant, high-resolution rendering."""
-    styled = f"{image_prompt}. High resolution, vibrant contrast, 8k, professional quality. No text, no words, no letters, no logos, no watermark."
+    """Keyless free image generator (FLUX-Realism). Uses model=flux-realism for photorealistic rendering."""
+    styled = f"{image_prompt}. Professional editorial photograph, 35mm lens, 8k resolution, crisp studio lighting. No text, no words, no letters, no logos, no watermark."
     seed = random.randint(1000, 999999)
     url = (
         f"https://image.pollinations.ai/prompt/{quote(styled)}"
-        f"?width=1080&height=1080&seed={seed}&nologo=true&model=flux"
+        f"?width=1080&height=1080&seed={seed}&nologo=true&model=flux-realism"
     )
-    print(f"[image-gen] requesting FLUX image with seed={seed}")
+    print(f"[image-gen] requesting FLUX-Realism image with seed={seed}")
     r = httpx.get(url, timeout=120.0)
     r.raise_for_status()
     return r.content
@@ -807,7 +856,13 @@ def generate_image(client: genai.Client, image_prompt: str, topic: str = "", com
     if mode in ("none", "off", "text", "false", "0"):
         print("[image-gen] IMAGE_MODE=none -> text-only post (no image attached)")
         return b""
-    if mode in ("ai", "flux"):
+    if mode in ("ai", "flux", "dalle", "recraft"):
+        img = generate_image_openai(image_prompt)
+        if img:
+            return img
+        img = generate_image_recraft(image_prompt)
+        if img:
+            return img
         if os.environ.get("GEMINI_IMAGE", "false").strip().lower() in ("1", "true", "yes"):
             img = generate_image_gemini(client, image_prompt)
             if img:

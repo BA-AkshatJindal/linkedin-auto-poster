@@ -17,6 +17,14 @@ on:
         description: "Specific context / background notes for the post"
         type: string
         required: false
+      image_mode:
+        description: "Image Mode: 'none' (text-only, recommended), 'ai' (DALL-E 3 / Recraft V3 / FLUX), or 'card' (minimalist banner)"
+        type: choice
+        options:
+          - none
+          - ai
+          - card
+        default: none
       dry_run:
         description: "Preview only: generate post + image, save as artifact, do NOT post"
         type: boolean
@@ -51,10 +59,13 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          RECRAFT_API_KEY: ${{ secrets.RECRAFT_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TOPIC: ${{ inputs.topic }}
           PERSONA: ${{ inputs.persona }}
           CONTEXT: ${{ inputs.context }}
+          IMAGE_MODE: ${{ inputs.image_mode || 'none' }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: python post.py
 
@@ -67,4 +78,5 @@ jobs:
             out_image.png
             out_post.txt
           if-no-files-found: ignore
+
 
