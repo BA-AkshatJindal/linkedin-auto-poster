@@ -18,11 +18,12 @@ on:
         type: string
         required: false
       image_mode:
-        description: "Image Mode: 'ai' (DALL-E 3 / Recraft V3 / FLUX-Realism photo), 'carousel' (3-slide PDF Carousel), 'none' (text-only), or 'card' (minimalist banner)"
+        description: "Image Mode: 'ai' (DALL-E 3 / Recraft V3 / FLUX photo), 'carousel' (3-slide PDF Carousel), 'poll' (Interactive Poll), 'none' (text-only), or 'card'"
         type: choice
         options:
           - ai
           - carousel
+          - poll
           - none
           - card
         default: ai
