@@ -32,12 +32,32 @@ from google.genai import types
 from google.genai import errors as genai_errors
 
 # The niche this account posts about.
-CORE_THEMES = "AI, AI agents, agentic systems, LLMs, and product building"
+CORE_THEMES = "Product Management, Product Strategy, AI & AI agents, LLMs, Business Analysis, and Product Operations"
 
-# ── Static backup topics (50) ────────────────────────────────────────
-# Used ONLY if the live trend engine fails. Keep them on-brand: AI / agents
-# / products. The live engine (below) is what normally drives topics.
+# ── Static backup topics ──────────────────────────────────────────────
+# Used ONLY if the live trend engine fails. Keep them on-brand: Product
+# Management, Product Strategy, AI / agents / product building.
 TOPICS = [
+    "Why feature roadmaps fail without a clear non-goal list",
+    "The difference between product velocity and real product progress",
+    "Why 80% of product features are rarely or never used",
+    "How to handle executive stakeholder pushback without ruining your roadmap",
+    "Why user interviews lie and user behavior never does",
+    "The danger of building for power users instead of your core ICP",
+    "How Business Analysts bridge the gap between engineering reality and product vision",
+    "Why technical debt is a product strategy decision, not an engineering bug",
+    "The real cost of pivoting your product roadmap every quarter",
+    "Why product managers should write problem statements, not solution specs",
+    "How to prioritize product backlog items when everything is urgent",
+    "Why metric-driven product design often leads to local maxima",
+    "The art of saying no to high-value enterprise custom requests",
+    "Why product metrics matter less than retention cohorts",
+    "How product specs change when building AI-first features",
+    "The silent product killer: shipping before defining success metrics",
+    "Why business analysts are the unsung heroes of AI product adoption",
+    "The trade-off between shipping fast and building scalable UX",
+    "Why product-led growth fails without product-led onboarding",
+    "How to run user research that actually changes product decisions",
     "Why most AI agents fail in production, not in demos",
     "The real reason 'AI-first' products lose users",
     "What nobody tells you about building reliable LLM apps",
@@ -93,10 +113,11 @@ TOPICS = [
 # ── Live trend sources (free, keyless) ───────────────────────────────
 TRENDS_RSS = [
     "https://news.google.com/rss/search?q=AI%20agents%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22Product%20Management%22%20OR%20%22Product%20Strategy%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
     "https://news.google.com/rss/search?q=%22AI%20product%22%20OR%20LLM%20when:7d&hl=en-US&gl=US&ceid=US:en",
 ]
 HN_SEARCH = "https://hn.algolia.com/api/v1/search?tags=story&query="
-HN_QUERIES = ("AI agents", "LLM", "AI product")
+HN_QUERIES = ("AI agents", "LLM", "product management", "product strategy")
 
 # Trend-topic cache: generate a fresh pool at most once per ~20h, then reuse it
 # for every run in between (0 API hits for topic selection). Persisted across
