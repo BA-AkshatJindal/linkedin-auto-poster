@@ -498,6 +498,50 @@ POST_FORMATS = [
 ]
 
 
+def format_linkedin_text(text: str) -> str:
+    """Ensure LinkedIn post text is cleanly formatted with punchy double line breaks (\\n\\n)
+    between 1-2 sentence paragraphs for high mobile readability. Never a dense wall of text."""
+    if not text:
+        return text
+
+    # Extract hashtags at the end
+    hashtags = re.findall(r"#\w+", text)
+    clean_text = re.sub(r"#\w+", "", text).strip()
+
+    # Split into paragraphs by existing newlines
+    paragraphs = [p.strip() for p in clean_text.split("\n") if p.strip()]
+
+    final_paragraphs = []
+    for p in paragraphs:
+        # If a paragraph is dense (longer than 150 chars with multiple sentences), break it up
+        if len(p) > 150 and "." in p:
+            sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", p) if s.strip()]
+            chunk = []
+            for s in sentences:
+                chunk.append(s)
+                if len(" ".join(chunk)) > 100 or len(chunk) >= 2:
+                    final_paragraphs.append(" ".join(chunk))
+                    chunk = []
+            if chunk:
+                final_paragraphs.append(" ".join(chunk))
+        else:
+            final_paragraphs.append(p)
+
+    formatted_body = "\n\n".join(final_paragraphs)
+
+    if hashtags:
+        seen = set()
+        unique_tags = []
+        for tag in hashtags:
+            lower = tag.lower()
+            if lower not in seen:
+                seen.add(lower)
+                unique_tags.append(tag)
+        formatted_body += "\n\n" + " ".join(unique_tags[:5])
+
+    return formatted_body
+
+
 # ── Gemini: write the post ───────────────────────────────────────────
 
 def generate_post(client: genai.Client, topic: str, persona: str = "", context: str = "", feedback: str = "") -> dict:
@@ -518,14 +562,19 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         - ZERO AI BUBBLEGUM / ZERO MARKETING FLUFF. Never sound like a social media manager or a ChatGPT bot trying to be deep.
         - NO CHEESY RHETORICAL OPENERS ("Does X measure that anymore?", "Is Y dead?", "Let that sink in").
         - NO FORCED ENGAGEMENT BAIT ("Repost if you agree!", "What do you think? Drop a comment!").
-        - Speak the real, everyday observations of shipping products and working with AI tools with quiet conviction. No pretend 20-year veteran preachiness.
+        - Speak the real, everyday observations of shipping products and working with AI tools with quiet conviction.
+
+        LINE SPACING & FORMATTING (CRITICAL FOR READABILITY):
+        - NEVER write a wall of text paragraph.
+        - Maximum 1-2 sentences per paragraph.
+        - Leave a clear blank line (\\n\\n) between EVERY single paragraph.
+        - Place 3-5 clean hashtags on a separate line at the very bottom with a blank line before them.
 
         TONE & FORMAT:
         - Grounded, pragmatic, and opinionated observations.
         - 80-140 words MAX. Concise, crisp, impactful. Every word earns its place.
         - Short sentences, natural line breaks, human conversational rhythm.
         - NO bullet lists. NO numbered tips. NO emojis.
-        - 3-5 clean, relevant hashtags at the very end.
 
         TRUTHFULNESS:
         - Share genuine opinions, observations, and widely-true insights.
@@ -577,8 +626,11 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
             temperature=0.9,
         ))
     data = _extract_json(resp.text)
+    raw_commentary = str(data["commentary"]).strip()
+    formatted_commentary = format_linkedin_text(raw_commentary)
+
     return {
-        "commentary": str(data["commentary"]).strip(),
+        "commentary": formatted_commentary,
         "image_prompt": str(data["image_prompt"]).strip(),
         "first_comment": str(data.get("first_comment", "")).strip(),
     }
