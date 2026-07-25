@@ -1279,10 +1279,11 @@ def generate_image(client: genai.Client, image_prompt: str, topic: str = "", com
     raw_mode = os.environ.get("IMAGE_MODE", "auto").strip().lower()
     
     # Auto day-of-week schedule rotation if IMAGE_MODE is 'auto' or default 'ai'
-    weekday = datetime.now(timezone.utc).weekday() # 0=Mon, 2=Wed, 3=Thu
+    weekday = datetime.now(timezone.utc).weekday() # 0=Mon, 2=Wed, 3=Thu, 6=Sun
     if raw_mode in ("auto", "ai") and not os.environ.get("EXPLICIT_IMAGE_MODE"):
-        if weekday == 2: # Wednesday
-            print("[schedule] Wednesday detected -> Auto-scheduling Interactive LinkedIn Poll")
+        if weekday in (2, 6): # Wednesday or Sunday
+            day_name = "Wednesday" if weekday == 2 else "Sunday"
+            print(f"[schedule] {day_name} detected -> Auto-scheduling Interactive LinkedIn Poll")
             mode = "poll"
         elif weekday in (0, 3): # Monday, Thursday
             print("[schedule] Monday/Thursday detected -> Auto-scheduling 3-Slide PDF Carousel")
