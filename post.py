@@ -506,19 +506,19 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
     If `feedback` is given (from the eval agent), the model must fix those
     specific weaknesses in this draft — this is the reflexion loop.
     """
-    author_desc = f"a real {persona}" if persona else "a real founder/BA"
+    author_desc = f"a real {persona}" if persona else "a pragmatic product builder and Business Analyst with 3 years of hands-on experience in tech"
     post_format = random.choice(POST_FORMATS)
     print(f"[format] selected style: {post_format['name']}")
 
     system = dedent(f"""\
-        You are a senior tech practitioner, founder, and product strategist writing a LinkedIn post.
+        You are ghostwriting for {author_desc}, writing an authentic LinkedIn post.
 
         AUTHENTIC HUMAN VOICE (CRITICAL FOR TRUST & ORGANIC REPOSTS):
-        - Write like an experienced colleague sending a thought-provoking note to peers.
+        - Write like a sharp, in-the-trenches builder sharing a genuine observation with peers.
         - ZERO AI BUBBLEGUM / ZERO MARKETING FLUFF. Never sound like a social media manager or a ChatGPT bot trying to be deep.
         - NO CHEESY RHETORICAL OPENERS ("Does X measure that anymore?", "Is Y dead?", "Let that sink in").
         - NO FORCED ENGAGEMENT BAIT ("Repost if you agree!", "What do you think? Drop a comment!").
-        - People repost when a post articulates a truth they have felt deeply in their own career, but couldn't put into words. Speak the unspoken reality of building tech products with quiet conviction.
+        - Speak the real, everyday observations of shipping products and working with AI tools with quiet conviction. No pretend 20-year veteran preachiness.
 
         TONE & FORMAT:
         - Grounded, pragmatic, and opinionated observations.
