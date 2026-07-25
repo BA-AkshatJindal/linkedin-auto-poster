@@ -515,11 +515,13 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         operators, leaders — NOT just engineers. Anyone in tech should get it in
         one read.
 
-        ACCESSIBILITY (critical for reach):
+        ACCESSIBILITY & RELATABILITY (critical for reach & reposts):
         - Write in PLAIN ENGLISH. Lead with the insight and why it matters, not the
           technical mechanism.
-        - AVOID deep jargon, protocol/spec names, and code-level detail. If a
-          technical thing is essential, translate it into a real-world consequence.
+        - HIGH RELATABILITY: Focus on universal human experiences in tech (over-engineering exhaustion, simple fixes that saved hours, hard lessons everyone secretly agrees with).
+        - REPOST VALUE: Make the central takeaway so clear, punchy, and valuable that a reader immediately wants to hit 'Repost' to share it with their network.
+        - REACTION MAGNET: Use a bold, relatable stance or a memorable real-world analogy that makes readers nod along and hit Like / Celebrate / Insightful.
+        - AVOID deep jargon, protocol/spec names, and code-level detail. Translate technical concepts into real-world consequences.
         - Favor the human / business angle — decisions, trade-offs, lessons — over
           implementation details.
 
@@ -620,7 +622,7 @@ def _extract_json(text: str) -> dict:
         raise
 
 
-RUBRIC_DIMS = ["hook", "insight", "authenticity", "engagement", "originality"]
+RUBRIC_DIMS = ["hook", "insight", "authenticity", "relatability", "repostability", "originality"]
 
 
 def guardrail_check(text: str) -> list[str]:
@@ -655,7 +657,8 @@ def evaluate_post(client: genai.Client, commentary: str) -> dict:
         - hook: does the FIRST line stop the scroll?
         - insight: is there a real, specific idea (not generic advice)?
         - authenticity: does it sound like a real person, not AI/marketing?
-        - engagement: does the ending genuinely invite discussion?
+        - relatability: is it deeply relatable to anyone working in tech, products, or business?
+        - repostability: is the central takeaway shareable enough that someone would hit Repost?
         - originality: a fresh angle, not a cliche everyone has posted?
 
         Also set "fabricated": true if the post presents ANY invented personal
@@ -667,7 +670,7 @@ def evaluate_post(client: genai.Client, commentary: str) -> dict:
         biggest weakness (what to change to score higher).
 
         Reply ONLY with JSON:
-        {{"hook":int,"insight":int,"authenticity":int,"engagement":int,"originality":int,"fabricated":bool,"feedback":"..."}}
+        {{"hook":int,"insight":int,"authenticity":int,"relatability":int,"repostability":int,"originality":int,"fabricated":bool,"feedback":"..."}}
 
         <post>
         {commentary}
