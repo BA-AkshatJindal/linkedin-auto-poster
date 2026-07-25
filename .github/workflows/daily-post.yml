@@ -31,7 +31,7 @@ on:
         default: false
 
 permissions:
-  contents: read
+  contents: write
   issues: write
 
 jobs:
@@ -43,13 +43,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Cache trend topics (daily)
+      - name: Cache trend topics & post history
         uses: actions/cache@v4
         with:
-          path: topics_cache.json
-          key: trend-topics-${{ github.run_id }}
+          path: |
+            topics_cache.json
+            history_posts.json
+          key: post-history-${{ github.run_id }}
           restore-keys: |
-            trend-topics-
+            post-history-
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -68,6 +70,15 @@ jobs:
           IMAGE_MODE: ${{ inputs.image_mode || 'ai' }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: python post.py
+
+      - name: Commit & push updated post history
+        if: always() && inputs.dry_run != true
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add history_posts.json topics_cache.json upcoming_posts.json || true
+          git commit -m "Update post history & deduplication cache [skip ci]" || true
+          git push origin development || true
 
       - name: Upload generated post + image
         if: always()

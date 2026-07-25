@@ -542,6 +542,42 @@ def format_linkedin_text(text: str) -> str:
     return formatted_body
 
 
+def load_post_history(filepath: str = "history_posts.json", limit: int = 15) -> list[dict]:
+    """Load the last 15 published posts from local JSON history file."""
+    if not os.path.exists(filepath):
+        return []
+    try:
+        with open(filepath, encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, list):
+            return data[-limit:]
+    except Exception as e:
+        print(f"[history] error reading {filepath}: {e}")
+    return []
+
+
+def save_post_history(topic: str, commentary: str, filepath: str = "history_posts.json", limit: int = 15):
+    """Append the newly published post to the history file, capping at `limit` items."""
+    history = load_post_history(filepath, limit=100)
+    lines = [line.strip() for line in commentary.split("\n") if line.strip() and not line.strip().startswith("#")]
+    hook = lines[0] if lines else topic
+
+    entry = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "topic": topic,
+        "hook": hook,
+    }
+    history.append(entry)
+    history = history[-limit:]
+
+    try:
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(history, f, indent=2)
+        print(f"[history] saved post history to {filepath} ({len(history)} total entries)")
+    except Exception as e:
+        print(f"[history] error writing {filepath}: {e}")
+
+
 # ── Gemini: write the post ───────────────────────────────────────────
 
 def generate_post(client: genai.Client, topic: str, persona: str = "", context: str = "", feedback: str = "") -> dict:
@@ -602,6 +638,19 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         - 50% Specific Detail: Weave the specific nuance, real-world detail, or core idea of the topic into the post so it feels authentic, fresh, and non-generic.
         - 50% High-Level Umbrella: Connect it directly to the broader picture of AI products, LLM reliability, and product strategy so it resonates with founders, PMs, and tech leaders.
         - Ensure this post has its own unique rhythm, sentence structure, and flow. Avoid repeating generic templates.""")
+
+    history = load_post_history(limit=15)
+    if history:
+        history_summary = "\n".join([f"- Topic: '{item.get('topic', '')}' | Hook: '{item.get('hook', '')}'" for item in history])
+        user += dedent(f"""
+
+            RECENTLY PUBLISHED POST HISTORY (DO NOT REPEAT):
+            The following topics and hooks were recently published on this account:
+            {history_summary}
+
+            DEDUPLICATION DIRECTIVE:
+            - Ensure your new post explores a FRESH, DISTINCT angle or unique insight.
+            - Do NOT rehash or repeat the same arguments, conclusions, or core points used in the recent posts above.""")
 
     if feedback:
         user += dedent(f"""
@@ -1142,6 +1191,9 @@ def main() -> None:
     with open("out_post.txt", "w", encoding="utf-8") as f:
         f.write(f"TOPIC: {topic}\n\n{commentary}\n\n"
                 f"FIRST COMMENT: {first_comment}\n\nIMAGE PROMPT: {image_prompt}\n")
+
+    # Save post to local history file for topic deduplication across runs
+    save_post_history(topic, commentary)
 
     # Preview mode: generate everything but skip publishing to LinkedIn.
     if os.environ.get("DRY_RUN", "").strip().lower() in ("1", "true", "yes"):
