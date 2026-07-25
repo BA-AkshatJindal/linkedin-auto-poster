@@ -304,6 +304,88 @@ def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 
     return []
 
 
+def fetch_github_issue_spec() -> dict | None:
+    """Fetch the oldest open GitHub issue to use as post topic, persona, and context."""
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    repo = os.environ.get("GITHUB_REPOSITORY")
+    if not token or not repo:
+        return None
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    # Check for issue labeled 'post-idea' first, then any open issue
+    for url in (
+        f"https://api.github.com/repos/{repo}/issues?state=open&labels=post-idea&sort=created&direction=asc",
+        f"https://api.github.com/repos/{repo}/issues?state=open&sort=created&direction=asc",
+    ):
+        try:
+            r = httpx.get(url, headers=headers, timeout=15.0)
+            if r.status_code == 200:
+                issues = r.json()
+                for issue in issues:
+                    if issue.get("pull_request"):
+                        continue
+                    title = (issue.get("title") or "").strip()
+                    body = (issue.get("body") or "").strip()
+                    if not title:
+                        continue
+
+                    persona = ""
+                    context = body
+
+                    m_persona = re.search(r"(?:persona|agent|role):\s*([^\n]+)", body, re.IGNORECASE)
+                    if m_persona:
+                        persona = m_persona.group(1).strip()
+
+                    m_context = re.search(r"context:\s*(.+)", body, re.IGNORECASE | re.DOTALL)
+                    if m_context:
+                        context = m_context.group(1).strip()
+
+                    print(f"[github-issue] Found open issue #{issue['number']}: '{title}'")
+                    return {
+                        "topic": title,
+                        "persona": persona,
+                        "context": context,
+                        "issue_number": issue["number"],
+                    }
+        except Exception as e:
+            print(f"[github-issue] Error fetching issues: {e}")
+    return None
+
+
+def close_github_issue(issue_number: int, comment_text: str) -> None:
+    """Close the processed GitHub Issue and post a comment."""
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    repo = os.environ.get("GITHUB_REPOSITORY")
+    if not token or not repo or not issue_number:
+        return
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    try:
+        httpx.post(
+            f"https://api.github.com/repos/{repo}/issues/{issue_number}/comments",
+            headers=headers,
+            json={"body": comment_text},
+            timeout=15.0,
+        )
+        httpx.patch(
+            f"https://api.github.com/repos/{repo}/issues/{issue_number}",
+            headers=headers,
+            json={"state": "closed", "state_reason": "completed"},
+            timeout=15.0,
+        )
+        print(f"[github-issue] Closed issue #{issue_number}")
+    except Exception as e:
+        print(f"[github-issue] Error closing issue #{issue_number}: {e}")
+
+
 def pick_topic(client: genai.Client | None = None) -> str:
     """TOPIC override > live trend-generated topic > static backup pool."""
     forced = os.environ.get("TOPIC", "").strip()
@@ -330,16 +412,77 @@ def pick_topic(client: genai.Client | None = None) -> str:
     return random.choice(TOPICS)
 
 
+def pick_post_spec(client: genai.Client | None = None) -> dict:
+    """Returns {'topic': str, 'persona': str, 'context': str, 'issue_number': int|None}
+
+    Priority:
+    1. Environment variables (TOPIC, AGENT_PERSONA/PERSONA, CONTEXT)
+    2. GitHub Issues from GitHub Mobile app
+    3. upcoming_posts.json queue file
+    4. Live AI trend generator / cached trend topics / backup topic pool
+    """
+    forced_topic = os.environ.get("TOPIC", "").strip()
+    forced_persona = os.environ.get("AGENT_PERSONA", "").strip() or os.environ.get("PERSONA", "").strip()
+    forced_context = os.environ.get("CONTEXT", "").strip()
+
+    if forced_topic:
+        return {
+            "topic": forced_topic,
+            "persona": forced_persona,
+            "context": forced_context,
+            "issue_number": None,
+        }
+
+    # 2) GitHub Issues (GitHub Mobile)
+    gh_spec = fetch_github_issue_spec()
+    if gh_spec:
+        if forced_persona and not gh_spec["persona"]:
+            gh_spec["persona"] = forced_persona
+        if forced_context and not gh_spec["context"]:
+            gh_spec["context"] = forced_context
+        return gh_spec
+
+    # 3) upcoming_posts.json queue
+    if os.path.exists("upcoming_posts.json"):
+        try:
+            with open("upcoming_posts.json", encoding="utf-8") as f:
+                queue = json.load(f)
+            if isinstance(queue, list) and len(queue) > 0:
+                item = queue.pop(0)
+                if isinstance(item, dict) and item.get("topic"):
+                    with open("upcoming_posts.json", "w", encoding="utf-8") as f:
+                        json.dump(queue, f, indent=2)
+                    print(f"[queue] Picked topic from upcoming_posts.json: '{item['topic']}'")
+                    return {
+                        "topic": item["topic"],
+                        "persona": item.get("persona") or item.get("agent_persona") or forced_persona,
+                        "context": item.get("context") or forced_context,
+                        "issue_number": None,
+                    }
+        except Exception as e:
+            print(f"[queue] Error reading upcoming_posts.json: {e}")
+
+    # 4) AI trend engine / backup pool
+    topic = pick_topic(client)
+    return {
+        "topic": topic,
+        "persona": forced_persona,
+        "context": forced_context,
+        "issue_number": None,
+    }
+
+
 # ── Gemini: write the post ───────────────────────────────────────────
 
-def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
+def generate_post(client: genai.Client, topic: str, persona: str = "", context: str = "", feedback: str = "") -> dict:
     """Return {'commentary': str, 'image_prompt': str}.
 
     If `feedback` is given (from the eval agent), the model must fix those
     specific weaknesses in this draft — this is the reflexion loop.
     """
-    system = dedent("""\
-        You are ghostwriting LinkedIn posts for a real founder/BA who posts about Product + AI.
+    author_desc = f"a real {persona}" if persona else "a real founder/BA"
+    system = dedent(f"""\
+        You are ghostwriting LinkedIn posts for {author_desc} who posts about Product + AI.
 
         AUDIENCE: a BROAD professional audience — founders, product managers,
         operators, leaders — NOT just engineers. Anyone in tech should get it in
@@ -374,7 +517,7 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
         - Share genuine opinions, observations, and widely-true insights — not fiction.
         - Hypotheticals are fine ONLY if clearly framed ("Imagine if…", "Picture a team that…").
 
-        Reply ONLY with JSON: {"commentary": "...", "image_prompt": "...", "first_comment": "..."}
+        Reply ONLY with JSON: {{"commentary": "...", "image_prompt": "...", "first_comment": "..."}}
         image_prompt = a VIVID, CONCRETE visual that captures the post's core idea
         or metaphor — a real scene, object, or moment a viewer instantly connects
         to the message (e.g. for "shipping fast without feedback" -> a runner
@@ -385,6 +528,8 @@ def generate_post(client: genai.Client, topic: str, feedback: str = "") -> dict:
         direct question. Conversational. NO invented stories/facts. NO hashtags.""")
 
     user = f"Write a LinkedIn post on: {topic}"
+    if context:
+        user += f"\n\nKey context / background notes / specific angle to include:\n{context}"
     if feedback:
         user += dedent(f"""
 
@@ -677,21 +822,23 @@ def main() -> None:
     li_token = os.environ["LINKEDIN_ACCESS_TOKEN"]
     client = genai.Client(api_key=gemini_key)
 
-    topic = pick_topic(client)
-    print(f"[topic] {topic}")
+    spec = pick_post_spec(client)
+    topic = spec["topic"]
+    persona = spec["persona"]
+    context = spec["context"]
+    issue_number = spec["issue_number"]
+
+    print(f"[post_spec] topic: '{topic}' | persona: '{persona}' | issue: {issue_number}")
 
     # Eval agent: up to 3 tries. Each draft is checked by deterministic
     # guardrails + an LLM rubric judge; the judge's feedback is fed into the
     # next draft (reflexion). We keep the BEST-scoring draft, not the first pass.
-    # Token/hit saver: deterministic guardrails (free) run FIRST. We only spend
-    # an LLM judge call on a draft that already passes guardrails — a malformed
-    # draft is regenerated using the free feedback, no judge hit wasted.
     best = None  # (score, post_dict)
     feedback = ""
     attempts = max(1, int(os.environ.get("MAX_ATTEMPTS", "3")))
     for attempt in range(1, attempts + 1):
         try:
-            post = generate_post(client, topic, feedback=feedback)
+            post = generate_post(client, topic, persona=persona, context=context, feedback=feedback)
         except Exception as e:
             # A malformed model reply must never kill the whole run — just retry.
             print(f"[draft] attempt {attempt}: generation/parse failed ({type(e).__name__}: {e}) -> regenerate")
@@ -763,6 +910,8 @@ def main() -> None:
         print("[dry-run] preview only — NOT posting to LinkedIn. "
               "Image saved to out_image.png (download it from the Actions artifact).")
         print(f"[dry-run] first comment would be: {first_comment}")
+        if issue_number:
+            close_github_issue(issue_number, f"✅ [DRY RUN] Generated preview post for topic: **{topic}**")
         return
 
     person_urn = get_person_urn(li_token)
@@ -785,6 +934,13 @@ def main() -> None:
                     time.sleep(10)
                 else:
                     print(f"[warn] first comment failed after retries (post still published): {e}")
+
+    # Close GitHub Issue if this post came from an open issue
+    if issue_number:
+        close_github_issue(
+            issue_number,
+            f"✅ **Published to LinkedIn!**\n\n**Topic:** {topic}\n\n**Post Text:**\n{commentary}\n\n**First Comment:**\n{first_comment}"
+        )
 
 
 if __name__ == "__main__":
