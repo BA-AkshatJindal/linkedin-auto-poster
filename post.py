@@ -1001,9 +1001,7 @@ def generate_image_recraft(image_prompt: str) -> bytes | None:
 
 def generate_carousel_pdf(topic: str, commentary: str = "") -> bytes:
     """Generate a high-end 3-slide PDF document (1080x1080 per slide) for LinkedIn Carousel.
-    Slide 1: Cover (Hook / Main Title)
-    Slide 2: The Core Breakdown (Key points / Insights)
-    Slide 3: Actionable Rule of Thumb & Author Branding
+    Includes container cards, electric accent glow, bullet icons, and magazine layout.
     """
     import io
     from PIL import Image, ImageDraw
@@ -1016,16 +1014,44 @@ def generate_carousel_pdf(topic: str, commentary: str = "") -> bytes:
     hook = paragraphs[0] if paragraphs else topic
     body_paragraphs = paragraphs[1:-1] if len(paragraphs) > 2 else paragraphs[1:]
 
+    # Fonts
+    font_tag = get_font(22, bold=True)
+    font_title = get_font(42, bold=True)
+    font_body = get_font(30, bold=False)
+    font_footer = get_font(20, bold=False)
+    font_bullet = get_font(32, bold=True)
+
+    # Helper: Draw Slide Header & Footer Frame
+    def draw_slide_frame(draw_obj, slide_num: int, title_tag: str):
+        # Top gradient glow line
+        draw_obj.rectangle([0, 0, width, 12], fill="#3b82f6")
+        
+        # Header Tag Box
+        draw_obj.rectangle([70, 60, 420, 115], fill="#0f172a", outline="#3b82f6", width=2)
+        draw_obj.text((90, 74), title_tag, fill="#60a5fa", font=font_tag)
+
+        # Footer divider line
+        draw_obj.line([70, 950, 1010, 950], fill="#1e293b", width=2)
+        draw_obj.text((70, 975), "AKSHAT JINDAL • TECH & PRODUCT STRATEGY", fill="#94a3b8", font=font_footer)
+        draw_obj.text((860, 975), f"SLIDE 0{slide_num} / 03", fill="#64748b", font=font_footer)
+
     # ── SLIDE 1: Cover Slide ──────────────────────────────────────────
     img1 = Image.new("RGB", (width, height), color="#090d16")
     draw1 = ImageDraw.Draw(img1)
-    draw1.rectangle([0, 0, width, 14], fill="#3b82f6")
+    
+    # Background gradient glow
+    for radius in range(400, 0, -20):
+        color = (59, 130, 246)
+        draw1.ellipse([540 - radius, 450 - radius, 540 + radius, 450 + radius], fill=color)
 
-    font_tag = get_font(22, bold=True)
-    draw1.rectangle([100, 120, 420, 175], fill="#1e293b", outline="#3b82f6", width=2)
-    draw1.text((120, 134), "PRODUCT + AI INSIGHT", fill="#60a5fa", font=font_tag)
+    # Outer border frame
+    draw1.rectangle([40, 40, width - 40, height - 40], outline="#1e293b", width=2)
+    draw_slide_frame(draw1, 1, "PRODUCT + AI INSIGHT")
 
-    font_title = get_font(44, bold=True)
+    # Main Hook Title Card Container
+    draw1.rectangle([70, 200, 1010, 840], fill="#0b1329", outline="#1e293b", width=2)
+    draw1.rectangle([70, 200, 82, 840], fill="#3b82f6") # Left electric accent line
+
     words = hook.split()
     wrapped = []
     curr = []
@@ -1038,52 +1064,63 @@ def generate_carousel_pdf(topic: str, commentary: str = "") -> bytes:
     if curr:
         wrapped.append(" ".join(curr))
 
-    y_pos = 320
-    for line in wrapped[:5]:
-        draw1.text((100, y_pos), line, fill="#f8fafc", font=font_title)
-        y_pos += 65
+    y_pos = 280
+    for line in wrapped[:6]:
+        draw1.text((120, y_pos), line, fill="#f8fafc", font=font_title)
+        y_pos += 68
 
-    font_footer = get_font(22, bold=False)
-    draw1.text((100, 960), "SWIPE FOR INSIGHTS ➔", fill="#94a3b8", font=font_footer)
-    draw1.text((750, 960), "SLIDE 01 / 03", fill="#64748b", font=font_footer)
+    draw1.text((120, 780), "SWIPE FOR DEEP INSIGHTS ➔", fill="#38bdf8", font=font_tag)
     slides.append(img1)
 
-    # ── SLIDE 2: Core Breakdown ───────────────────────────────────────
+    # ── SLIDE 2: Core Breakdown (2 Styled Container Cards) ─────────────
     img2 = Image.new("RGB", (width, height), color="#090d16")
     draw2 = ImageDraw.Draw(img2)
-    draw2.rectangle([0, 0, width, 14], fill="#3b82f6")
-    draw2.text((100, 120), "THE HARD LESSON", fill="#38bdf8", font=font_tag)
+    draw2.rectangle([40, 40, width - 40, height - 40], outline="#1e293b", width=2)
+    draw_slide_frame(draw2, 2, "THE HARD LESSON")
 
-    font_body = get_font(34, bold=False)
-    y_pos = 240
-    for p in body_paragraphs[:3]:
+    y_card = 160
+    for i, p in enumerate(body_paragraphs[:2]):
+        # Container Card
+        draw2.rectangle([70, y_card, 1010, y_card + 340], fill="#0b132c", outline="#1e293b", width=2)
+        draw2.rectangle([70, y_card, 80, y_card + 340], fill="#38bdf8" if i == 0 else "#60a5fa")
+        
+        # Icon tag
+        draw2.text((110, y_card + 30), f"0{i+1}. OBSERVATION", fill="#38bdf8", font=font_tag)
+
+        # Wrap text
         words = p.split()
         p_lines = []
         c = []
         for w in words:
             c.append(w)
-            if len(" ".join(c)) > 30:
+            if len(" ".join(c)) > 32:
                 c.pop()
                 p_lines.append(" ".join(c))
                 c = [w]
         if c:
             p_lines.append(" ".join(c))
-        for line in p_lines[:4]:
-            draw2.text((100, y_pos), line, fill="#e2e8f0", font=font_body)
-            y_pos += 50
-        y_pos += 35
 
-    draw2.text((100, 960), "AKSHAT JINDAL • TECH & PRODUCT", fill="#94a3b8", font=font_footer)
-    draw2.text((750, 960), "SLIDE 02 / 03", fill="#64748b", font=font_footer)
+        y_text = y_card + 85
+        for line in p_lines[:5]:
+            draw2.text((110, y_text), line, fill="#e2e8f0", font=font_body)
+            y_text += 48
+        y_card += 380
+
     slides.append(img2)
 
-    # ── SLIDE 3: Takeaway ──────────────────────────────────────────────
+    # ── SLIDE 3: Takeaway & Rule of Thumb ──────────────────────────────
     img3 = Image.new("RGB", (width, height), color="#090d16")
     draw3 = ImageDraw.Draw(img3)
-    draw3.rectangle([0, 0, width, 14], fill="#3b82f6")
-    draw3.text((100, 120), "TAKEAWAY RULE OF THUMB", fill="#60a5fa", font=font_tag)
+    draw3.rectangle([40, 40, width - 40, height - 40], outline="#1e293b", width=2)
+    draw_slide_frame(draw3, 3, "TAKEAWAY RULE OF THUMB")
 
-    font_takeaway = get_font(40, bold=True)
+    # Big Takeaway Container Card
+    draw3.rectangle([70, 200, 1010, 840], fill="#0b132c", outline="#3b82f6", width=3)
+    draw3.rectangle([70, 200, 84, 840], fill="#38bdf8")
+
+    draw3.text((120, 240), "KEY HEURISTIC", fill="#60a5fa", font=font_tag)
+
+    font_takeaway = get_font(38, bold=True)
     closing = paragraphs[-1] if paragraphs else "Ship with clarity. Focus on real product value."
     words = closing.split()
     w_lines = []
@@ -1098,12 +1135,10 @@ def generate_carousel_pdf(topic: str, commentary: str = "") -> bytes:
         w_lines.append(" ".join(c))
 
     y_pos = 320
-    for line in w_lines[:5]:
-        draw3.text((100, y_pos), line, fill="#38bdf8", font=font_takeaway)
-        y_pos += 60
+    for line in w_lines[:6]:
+        draw3.text((120, y_pos), line, fill="#38bdf8", font=font_takeaway)
+        y_pos += 62
 
-    draw3.text((100, 960), "AKSHAT JINDAL • DAILY INSIGHTS", fill="#94a3b8", font=font_footer)
-    draw3.text((750, 960), "SLIDE 03 / 03", fill="#64748b", font=font_footer)
     slides.append(img3)
 
     pdf_buffer = io.BytesIO()
