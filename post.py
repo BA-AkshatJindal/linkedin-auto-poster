@@ -32,25 +32,25 @@ from google.genai import types
 from google.genai import errors as genai_errors
 
 # The niche this account posts about.
-CORE_THEMES = "Product Management, Product Strategy, AI & AI agents, Business Analysis, and Career Guidance for Tech Aspirants & Freshers"
+CORE_THEMES = "Business Analysis, Product Management, AI & AI agents, Product Strategy, and Career Pathways in BA & PM for Freshers"
 
 # ── Static backup topics ──────────────────────────────────────────────
-# Used ONLY if the live trend engine fails. Keep them on-brand: Product
-# Management, Product Strategy, AI / agents, and Career Guidance for Freshers.
+# Used ONLY if the live trend engine fails. Keep them on-brand: Business
+# Analysis, Product Management, AI / agents, and Career Advice for BA & PM Freshers.
 TOPICS = [
-    "What I wish I knew before starting my career as a Business Analyst",
-    "Why portfolio projects beat resumes for tech freshers looking to stand out",
-    "3 core skills every entry-level tech builder needs to master in 2026",
-    "How freshers can gain hands-on product experience without waiting for a job offer",
-    "The biggest mistake fresh graduates make when interviewing for PM & BA roles",
-    "Why understanding business workflows matters more than memorizing syntax for early career builders",
-    "How to build a high-signal LinkedIn profile as a fresher in tech",
-    "What hiring managers actually look for in a junior Business Analyst portfolio",
-    "Why combining Business Analysis with basic AI tool skills is the ultimate entry-level cheat code",
-    "The non-linear path into tech: starting as a BA or product builder",
-    "Why freshers should focus on problem breakdown rather than tool mastery",
-    "How to prepare for entry-level tech interviews without getting overwhelmed",
-    "The difference between academic projects and real-world product building",
+    "What I wish I knew before starting my career as a Business Analyst in tech",
+    "How freshers can break into Product Management and Business Analysis in 2026",
+    "Why combining Business Analysis with AI prompt workflows is the ultimate fresher cheat code",
+    "3 core skills every entry-level Business Analyst needs to master before their first role",
+    "How to build a high-signal PM or BA portfolio project without waiting for a job offer",
+    "The biggest mistake fresh graduates make when interviewing for PM and BA roles",
+    "Why understanding business process mapping matters more than coding for junior Business Analysts",
+    "What hiring managers actually look for in an entry-level Business Analyst case study",
+    "How junior PMs and BAs can use AI tools to speed up requirements gathering by 5x",
+    "The non-linear path into Product Management: starting as an agile Business Analyst",
+    "Why freshers aiming for BA roles should focus on requirement elicitation, not just documentation",
+    "How to prepare for junior Business Analyst case study interviews without getting overwhelmed",
+    "Why AI fluency is becoming mandatory for entry-level Business Analyst and PM roles",
     "Why feature roadmaps fail without a clear non-goal list",
     "The difference between product velocity and real product progress",
     "Why 80% of product features are rarely or never used",
