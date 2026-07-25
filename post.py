@@ -603,9 +603,9 @@ def save_post_history(topic: str, commentary: str, urn: str = "", filepath: str 
         print(f"[history] error writing {filepath}: {e}")
 
 
-def fetch_and_update_post_performance(token: str, filepath: str = "history_posts.json"):
-    """Fetch real-time engagement metrics (likes & comments) from LinkedIn API for past posts
-    and update history_posts.json so the AI generator learns what performs best."""
+def fetch_and_update_post_performance(token: str, person_urn: str = "", filepath: str = "history_posts.json"):
+    """Fetch real-time engagement metrics (likes, comments, reaction breakdown, and network followers)
+    from LinkedIn APIs for past posts and update history_posts.json so the AI generator learns what performs best."""
     if not token or not os.path.exists(filepath):
         return
 
@@ -615,9 +615,22 @@ def fetch_and_update_post_performance(token: str, filepath: str = "history_posts
     headers = {
         "Authorization": f"Bearer {token}",
         "X-Restli-Protocol-Version": "2.0.0",
+        "LinkedIn-Version": "202601",
     }
 
     with httpx.Client(timeout=15.0) as client:
+        # 1) Network & Followers Count API (GET /v2/networkSizes)
+        if person_urn:
+            try:
+                person_id = person_urn.split(":")[-1]
+                r_net = client.get(f"https://api.linkedin.com/v2/networkSizes/urn:li:person:{person_id}?edgeType=CompanyFollowedByMember", headers=headers)
+                if r_net.status_code == 200:
+                    net_count = r_net.json().get("firstDegreeSize", 0)
+                    print(f"[analytics] Current LinkedIn Network Count: {net_count}")
+            except Exception as e:
+                print(f"[analytics] networkSizes note: {e}")
+
+        # 2) Per-post Social Actions & Reactions Breakdown API
         for entry in history:
             urn = entry.get("urn")
             if not urn:
@@ -633,7 +646,19 @@ def fetch_and_update_post_performance(token: str, filepath: str = "history_posts
                     entry["comments"] = comments
                     entry["engagement"] = likes + (comments * 2)
                     updated = True
-                    print(f"[analytics] URN {urn[:30]}... -> {likes} likes, {comments} comments")
+
+                # LinkedIn Reaction Breakdown API (GET /v2/socialActions/{urn}/reactions)
+                r_rxn = client.get(f"https://api.linkedin.com/v2/socialActions/{enc}/reactions", headers=headers)
+                if r_rxn.status_code == 200:
+                    rxn_elements = r_rxn.json().get("elements", [])
+                    rxn_counts = {}
+                    for rx in rxn_elements:
+                        rtype = rx.get("reactionType", "LIKE")
+                        rxn_counts[rtype] = rxn_counts.get(rtype, 0) + 1
+                    if rxn_counts:
+                        entry["reactions_breakdown"] = rxn_counts
+                        updated = True
+                    print(f"[analytics] URN {urn[:30]}... -> {likes} likes, {comments} comments, reactions: {rxn_counts}")
             except Exception as e:
                 print(f"[analytics] error fetching metrics for {urn}: {e}")
 
@@ -644,6 +669,70 @@ def fetch_and_update_post_performance(token: str, filepath: str = "history_posts
             print(f"[analytics] updated performance metrics in {filepath}")
         except Exception as e:
             print(f"[analytics] error saving metrics: {e}")
+
+
+def reply_to_follower_comments(client: genai.Client, token: str, person_urn: str, filepath: str = "history_posts.json") -> None:
+    """Followers' Comments Reader API & AI Auto-Replier: Reads follower comments on recent posts
+    and posts authentic 1-2 sentence AI author replies to keep discussion threads active."""
+    if not token or not person_urn or not os.path.exists(filepath):
+        return
+
+    history = load_post_history(filepath, limit=100)
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "LinkedIn-Version": "202601",
+    }
+    updated = False
+
+    for item in reversed(history[-5:]):
+        urn = item.get("urn")
+        if not urn:
+            continue
+        replied_set = set(item.get("replied_comment_urns", []))
+        try:
+            enc_urn = quote(urn, safe="")
+            url = f"https://api.linkedin.com/v2/socialActions/{enc_urn}/comments"
+            r = httpx.get(url, headers=headers, timeout=15.0)
+            if r.status_code != 200:
+                continue
+            elements = r.json().get("elements", [])
+            for c in elements:
+                c_urn = c.get("$URN") or c.get("urn", "")
+                actor = c.get("created", {}).get("actor", "") or c.get("actor", "")
+                text = c.get("message", {}).get("text", "") or c.get("text", "")
+
+                # Skip self-comments or already replied comments
+                if not text or actor == person_urn or (c_urn and c_urn in replied_set):
+                    continue
+
+                prompt = dedent(f"""\
+                    You are Akshat Jindal, a pragmatic product builder and Business Analyst.
+                    A reader left this comment on your LinkedIn post.
+                    Post Topic: {item.get('topic', '')}
+                    Reader's Comment: "{text}"
+
+                    Write a short, warm, authentic 1-2 sentence author response to this reader.
+                    No corporate fluff, no emojis, no hashtags, no sales pitches. Just direct human conversation.
+                """)
+                reply_resp = smart_generate(client, TEXT_MODELS, contents=prompt)
+                reply_text = (reply_resp.text or "").strip()
+                if reply_text:
+                    curn = post_comment(token, person_urn, urn, reply_text)
+                    print(f"[auto-reply] replied to follower comment '{text[:30]}...': {curn}")
+                    if c_urn:
+                        replied_set.add(c_urn)
+                        item["replied_comment_urns"] = list(replied_set)
+                        updated = True
+        except Exception as e:
+            print(f"[auto-reply] follower comment reader check note for {urn}: {e}")
+
+    if updated:
+        try:
+            with open(filepath, "w", encoding="utf-8") as f:
+                json.dump(history, f, indent=2)
+        except Exception as e:
+            print(f"[auto-reply] error updating history: {e}")
 
 
 # ── Gemini: write the post ───────────────────────────────────────────
@@ -1354,8 +1443,14 @@ def main() -> None:
     li_token = os.environ["LINKEDIN_ACCESS_TOKEN"]
     client = genai.Client(api_key=gemini_key)
 
-    # 1) Fetch real-time analytics for past posts to update history_posts.json metrics
-    fetch_and_update_post_performance(li_token)
+    # 1) Get Member URN
+    person_urn = get_person_urn(li_token)
+
+    # 2) Fetch analytics, follower network count & reaction breakdown for past posts
+    fetch_and_update_post_performance(li_token, person_urn=person_urn)
+
+    # 3) Followers' Comments Reader API & AI Auto-Replier for recent comments
+    reply_to_follower_comments(client, li_token, person_urn)
 
     spec = pick_post_spec(client)
     topic = spec["topic"]
@@ -1450,7 +1545,6 @@ def main() -> None:
             close_github_issue(issue_number, f"✅ [DRY RUN] Generated preview post for topic: **{topic}**")
         return
 
-    person_urn = get_person_urn(li_token)
     urn = publish_to_linkedin(li_token, person_urn, commentary, image, is_pdf=is_pdf)
     print(f"[done] published: {urn}")
 
