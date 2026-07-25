@@ -1,12 +1,30 @@
 name: Daily LinkedIn Post
 
 on:
+  schedule:
+    - cron: "30 6 * * *" # Daily at 06:30 UTC / 12:00 PM IST
   workflow_dispatch:
     inputs:
+      topic:
+        description: "Custom post topic (leave empty to pick from GitHub Issues or AI trends)"
+        type: string
+        required: false
+      persona:
+        description: "Agent persona (e.g., 'AI Product PM', 'Founder')"
+        type: string
+        required: false
+      context:
+        description: "Specific context / background notes for the post"
+        type: string
+        required: false
       dry_run:
         description: "Preview only: generate post + image, save as artifact, do NOT post"
         type: boolean
         default: false
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   post:
@@ -33,6 +51,10 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           LINKEDIN_PERSON_URN: ${{ secrets.LINKEDIN_PERSON_URN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOPIC: ${{ inputs.topic }}
+          PERSONA: ${{ inputs.persona }}
+          CONTEXT: ${{ inputs.context }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: python post.py
 
@@ -45,3 +67,4 @@ jobs:
             out_image.png
             out_post.txt
           if-no-files-found: ignore
+
