@@ -1,8 +1,6 @@
 name: Daily LinkedIn Post
 
 on:
-  schedule:
-    - cron: "30 6 * * *" # Daily at 06:30 UTC / 12:00 PM IST
   workflow_dispatch:
     inputs:
       topic:
