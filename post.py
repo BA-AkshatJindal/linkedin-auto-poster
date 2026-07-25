@@ -13,6 +13,7 @@ Optional:
   TOPIC                   - force a specific topic instead of the rotating list.
 """
 
+import io
 import os
 import re
 import json
@@ -25,6 +26,7 @@ from textwrap import dedent
 from urllib.parse import quote
 
 import httpx
+from PIL import Image, ImageDraw, ImageFont
 from google import genai
 from google.genai import types
 from google.genai import errors as genai_errors
