@@ -32,12 +32,25 @@ from google.genai import types
 from google.genai import errors as genai_errors
 
 # The niche this account posts about.
-CORE_THEMES = "Product Management, Product Strategy, AI & AI agents, LLMs, Business Analysis, and Product Operations"
+CORE_THEMES = "Product Management, Product Strategy, AI & AI agents, Business Analysis, and Career Guidance for Tech Aspirants & Freshers"
 
 # ── Static backup topics ──────────────────────────────────────────────
 # Used ONLY if the live trend engine fails. Keep them on-brand: Product
-# Management, Product Strategy, AI / agents / product building.
+# Management, Product Strategy, AI / agents, and Career Guidance for Freshers.
 TOPICS = [
+    "What I wish I knew before starting my career as a Business Analyst",
+    "Why portfolio projects beat resumes for tech freshers looking to stand out",
+    "3 core skills every entry-level tech builder needs to master in 2026",
+    "How freshers can gain hands-on product experience without waiting for a job offer",
+    "The biggest mistake fresh graduates make when interviewing for PM & BA roles",
+    "Why understanding business workflows matters more than memorizing syntax for early career builders",
+    "How to build a high-signal LinkedIn profile as a fresher in tech",
+    "What hiring managers actually look for in a junior Business Analyst portfolio",
+    "Why combining Business Analysis with basic AI tool skills is the ultimate entry-level cheat code",
+    "The non-linear path into tech: starting as a BA or product builder",
+    "Why freshers should focus on problem breakdown rather than tool mastery",
+    "How to prepare for entry-level tech interviews without getting overwhelmed",
+    "The difference between academic projects and real-world product building",
     "Why feature roadmaps fail without a clear non-goal list",
     "The difference between product velocity and real product progress",
     "Why 80% of product features are rarely or never used",
@@ -511,6 +524,10 @@ POST_FORMATS = [
     {
         "name": "Provocative Dilemma",
         "instruction": "Structure the post around an underlying tension (e.g. speed vs reliability, autonomy vs control). Lead with a bold stance on that dilemma.",
+    },
+    {
+        "name": "Fresher & Aspirant Career Guide",
+        "instruction": "Structure the post as supportive, highly practical career advice for freshers, students, and early-career tech aspirants. Share a real lesson from your 3 years of hands-on experience on how to build high-signal skills, portfolios, or break into product/BA roles.",
     },
 ]
 
