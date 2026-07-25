@@ -472,6 +472,30 @@ def pick_post_spec(client: genai.Client | None = None) -> dict:
     }
 
 
+POST_FORMATS = [
+    {
+        "name": "Contrarian / Mythbuster",
+        "instruction": "Structure the post as a contrarian take or mythbuster. Challenge a common misconception in tech/AI, using the topic to prove why conventional wisdom fails.",
+    },
+    {
+        "name": "Hard Field Lesson",
+        "instruction": "Structure the post around a sharp, pragmatic trade-off or hard-learned lesson. Focus on what teams get wrong vs what actually works in production.",
+    },
+    {
+        "name": "Before vs. After Shift",
+        "instruction": "Structure the post as a mindset shift. Contrast how products used to be designed vs how AI-native systems must be built today.",
+    },
+    {
+        "name": "Rule of Thumb / Heuristic",
+        "instruction": "Structure the post as a crisp rule of thumb or mental model for product leaders and builders.",
+    },
+    {
+        "name": "Provocative Dilemma",
+        "instruction": "Structure the post around an underlying tension (e.g. speed vs reliability, autonomy vs control). Lead with a bold stance on that dilemma.",
+    },
+]
+
+
 # ── Gemini: write the post ───────────────────────────────────────────
 
 def generate_post(client: genai.Client, topic: str, persona: str = "", context: str = "", feedback: str = "") -> dict:
@@ -481,6 +505,9 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
     specific weaknesses in this draft — this is the reflexion loop.
     """
     author_desc = f"a real {persona}" if persona else "a real founder/BA"
+    post_format = random.choice(POST_FORMATS)
+    print(f"[format] selected style: {post_format['name']}")
+
     system = dedent(f"""\
         You are ghostwriting LinkedIn posts for {author_desc} who posts about Product + AI.
 
@@ -530,17 +557,21 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
     user = dedent(f"""\
         Write a LinkedIn post anchored in your core niche ({CORE_THEMES}).
 
-        USER INPUT SPARK / REFERENCE ANGLE:
-        Topic / Angle: {topic}""")
+        STRUCTURAL ANGLE FOR THIS POST:
+        Format Style: {post_format['name']}
+        Structural Directive: {post_format['instruction']}
+
+        USER INPUT SPARK / TOPIC REFERENCE:
+        Topic: {topic}""")
     if context:
-        user += f"\nBackground context / specific note: {context}"
+        user += f"\nSpecific Context / Notes: {context}"
 
     user += dedent("""
 
-        CRITICAL DIRECTION:
-        - Do NOT write a narrow or isolated post solely about this specific topic in a vacuum.
-        - Treat the topic/note as a concrete real-world SPARK, REFERENCE, or EXAMPLE under the broader umbrella of AI products, LLM reliability, and building tech products that stick.
-        - Connect this specific reference back to the bigger picture, business lesson, or product strategy that tech leaders, PMs, and founders care about.""")
+        HYBRID BLENDING DIRECTIONS:
+        - 50% Specific Detail: Weave the specific nuance, real-world detail, or core idea of the topic into the post so it feels authentic, fresh, and non-generic.
+        - 50% High-Level Umbrella: Connect it directly to the broader picture of AI products, LLM reliability, and product strategy so it resonates with founders, PMs, and tech leaders.
+        - Ensure this post has its own unique rhythm, sentence structure, and flow. Avoid repeating generic templates.""")
 
     if feedback:
         user += dedent(f"""
