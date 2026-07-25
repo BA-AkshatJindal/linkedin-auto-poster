@@ -707,6 +707,87 @@ def generate_image_gemini(client: genai.Client, image_prompt: str) -> bytes | No
     return None
 
 
+def get_font(size: int, bold: bool = False):
+    font_paths = [
+        "C:\\Windows\\Fonts\\segoeuib.ttf" if bold else "C:\\Windows\\Fonts\\segoeui.ttf",
+        "C:\\Windows\\Fonts\\arialbd.ttf" if bold else "C:\\Windows\\Fonts\\arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+    ]
+    for p in font_paths:
+        if os.path.exists(p):
+            try:
+                return ImageFont.truetype(p, size)
+            except Exception:
+                pass
+    return ImageFont.load_default()
+
+
+def generate_graphic_card(topic: str, commentary: str = "") -> bytes:
+    """Generate a sleek, modern, 1080x1080 dark-mode graphic card with Pillow.
+    Features rich gradients, pill tags, the post's core hook, and clean typography.
+    100% crisp visual quality with ZERO AI artifacts or muddy renders."""
+    import io
+    from PIL import Image, ImageDraw
+
+    width, height = 1080, 1080
+    img = Image.new("RGB", (width, height), color="#090d16")
+    draw = ImageDraw.Draw(img)
+
+    # Draw gradient glow background
+    for radius in range(520, 0, -15):
+        alpha = int(30 * (1 - radius / 520))
+        color = (59, 130, 246)
+        draw.ellipse([540 - radius, 540 - radius, 540 + radius, 540 + radius], fill=color)
+
+    # Draw sleek outer border frame
+    draw.rectangle([50, 50, width - 50, height - 50], outline="#1e293b", width=3)
+    draw.rectangle([70, 70, width - 70, height - 70], outline="#334155", width=1)
+
+    # Fonts
+    font_tag = get_font(22, bold=True)
+    font_hook = get_font(48, bold=True)
+    font_footer = get_font(20, bold=False)
+
+    # Top Pill Tag
+    tag_text = "PRODUCT + AI INSIGHT"
+    draw.rectangle([100, 120, 390, 175], fill="#1e293b", outline="#3b82f6", width=2)
+    draw.text((120, 134), tag_text, fill="#60a5fa", font=font_tag)
+
+    # Hook Text (Extract first line of commentary or topic)
+    lines = commentary.strip().split("\n")
+    hook = lines[0].strip() if lines else topic
+    hook = re.sub(r"#\w+", "", hook).strip()
+    if len(hook) > 130:
+        hook = hook[:127] + "..."
+
+    # Wrap text into lines
+    words = hook.split()
+    wrapped_lines = []
+    current_line = []
+    for word in words:
+        current_line.append(word)
+        if len(" ".join(current_line)) > 24:
+            current_line.pop()
+            wrapped_lines.append(" ".join(current_line))
+            current_line = [word]
+    if current_line:
+        wrapped_lines.append(" ".join(current_line))
+
+    # Draw Hook Text
+    y_start = 360 - (len(wrapped_lines) * 25)
+    for i, line in enumerate(wrapped_lines[:5]):
+        draw.text((100, y_start + (i * 70)), line, fill="#f8fafc", font=font_hook)
+
+    # Bottom accent line + signature
+    draw.line([(100, 920), (980, 920)], fill="#3b82f6", width=4)
+    draw.text((100, 945), "AKSHAT JINDAL  •  DAILY TECH & PRODUCT STRATEGY", fill="#94a3b8", font=font_footer)
+
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    return buf.getvalue()
+
+
 IMAGE_AESTHETIC_STYLES = [
     {
         "name": "Editorial Photography",
@@ -742,12 +823,16 @@ def generate_image_pollinations(image_prompt: str) -> bytes:
     return r.content
 
 
-def generate_image(client: genai.Client, image_prompt: str) -> bytes:
-    if os.environ.get("GEMINI_IMAGE", "false").strip().lower() in ("1", "true", "yes"):
-        img = generate_image_gemini(client, image_prompt)
-        if img:
-            return img
-    return generate_image_pollinations(image_prompt)
+def generate_image(client: genai.Client, image_prompt: str, topic: str = "", commentary: str = "") -> bytes:
+    mode = os.environ.get("IMAGE_MODE", "card").strip().lower()
+    if mode in ("ai", "flux"):
+        if os.environ.get("GEMINI_IMAGE", "false").strip().lower() in ("1", "true", "yes"):
+            img = generate_image_gemini(client, image_prompt)
+            if img:
+                return img
+        return generate_image_pollinations(image_prompt)
+    print("[image-gen] generating high-end dark-mode graphic card (Pillow)")
+    return generate_graphic_card(topic, commentary)
 
 
 # ── Image-prompt agent ───────────────────────────────────────────────
@@ -957,7 +1042,7 @@ def main() -> None:
     if crafted:
         print(f"[image-prompt] {crafted}")
         image_prompt = crafted
-    image = generate_image(client, image_prompt)
+    image = generate_image(client, image_prompt, topic=topic, commentary=commentary)
     print(f"[image] {len(image)} bytes")
 
     # Save outputs so a workflow run can upload them as a downloadable artifact
