@@ -707,24 +707,42 @@ def generate_image_gemini(client: genai.Client, image_prompt: str) -> bytes | No
     return None
 
 
+IMAGE_AESTHETIC_STYLES = [
+    {
+        "name": "Editorial Photography",
+        "style": "editorial photograph, 35mm lens, f/1.8 shallow depth of field, warm natural rim lighting, 8k resolution, cinematic color grading, magazine cover quality",
+    },
+    {
+        "name": "3D Glassmorphism & Octane Render",
+        "style": "3D glassmorphic art render, Octane render, smooth frosted glass and vibrant gradient lighting, soft shadows, sleek minimal tech aesthetic, 8k",
+    },
+    {
+        "name": "Cinematic Dark Mode Tech",
+        "style": "cinematic dark mode photography, subtle cyan and amber accent neon rim lighting, modern high-tech workspace, moody atmosphere, sharp focus, 4k",
+    },
+    {
+        "name": "Minimalist Conceptual Vector Art",
+        "style": "minimalist 3D vector illustration, bold geometric composition, vibrant harmonious colors, clean layout, modern digital art, soft ambient depth",
+    },
+]
+
+
 def generate_image_pollinations(image_prompt: str) -> bytes:
-    """Keyless free image generator (FLUX). The prompt should already be crafted;
-    we only reinforce no-text. `enhance` is OFF so the crafted prompt renders
-    faithfully (enhance tends to inject captions/text)."""
-    styled = f"{image_prompt} No text, no words, no letters, no logos, no watermark."
+    """Keyless free image generator (FLUX). Uses seed randomization and model=flux
+    for crisp, vibrant, high-resolution rendering."""
+    styled = f"{image_prompt}. High resolution, vibrant contrast, 8k, professional quality. No text, no words, no letters, no logos, no watermark."
+    seed = random.randint(1000, 999999)
     url = (
         f"https://image.pollinations.ai/prompt/{quote(styled)}"
-        "?width=1024&height=1024&nologo=true&model=flux"
+        f"?width=1080&height=1080&seed={seed}&nologo=true&model=flux"
     )
+    print(f"[image-gen] requesting FLUX image with seed={seed}")
     r = httpx.get(url, timeout=120.0)
     r.raise_for_status()
     return r.content
 
 
 def generate_image(client: genai.Client, image_prompt: str) -> bytes:
-    # The Gemini image model 404s on this key, so we skip that wasted API hit and
-    # go straight to the free Pollinations generator. Set GEMINI_IMAGE=true to try
-    # Gemini first (e.g. if you move to a key that has image access).
     if os.environ.get("GEMINI_IMAGE", "false").strip().lower() in ("1", "true", "yes"):
         img = generate_image_gemini(client, image_prompt)
         if img:
@@ -737,36 +755,32 @@ def generate_image(client: genai.Client, image_prompt: str) -> bytes:
 def craft_image_prompt(client: genai.Client, topic: str, commentary: str = "") -> str | None:
     """Dedicated prompt-engineering agent for the image generator.
 
-    The writer's inline image idea is often too abstract/crowded for FLUX, which
-    produces muddy images. This agent rewrites it into ONE concrete, photographic,
-    single-subject prompt that FLUX renders cleanly. Returns None on failure so
-    the caller can fall back to the writer's original image_prompt.
+    Creates ONE concrete, vibrant visual prompt directly tied to the post's core message,
+    enhanced with a professional aesthetic style (Editorial Photo, 3D Glassmorphism, Dark Tech, Vector Art).
     """
-    sys_msg = dedent("""\
-        You are an elite prompt engineer for the FLUX text-to-image model. Turn the
-        LinkedIn post below into ONE image prompt that yields a striking, clean,
-        professional, scroll-stopping image.
+    chosen_style = random.choice(IMAGE_AESTHETIC_STYLES)
+    print(f"[image-style] selected visual style: {chosen_style['name']}")
+
+    sys_msg = dedent(f"""\
+        You are an elite visual prompt engineer for FLUX image generator. Turn the LinkedIn
+        post below into ONE stunning, scroll-stopping visual prompt that is DEEPLY RELEVANT
+        to the post's central idea.
+
+        VISUAL STYLE REQUIREMENT:
+        Style Tag: {chosen_style['style']}
 
         HARD RULES:
-        - ONE clear single subject. Describe a CONCRETE, literal real-world scene,
-          person, or object. FLUX renders literal scenes far better than abstract
-          ideas — translate the concept into a real, physical metaphor a photographer
-          could actually shoot.
-        - Keep it SIMPLE and bold. Avoid crowded multi-object scenes or several
-          competing metaphors — they turn to visual mush.
-        - Always specify: subject + setting, composition/framing, lighting, mood,
-          and a photographic style (e.g. "editorial photograph, 35mm, shallow depth
-          of field, soft rim light, muted color palette, cinematic").
-        - NEVER include any text, words, letters, numbers, charts, graphs, diagrams,
-          screens with UI, logos, or watermarks.
-        - Under 55 words. Output ONLY the final prompt — no preamble, no quotes.
+        - ONE clear single subject that directly embodies the central message or metaphor of the post.
+        - Make it VIBRANT, ATTRACTIVE, and CONTRASTY so it immediately stops the scroll on LinkedIn.
+        - Describe a physical, real-world object, scene, or person that represents the core idea.
+        - Keep it simple, elegant, and uncluttered (no crowded multi-object scenes).
+        - NEVER include any text, words, letters, numbers, charts, diagrams, code, UI screens, logos, or watermarks.
+        - Under 45 words. Output ONLY the visual subject description — the style tag will be appended automatically.
 
-        Example of the transformation:
-        Concept: "the hidden cost of technical debt slowing a team down"
-        Prompt: "Editorial photograph of a lone runner sprinting on a track while
-        dragging a heavy rusted anchor by a rope, early morning light, dramatic long
-        shadow, shallow depth of field, muted cinematic color, sense of strain and
-        determination."
+        Examples of strong visual transformations:
+        - Post on "fast shipping without feedback": "A sleek runner sprinting on a red athletic track at sunrise, carrying a glowing compass, intense focus, crisp action shot."
+        - Post on "AI memory & context window": "A glowing crystal sphere suspended over a minimalist oak desk, reflecting warm golden light rays."
+        - Post on "evals over model size": "A precise silver scale balancing a glowing diamond against heavy iron gears, studio light background."
     """)
     content = f"TOPIC: {topic}\n\nPOST:\n{commentary}".strip()
     try:
@@ -775,8 +789,11 @@ def craft_image_prompt(client: genai.Client, topic: str, commentary: str = "") -
             config=types.GenerateContentConfig(
                 system_instruction=sys_msg, temperature=0.85),
         )
-        prompt = (resp.text or "").strip().strip('"').strip()
-        return prompt or None
+        base_prompt = (resp.text or "").strip().strip('"').strip()
+        if not base_prompt:
+            return None
+        full_prompt = f"{base_prompt}, {chosen_style['style']}"
+        return full_prompt
     except Exception as e:
         print(f"[image-prompt] agent failed, using writer's prompt: {e}")
         return None
