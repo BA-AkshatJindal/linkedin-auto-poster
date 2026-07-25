@@ -18,15 +18,16 @@ on:
         type: string
         required: false
       image_mode:
-        description: "Image Mode: 'ai' (DALL-E 3 / Recraft V3 / FLUX-Realism studio photo), 'none' (text-only), or 'card' (minimalist banner)"
+        description: "Image Mode: 'ai' (DALL-E 3 / Recraft V3 / FLUX-Realism photo), 'carousel' (3-slide PDF Carousel), 'none' (text-only), or 'card' (minimalist banner)"
         type: choice
         options:
           - ai
+          - carousel
           - none
           - card
         default: ai
       dry_run:
-        description: "Preview only: generate post + image, save as artifact, do NOT post"
+        description: "Preview only: generate post + image/carousel, save as artifact, do NOT post"
         type: boolean
         default: false
 
@@ -87,6 +88,7 @@ jobs:
           name: linkedin-post
           path: |
             out_image.png
+            out_carousel.pdf
             out_post.txt
           if-no-files-found: ignore
 

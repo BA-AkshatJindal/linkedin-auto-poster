@@ -999,6 +999,118 @@ def generate_image_recraft(image_prompt: str) -> bytes | None:
         return None
 
 
+def generate_carousel_pdf(topic: str, commentary: str = "") -> bytes:
+    """Generate a high-end 3-slide PDF document (1080x1080 per slide) for LinkedIn Carousel.
+    Slide 1: Cover (Hook / Main Title)
+    Slide 2: The Core Breakdown (Key points / Insights)
+    Slide 3: Actionable Rule of Thumb & Author Branding
+    """
+    import io
+    from PIL import Image, ImageDraw
+
+    width, height = 1080, 1080
+    slides = []
+
+    # Clean lines without hashtags
+    paragraphs = [p.strip() for p in commentary.split("\n\n") if p.strip() and not p.strip().startswith("#")]
+    hook = paragraphs[0] if paragraphs else topic
+    body_paragraphs = paragraphs[1:-1] if len(paragraphs) > 2 else paragraphs[1:]
+
+    # ── SLIDE 1: Cover Slide ──────────────────────────────────────────
+    img1 = Image.new("RGB", (width, height), color="#090d16")
+    draw1 = ImageDraw.Draw(img1)
+    draw1.rectangle([0, 0, width, 14], fill="#3b82f6")
+
+    font_tag = get_font(22, bold=True)
+    draw1.rectangle([100, 120, 420, 175], fill="#1e293b", outline="#3b82f6", width=2)
+    draw1.text((120, 134), "PRODUCT + AI INSIGHT", fill="#60a5fa", font=font_tag)
+
+    font_title = get_font(44, bold=True)
+    words = hook.split()
+    wrapped = []
+    curr = []
+    for w in words:
+        curr.append(w)
+        if len(" ".join(curr)) > 22:
+            curr.pop()
+            wrapped.append(" ".join(curr))
+            curr = [w]
+    if curr:
+        wrapped.append(" ".join(curr))
+
+    y_pos = 320
+    for line in wrapped[:5]:
+        draw1.text((100, y_pos), line, fill="#f8fafc", font=font_title)
+        y_pos += 65
+
+    font_footer = get_font(22, bold=False)
+    draw1.text((100, 960), "SWIPE FOR INSIGHTS ➔", fill="#94a3b8", font=font_footer)
+    draw1.text((750, 960), "SLIDE 01 / 03", fill="#64748b", font=font_footer)
+    slides.append(img1)
+
+    # ── SLIDE 2: Core Breakdown ───────────────────────────────────────
+    img2 = Image.new("RGB", (width, height), color="#090d16")
+    draw2 = ImageDraw.Draw(img2)
+    draw2.rectangle([0, 0, width, 14], fill="#3b82f6")
+    draw2.text((100, 120), "THE HARD LESSON", fill="#38bdf8", font=font_tag)
+
+    font_body = get_font(34, bold=False)
+    y_pos = 240
+    for p in body_paragraphs[:3]:
+        words = p.split()
+        p_lines = []
+        c = []
+        for w in words:
+            c.append(w)
+            if len(" ".join(c)) > 30:
+                c.pop()
+                p_lines.append(" ".join(c))
+                c = [w]
+        if c:
+            p_lines.append(" ".join(c))
+        for line in p_lines[:4]:
+            draw2.text((100, y_pos), line, fill="#e2e8f0", font=font_body)
+            y_pos += 50
+        y_pos += 35
+
+    draw2.text((100, 960), "AKSHAT JINDAL • TECH & PRODUCT", fill="#94a3b8", font=font_footer)
+    draw2.text((750, 960), "SLIDE 02 / 03", fill="#64748b", font=font_footer)
+    slides.append(img2)
+
+    # ── SLIDE 3: Takeaway ──────────────────────────────────────────────
+    img3 = Image.new("RGB", (width, height), color="#090d16")
+    draw3 = ImageDraw.Draw(img3)
+    draw3.rectangle([0, 0, width, 14], fill="#3b82f6")
+    draw3.text((100, 120), "TAKEAWAY RULE OF THUMB", fill="#60a5fa", font=font_tag)
+
+    font_takeaway = get_font(40, bold=True)
+    closing = paragraphs[-1] if paragraphs else "Ship with clarity. Focus on real product value."
+    words = closing.split()
+    w_lines = []
+    c = []
+    for w in words:
+        c.append(w)
+        if len(" ".join(c)) > 24:
+            c.pop()
+            w_lines.append(" ".join(c))
+            c = [w]
+    if c:
+        w_lines.append(" ".join(c))
+
+    y_pos = 320
+    for line in w_lines[:5]:
+        draw3.text((100, y_pos), line, fill="#38bdf8", font=font_takeaway)
+        y_pos += 60
+
+    draw3.text((100, 960), "AKSHAT JINDAL • DAILY INSIGHTS", fill="#94a3b8", font=font_footer)
+    draw3.text((750, 960), "SLIDE 03 / 03", fill="#64748b", font=font_footer)
+    slides.append(img3)
+
+    pdf_buffer = io.BytesIO()
+    slides[0].save(pdf_buffer, format="PDF", save_all=True, append_images=slides[1:])
+    return pdf_buffer.getvalue()
+
+
 def generate_image_pollinations(image_prompt: str) -> bytes:
     """Keyless free image generator (FLUX-Realism). Uses model=flux-realism for photorealistic rendering."""
     styled = f"{image_prompt}. Professional editorial photograph, 35mm lens, 8k resolution, crisp studio lighting. No text, no words, no letters, no logos, no watermark."
@@ -1013,27 +1125,31 @@ def generate_image_pollinations(image_prompt: str) -> bytes:
     return r.content
 
 
-def generate_image(client: genai.Client, image_prompt: str, topic: str = "", commentary: str = "") -> bytes:
+def generate_image(client: genai.Client, image_prompt: str, topic: str = "", commentary: str = "") -> tuple[bytes, bool]:
+    """Returns tuple of (media_bytes, is_pdf)."""
     mode = os.environ.get("IMAGE_MODE", "ai").strip().lower()
     if mode in ("none", "off", "text", "false", "0"):
         print("[image-gen] IMAGE_MODE=none -> text-only post (no image attached)")
-        return b""
+        return b"", False
+    if mode in ("carousel", "pdf", "slides"):
+        print("[image-gen] generating 3-slide PDF document for LinkedIn Carousel (Pillow)")
+        return generate_carousel_pdf(topic, commentary), True
     if mode in ("ai", "flux", "dalle", "recraft"):
         img = generate_image_openai(image_prompt)
         if img:
-            return img
+            return img, False
         img = generate_image_recraft(image_prompt)
         if img:
-            return img
+            return img, False
         if os.environ.get("GEMINI_IMAGE", "false").strip().lower() in ("1", "true", "yes"):
             img = generate_image_gemini(client, image_prompt)
             if img:
-                return img
-        return generate_image_pollinations(image_prompt)
+                return img, False
+        return generate_image_pollinations(image_prompt), False
     if mode == "card":
         print("[image-gen] generating graphic card (Pillow)")
-        return generate_graphic_card(topic, commentary)
-    return b""
+        return generate_graphic_card(topic, commentary), False
+    return b"", False
 
 
 # ── Image-prompt agent ───────────────────────────────────────────────
@@ -1100,7 +1216,7 @@ def get_person_urn(token: str) -> str:
     return f"urn:li:person:{r.json()['sub']}"
 
 
-def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: bytes) -> str:
+def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: bytes, is_pdf: bool = False) -> str:
     headers = {
         "Authorization": f"Bearer {token}",
         "X-Restli-Protocol-Version": "2.0.0",
@@ -1122,21 +1238,33 @@ def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: byt
         }
 
         if image:
-            # 1) reserve an image upload slot
-            init = client.post(
-                "https://api.linkedin.com/rest/images?action=initializeUpload",
-                headers=headers,
-                json={"initializeUploadRequest": {"owner": person_urn}},
-            )
-            init.raise_for_status()
-            val = init.json()["value"]
+            if is_pdf:
+                # 1) reserve a document upload slot for PDF Carousel
+                init = client.post(
+                    "https://api.linkedin.com/rest/documents?action=initializeUpload",
+                    headers=headers,
+                    json={"initializeUploadRequest": {"owner": person_urn}},
+                )
+                init.raise_for_status()
+                val = init.json()["value"]
+                client.put(val["uploadUrl"], content=image, headers={"Content-Type": "application/pdf"}).raise_for_status()
+                payload["content"] = {"media": {"id": val["document"], "title": "Product Strategy Carousel"}}
+            else:
+                # 1) reserve an image upload slot
+                init = client.post(
+                    "https://api.linkedin.com/rest/images?action=initializeUpload",
+                    headers=headers,
+                    json={"initializeUploadRequest": {"owner": person_urn}},
+                )
+                init.raise_for_status()
+                val = init.json()["value"]
 
-            # 2) upload the bytes
-            client.put(
-                val["uploadUrl"], content=image, headers={"Content-Type": "image/png"}
-            ).raise_for_status()
+                # 2) upload the bytes
+                client.put(
+                    val["uploadUrl"], content=image, headers={"Content-Type": "image/png"}
+                ).raise_for_status()
 
-            payload["content"] = {"media": {"id": val["image"], "altText": "Visual"}}
+                payload["content"] = {"media": {"id": val["image"], "altText": "Visual"}}
 
         resp = client.post("https://api.linkedin.com/rest/posts", headers=headers, json=payload)
         if resp.status_code != 201:
@@ -1245,12 +1373,13 @@ def main() -> None:
     if crafted:
         print(f"[image-prompt] {crafted}")
         image_prompt = crafted
-    image = generate_image(client, image_prompt, topic=topic, commentary=commentary)
-    print(f"[image] {len(image)} bytes")
+    image, is_pdf = generate_image(client, image_prompt, topic=topic, commentary=commentary)
+    print(f"[image] {len(image)} bytes (is_pdf={is_pdf})")
 
     # Save outputs so a workflow run can upload them as a downloadable artifact
-    # (lets you SEE the post + image from the Actions tab).
-    with open("out_image.png", "wb") as f:
+    # (lets you SEE the post + image/carousel from the Actions tab).
+    out_file = "out_carousel.pdf" if is_pdf else "out_image.png"
+    with open(out_file, "wb") as f:
         f.write(image)
     with open("out_post.txt", "w", encoding="utf-8") as f:
         f.write(f"TOPIC: {topic}\n\n{commentary}\n\n"
@@ -1258,15 +1387,15 @@ def main() -> None:
 
     # Preview mode: generate everything but skip publishing to LinkedIn.
     if os.environ.get("DRY_RUN", "").strip().lower() in ("1", "true", "yes"):
-        print("[dry-run] preview only — NOT posting to LinkedIn. "
-              "Image saved to out_image.png (download it from the Actions artifact).")
+        print(f"[dry-run] preview only — NOT posting to LinkedIn. "
+              f"Media saved to {out_file} (download it from the Actions artifact).")
         print(f"[dry-run] first comment would be: {first_comment}")
         if issue_number:
             close_github_issue(issue_number, f"✅ [DRY RUN] Generated preview post for topic: **{topic}**")
         return
 
     person_urn = get_person_urn(li_token)
-    urn = publish_to_linkedin(li_token, person_urn, commentary, image)
+    urn = publish_to_linkedin(li_token, person_urn, commentary, image, is_pdf=is_pdf)
     print(f"[done] published: {urn}")
 
     # Save post URN to local history file for future performance tracking
