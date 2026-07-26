@@ -797,6 +797,11 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         - NO FORCED ENGAGEMENT BAIT ("Repost if you agree!", "What do you think? Drop a comment!").
         - Speak the real, everyday observations of shipping products and working with AI tools with quiet conviction.
 
+        BUSINESS & STRATEGY FOCUS (CRITICAL FOR BROAD READERSHIP):
+        - Focus on Business Value, Product Strategy, Requirement Elicitation, User Adoption, Team Alignment, and Career Guidance.
+        - ABSOLUTELY ZERO LOW-LEVEL CODE JARGON / ZERO INFRASTRUCTURE SPECIFICS. Never sound like a backend developer detailing code syntax or regex.
+        - Write so that Product Managers, Business Analysts, Founders, and Freshers can instantly understand, relate to, and repost every paragraph.
+
         LINE SPACING & FORMATTING (CRITICAL FOR READABILITY):
         - NEVER write a wall of text paragraph.
         - Maximum 1-2 sentences per paragraph.
