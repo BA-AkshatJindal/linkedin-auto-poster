@@ -1318,16 +1318,32 @@ def generate_image(client: genai.Client, image_prompt: str, topic: str = "", com
     """
     raw_mode = os.environ.get("IMAGE_MODE", "auto").strip().lower()
     
-    # Auto day-of-week schedule rotation if IMAGE_MODE is 'auto' or default 'ai'
-    weekday = datetime.now(timezone.utc).weekday() # 0=Mon, 2=Wed, 3=Thu, 6=Sun
+    # Auto day-of-week & morning/evening schedule rotation if IMAGE_MODE is 'auto' or 'ai'
+    now_utc = datetime.now(timezone.utc)
+    weekday = now_utc.weekday() # 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri, 5=Sat, 6=Sun
+    is_evening = now_utc.hour >= 10  # 07:30 PM IST = 14:00 UTC (is_evening = True)
+
     if raw_mode in ("auto", "ai") and not os.environ.get("EXPLICIT_IMAGE_MODE"):
-        if weekday in (2, 6): # Wednesday or Sunday
-            day_name = "Wednesday" if weekday == 2 else "Sunday"
-            print(f"[schedule] {day_name} detected -> Auto-scheduling Interactive LinkedIn Poll")
-            mode = "poll"
+        if weekday == 6: # Sunday
+            if is_evening:
+                print("[schedule] Sunday Evening detected -> Auto-scheduling Interactive Sunday Poll")
+                mode = "poll"
+            else:
+                print("[schedule] Sunday Morning detected -> Auto-scheduling Studio AI Photo / Fresher Guide")
+                mode = "ai"
+        elif weekday == 2: # Wednesday
+            if is_evening:
+                print("[schedule] Wednesday Evening detected -> Auto-scheduling Interactive Wednesday Poll")
+                mode = "poll"
+            else:
+                print("[schedule] Wednesday Morning detected -> Auto-scheduling 3-Slide PDF Carousel")
+                mode = "carousel"
         elif weekday in (0, 3): # Monday, Thursday
-            print("[schedule] Monday/Thursday detected -> Auto-scheduling 3-Slide PDF Carousel")
-            mode = "carousel"
+            if (weekday == 0 and not is_evening) or (weekday == 3 and is_evening):
+                print("[schedule] Mon Morn / Thu Eve detected -> Auto-scheduling 3-Slide PDF Carousel")
+                mode = "carousel"
+            else:
+                mode = "ai"
         else:
             mode = "ai"
     else:
@@ -1659,7 +1675,9 @@ def main() -> None:
 
     poll_data = None
     mode_check = os.environ.get("IMAGE_MODE", "").strip().lower()
-    if mode_check == "poll" or (datetime.now(timezone.utc).weekday() in (2, 6) and mode_check in ("", "auto", "ai")):
+    now_utc = datetime.now(timezone.utc)
+    is_evening = now_utc.hour >= 10
+    if mode_check == "poll" or (now_utc.weekday() in (2, 6) and is_evening and mode_check in ("", "auto", "ai")):
         poll_data = generate_poll_data(client, topic, commentary)
 
     reshare_urn = spec.get("reshare_urn") or os.environ.get("RESHARE_URN", "").strip()
