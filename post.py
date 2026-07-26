@@ -1442,37 +1442,40 @@ def generate_poll_data(client: genai.Client, topic: str, commentary: str = "") -
     for LinkedIn Polls API."""
     prompt = dedent(f"""\
         You are a LinkedIn content strategist. Create a sharp, debatable 1-question poll
-        and 2-4 distinct voting options based on this post:
+        and 2-4 distinct voting options based on this specific post and topic:
 
         Topic: {topic}
         Post: {commentary}
 
-        HARD RULES:
+        HARD RULES FOR POLL OPTIONS:
         - Question must be under 140 characters, highly relatable to tech/product builders.
         - Produce 2 to 4 options. Each option text MUST be under 30 characters MAX.
-        - Options must represent real, distinct choices or trade-offs people disagree on.
+        - Options MUST be HIGHLY SPECIFIC to the topic above — NEVER use generic options like "Agree/Disagree", "Option A/Option B", or "Tool reliability/Team alignment".
+        - Craft distinct real-world choices, trade-offs, or contrasting philosophies people actually debate.
 
         Reply ONLY with JSON:
-        {{"question": "...", "options": ["Option 1", "Option 2", "Option 3"]}}
+        {{"question": "...", "options": ["Specific Choice 1", "Specific Choice 2", "Specific Choice 3"]}}
     """)
     try:
         resp = smart_generate(
             client, TEXT_MODELS, contents=prompt,
             config=types.GenerateContentConfig(
-                response_mime_type="application/json", temperature=0.7),
+                response_mime_type="application/json", temperature=0.9),
         )
         d = json.loads(resp.text)
         q = str(d.get("question", topic)).strip()[:140]
         opts = [str(o).strip()[:30] for o in d.get("options", []) if str(o).strip()]
         if len(opts) < 2:
-            opts = ["Agree with perspective", "Prefer classic approach", "Depends on scale"]
-        print(f"[poll-gen] generated poll: '{q}' | options: {opts[:4]}")
+            opts = [f"Focus on {topic[:15]}", "Classic Framework", "Hybrid Approach"]
+        print(f"[poll-gen] generated custom poll: '{q}' | options: {opts[:4]}")
         return {"question": q, "options": opts[:4]}
     except Exception as e:
-        print(f"[poll-gen] fallback poll data: {e}")
+        print(f"[poll-gen] fallback poll data generation: {e}")
+        # Dynamic fallback options based on topic keywords
+        clean_topic = topic.split(":")[0][:20]
         return {
-            "question": f"What is your biggest bottleneck with {topic}?",
-            "options": ["Tool reliability", "Team alignment", "Measuring ROI", "Scaling friction"]
+            "question": f"What is your biggest priority with {clean_topic}?",
+            "options": [f"Speed in {clean_topic[:10]}", f"Quality of {clean_topic[:10]}", "Team Efficacy", "ROI & Business Metric"]
         }
 
 
