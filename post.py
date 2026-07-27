@@ -725,7 +725,7 @@ def reply_to_follower_comments(client: genai.Client, token: str, person_urn: str
     }
     updated = False
 
-    for item in reversed(history[-5:]):
+    for item in reversed(history[-10:]):
         urn = item.get("urn")
         if not urn:
             continue
@@ -739,8 +739,16 @@ def reply_to_follower_comments(client: genai.Client, token: str, person_urn: str
             elements = r.json().get("elements", [])
             for c in elements:
                 c_urn = c.get("$URN") or c.get("urn", "")
-                actor = c.get("created", {}).get("actor", "") or c.get("actor", "")
-                text = c.get("message", {}).get("text", "") or c.get("text", "")
+                actor = c.get("actor", "") or c.get("created", {}).get("actor", "")
+                
+                # Robust comment text extraction
+                text = ""
+                if isinstance(c.get("message"), dict):
+                    text = c["message"].get("text", "")
+                elif isinstance(c.get("message"), str):
+                    text = c["message"]
+                if not text:
+                    text = c.get("text", "")
 
                 # Skip self-comments or already replied comments
                 if not text or actor == person_urn or (c_urn and c_urn in replied_set):
