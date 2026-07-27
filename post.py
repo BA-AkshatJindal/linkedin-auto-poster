@@ -770,11 +770,13 @@ def reply_to_follower_comments(client: genai.Client, token: str, person_urn: str
             url = f"https://api.linkedin.com/v2/socialActions/{enc_urn}/comments"
             r = httpx.get(url, headers=headers, timeout=15.0)
             if r.status_code != 200:
+                print(f"[comments-scan] URN {urn[:35]}... status={r.status_code}: {r.text[:100]}")
                 continue
             elements = r.json().get("elements", [])
+            print(f"[comments-scan] URN {urn[:35]}... -> {len(elements)} comments found")
             for c in elements:
                 c_urn = c.get("$URN") or c.get("urn", "")
-                actor = c.get("actor", "") or c.get("created", {}).get("actor", "")
+                actor = str(c.get("actor", "") or c.get("created", {}).get("actor", ""))
                 
                 # Robust comment text extraction
                 text = ""
@@ -784,6 +786,8 @@ def reply_to_follower_comments(client: genai.Client, token: str, person_urn: str
                     text = c["message"]
                 if not text:
                     text = c.get("text", "")
+
+                print(f"[comments-scan] comment URN={c_urn} actor={actor} self={actor==person_urn} text='{text[:30]}'")
 
                 # Skip self-comments or already replied comments
                 if not text or actor == person_urn or (c_urn and c_urn in replied_set):
