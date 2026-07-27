@@ -724,9 +724,13 @@ def get_recent_author_post_urns(token: str, person_urn: str, count: int = 10) ->
         r = httpx.get(url, headers=headers, timeout=15.0)
         if r.status_code == 200:
             for el in r.json().get("elements", []):
-                u = el.get("id") or el.get("urn", "")
+                u = str(el.get("id") or el.get("urn", ""))
                 if u:
-                    urns.append(u if u.startswith("urn:li:") else f"urn:li:share:{u}")
+                    num = u.split(":")[-1]
+                    if num.isdigit():
+                        urns.append(f"urn:li:activity:{num}")
+                    else:
+                        urns.append(u)
     except Exception as e:
         print(f"[comments-fetch] shares query note: {e}")
     return urns
