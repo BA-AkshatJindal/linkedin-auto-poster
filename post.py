@@ -711,13 +711,34 @@ def fetch_and_update_post_performance(token: str, person_urn: str = "", filepath
             print(f"[analytics] error saving metrics: {e}")
 
 
+def get_recent_author_post_urns(token: str, person_urn: str, count: int = 10) -> list[str]:
+    """Fetch recent post URNs directly from LinkedIn API to scan for follower comments."""
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "X-Restli-Protocol-Version": "2.0.0",
+        "LinkedIn-Version": "202601",
+    }
+    urns = []
+    try:
+        url = f"https://api.linkedin.com/v2/shares?q=owners&owners={quote(person_urn, safe='')}&count={count}"
+        r = httpx.get(url, headers=headers, timeout=15.0)
+        if r.status_code == 200:
+            for el in r.json().get("elements", []):
+                u = el.get("id") or el.get("urn", "")
+                if u:
+                    urns.append(u if u.startswith("urn:li:") else f"urn:li:share:{u}")
+    except Exception as e:
+        print(f"[comments-fetch] shares query note: {e}")
+    return urns
+
+
 def reply_to_follower_comments(client: genai.Client, token: str, person_urn: str, filepath: str = "history_posts.json") -> None:
     """Followers' Comments Reader API & AI Auto-Replier: Reads follower comments on recent posts
     and posts authentic 1-2 sentence AI author replies to keep discussion threads active."""
-    if not token or not person_urn or not os.path.exists(filepath):
+    if not token or not person_urn:
         return
 
-    history = load_post_history(filepath, limit=100)
+    history = load_post_history(filepath, limit=100) if os.path.exists(filepath) else []
     headers = {
         "Authorization": f"Bearer {token}",
         "X-Restli-Protocol-Version": "2.0.0",
@@ -725,10 +746,20 @@ def reply_to_follower_comments(client: genai.Client, token: str, person_urn: str
     }
     updated = False
 
+    # Collect URNs from both history file and direct LinkedIn API query
+    target_urns = []
     for item in reversed(history[-10:]):
-        urn = item.get("urn")
-        if not urn:
-            continue
+        if item.get("urn"):
+            target_urns.append(item["urn"])
+    
+    api_urns = get_recent_author_post_urns(token, person_urn, count=10)
+    for u in api_urns:
+        if u not in target_urns:
+            target_urns.append(u)
+
+    for urn in target_urns:
+        # Find matching history item or create dummy tracking dict
+        item = next((i for i in history if i.get("urn") == urn), {"urn": urn, "replied_comment_urns": []})
         replied_set = set(item.get("replied_comment_urns", []))
         try:
             enc_urn = quote(urn, safe="")
