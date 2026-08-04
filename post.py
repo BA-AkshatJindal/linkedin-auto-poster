@@ -169,15 +169,17 @@ def save_cached_topics(topics: list[str]) -> None:
 # quality gracefully only when forced to.
 TEXT_MODELS = [
     "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
     "gemini-2.0-flash",
-    "gemini-1.5-flash",
+    "gemini-2.0-flash-lite",
 ]
 # Judge uses a different order so the writer and judge don't drain the same
 # bucket first.
 JUDGE_MODELS = [
     "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
     "gemini-2.5-flash",
-    "gemini-1.5-flash",
+    "gemini-2.5-flash-lite",
 ]
 TEXT_MODEL = TEXT_MODELS[0]   # back-compat for any direct reference
 JUDGE_MODEL = JUDGE_MODELS[0]
@@ -229,9 +231,9 @@ def with_retry(fn, *, tries=5, base_delay=5.0, retry_429=True):
 def smart_generate(client: genai.Client, models: list[str], *, contents, config=None):
     """Generate content, rotating across models on daily-quota exhaustion.
 
-    Tries each model in order. A transient 5xx retries (with backoff) on the
-    SAME model; a daily-quota 429 immediately falls through to the NEXT model,
-    so one exhausted bucket never blocks the run.
+    Tries each model in order. Transient errors or temporary 429 rate limits are
+    retried with backoff. Non-429 client errors (like model 404s) or exhausted 429s
+    gracefully fall through to the NEXT model.
     """
     last = None
     for model in models:
@@ -239,16 +241,24 @@ def smart_generate(client: genai.Client, models: list[str], *, contents, config=
             return with_retry(
                 lambda m=model: client.models.generate_content(
                     model=m, contents=contents, config=config),
-                retry_429=False,
+                tries=3,
+                base_delay=3.0,
+                retry_429=True,
             )
         except genai_errors.ClientError as e:
-            if getattr(e, "code", None) == 429:
+            code = getattr(e, "code", None)
+            if code == 429:
                 print(f"[model] {model} hit daily quota (429) -> trying next model")
-                last = e
-                continue
-            raise
+            else:
+                print(f"[model] {model} ClientError ({code}: {e}) -> skipping model")
+            last = e
+            continue
         except genai_errors.ServerError as e:
             print(f"[model] {model} unavailable after retries -> trying next model")
+            last = e
+            continue
+        except Exception as e:
+            print(f"[model] {model} unexpected error ({e}) -> trying next model")
             last = e
             continue
     raise last if last else RuntimeError("smart_generate: no models provided")
