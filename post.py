@@ -168,6 +168,7 @@ def save_cached_topics(topics: list[str]) -> None:
 # fall through to the next — multiplying free capacity (~5x) and degrading
 # quality gracefully only when forced to.
 TEXT_MODELS = [
+    "gemini-2.5-pro",
     "gemini-2.5-flash",
     "gemini-2.5-flash-lite",
     "gemini-2.0-flash",
@@ -176,6 +177,7 @@ TEXT_MODELS = [
 # Judge uses a different order so the writer and judge don't drain the same
 # bucket first.
 JUDGE_MODELS = [
+    "gemini-2.5-pro",
     "gemini-2.0-flash",
     "gemini-2.0-flash-lite",
     "gemini-2.5-flash",
@@ -1358,7 +1360,7 @@ def generate_carousel_pdf(topic: str, commentary: str = "") -> bytes:
     return pdf_buffer.getvalue()
 
 
-def generate_image_pollinations(image_prompt: str) -> bytes:
+def generate_image_pollinations(image_prompt: str) -> bytes | None:
     """Keyless free image generator (FLUX-Realism). Uses model=flux-realism for photorealistic rendering."""
     styled = f"{image_prompt}. Professional editorial photograph, 35mm lens, 8k resolution, crisp studio lighting. No text, no words, no letters, no logos, no watermark."
     seed = random.randint(1000, 999999)
@@ -1367,9 +1369,16 @@ def generate_image_pollinations(image_prompt: str) -> bytes:
         f"?width=1080&height=1080&seed={seed}&nologo=true&model=flux-realism"
     )
     print(f"[image-gen] requesting FLUX-Realism image with seed={seed}")
-    r = httpx.get(url, timeout=120.0)
-    r.raise_for_status()
-    return r.content
+    for attempt in range(1, 3):
+        try:
+            r = httpx.get(url, timeout=120.0)
+            r.raise_for_status()
+            return r.content
+        except Exception as e:
+            print(f"[image-gen] Pollinations attempt {attempt} failed ({e})")
+            if attempt < 2:
+                time.sleep(2)
+    return None
 
 
 def generate_image(client: genai.Client, image_prompt: str, topic: str = "", commentary: str = "") -> tuple[bytes, bool]:
@@ -1428,7 +1437,11 @@ def generate_image(client: genai.Client, image_prompt: str, topic: str = "", com
             img = generate_image_gemini(client, image_prompt)
             if img:
                 return img, False
-        return generate_image_pollinations(image_prompt), False
+        img = generate_image_pollinations(image_prompt)
+        if img:
+            return img, False
+        print("[image-gen] AI image generator unavailable, falling back to local graphic card")
+        return generate_graphic_card(topic, commentary), False
     if mode == "card":
         print("[image-gen] generating graphic card (Pillow)")
         return generate_graphic_card(topic, commentary), False
