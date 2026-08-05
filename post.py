@@ -31,6 +31,12 @@ from google import genai
 from google.genai import types
 from google.genai import errors as genai_errors
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # The niche this account posts about.
 CORE_THEMES = "Business Analysis, Product Management, AI & AI agents, Product Strategy, and Career Pathways in BA & PM for Freshers"
 
