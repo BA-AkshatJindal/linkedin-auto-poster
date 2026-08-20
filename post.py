@@ -44,89 +44,63 @@ CORE_THEMES = "Business Analysis, Product Management, AI & AI agents, Product St
 # Used ONLY if the live trend engine fails. Keep them on-brand: Business
 # Analysis, Product Management, AI / agents, and Career Advice for BA & PM Freshers.
 TOPICS = [
-    "What I wish I knew before starting my career as a Business Analyst in tech",
-    "How freshers can break into Product Management and Business Analysis in 2026",
-    "Why combining Business Analysis with AI prompt workflows is the ultimate fresher cheat code",
-    "3 core skills every entry-level Business Analyst needs to master before their first role",
-    "How to build a high-signal PM or BA portfolio project without waiting for a job offer",
-    "The biggest mistake fresh graduates make when interviewing for PM and BA roles",
-    "Why understanding business process mapping matters more than coding for junior Business Analysts",
-    "What hiring managers actually look for in an entry-level Business Analyst case study",
-    "How junior PMs and BAs can use AI tools to speed up requirements gathering by 5x",
-    "The non-linear path into Product Management: starting as an agile Business Analyst",
-    "Why freshers aiming for BA roles should focus on requirement elicitation, not just documentation",
-    "How to prepare for junior Business Analyst case study interviews without getting overwhelmed",
-    "Why AI fluency is becoming mandatory for entry-level Business Analyst and PM roles",
-    "Why feature roadmaps fail without a clear non-goal list",
-    "The difference between product velocity and real product progress",
-    "Why 80% of product features are rarely or never used",
-    "How to handle executive stakeholder pushback without ruining your roadmap",
-    "Why user interviews lie and user behavior never does",
-    "The danger of building for power users instead of your core ICP",
-    "How Business Analysts bridge the gap between engineering reality and product vision",
-    "Why technical debt is a product strategy decision, not an engineering bug",
-    "The real cost of pivoting your product roadmap every quarter",
-    "Why product managers should write problem statements, not solution specs",
-    "How to prioritize product backlog items when everything is urgent",
-    "Why metric-driven product design often leads to local maxima",
-    "The art of saying no to high-value enterprise custom requests",
-    "Why product metrics matter less than retention cohorts",
-    "How product specs change when building AI-first features",
-    "The silent product killer: shipping before defining success metrics",
-    "Why business analysts are the unsung heroes of AI product adoption",
-    "The trade-off between shipping fast and building scalable UX",
-    "Why product-led growth fails without product-led onboarding",
-    "How to run user research that actually changes product decisions",
-    "Why most AI agents fail in production, not in demos",
-    "The real reason 'AI-first' products lose users",
-    "What nobody tells you about building reliable LLM apps",
-    "Why your AI agent needs guardrails before features",
-    "Agentic workflows are quietly eating traditional SaaS",
-    "The hidden cost of context windows in agent design",
-    "Why evals matter more than your model choice",
-    "RAG isn't dead — you're just doing it wrong",
-    "A product manager's guide to shipping AI that sticks",
-    "Why prompt engineering is becoming product engineering",
-    "Multi-agent systems: real power or expensive complexity?",
-    "What founders get wrong about 'AI-first' product strategy",
-    "Why human-in-the-loop still beats full autonomy",
-    "The skill gap that's killing AI product teams",
-    "How to price an AI product without burning margins",
-    "Why most AI features solve the wrong problem",
-    "The case for boring, reliable AI over flashy demos",
-    "What AI agent startups get wrong about retention",
-    "Tool-calling is the real unlock, not bigger models",
-    "Why your AI roadmap should be bets, not features",
-    "The underrated power of small, specialized models",
-    "How agent memory changes product design forever",
-    "Why latency, not accuracy, kills AI adoption",
-    "The truth about AI moats (most don't have one)",
-    "Designing trust into autonomous AI systems",
-    "Why 'ship fast' breaks differently with AI products",
-    "The feedback loop every AI product is missing",
-    "What I learned debugging a misbehaving AI agent",
-    "Why context engineering beats prompt engineering",
-    "The quiet rise of vertical AI agents",
-    "How to know if your problem actually needs an agent",
-    "Why AI UX is harder than AI infrastructure",
-    "The metrics that actually predict AI product success",
-    "Building AI products users don't have to babysit",
-    "Why most 'autonomous' agents are just glorified scripts",
-    "The coming shift from chatbots to agentic interfaces",
-    "What makes an AI product feel magical vs frustrating",
-    "Why your eval set is your real competitive advantage",
-    "The hard part of agents isn't reasoning, it's reliability",
-    "How to scope an AI MVP that won't embarrass you",
-    "Why data quality decides your AI product's ceiling",
-    "The myth of the fully autonomous enterprise agent",
-    "When to fine-tune vs when to just prompt better",
-    "Why AI products need a 'confidence' UX layer",
-    "The real ROI question every AI feature must answer",
-    "How agent orchestration is becoming the new backend",
-    "Why observability is non-negotiable for AI agents",
-    "The product lessons hiding in failed AI launches",
-    "Why saying no to AI features is a superpower",
-    "What the next wave of AI-native products will look like",
+    # ── Educational Frameworks & Teardowns (BABOK / Agile / Product) ──────
+    "How to use the INVEST framework to write razor-sharp agile user stories",
+    "BPMN 2.0 process mapping essentials: how junior BAs should map business workflows",
+    "The MoSCoW prioritization method: how to prevent scope creep in sprint planning",
+    "How to run a 5-Whys root cause analysis session with stubborn stakeholders",
+    "Writing unambiguous Acceptance Criteria using Given-When-Then (Gherkin format)",
+    "The Kano Model: how to categorize features into Basic, Performance, and Delighters",
+    "Gap Analysis masterclass: mapping Current State to Future State step-by-step",
+    "How to build a RACI matrix that eliminates team role confusion in projects",
+    "Opportunity Solution Trees: how product teams connect user needs to real solutions",
+    "Non-Functional Requirements (NFRs): the 5 categories every Business Analyst must document",
+    "ICE vs RICE prioritization scoring: which framework fits your product stage?",
+    "How to write a 1-page PRD that engineering teams actually love reading",
+    "The difference between Outcome-Based Roadmaps and Feature Delivery Timelines",
+    "North Star Metric decomposition: how to map high-level goals to input metrics",
+    "The 4 essential UML diagrams every Business Analyst must master (Use Case, Activity, Sequence, State)",
+
+    # ── AI Engineering & AI Product Architecture (Proof-backed) ───────────
+    "Why eval-driven development beats prompt tweaking when building reliable AI products",
+    "RAG vs Fine-Tuning: the 4-question decision tree for AI product builders",
+    "How to design Human-in-the-Loop guardrails for autonomous AI agent workflows",
+    "Why structured tool-calling beats open-ended text generation for AI reliability",
+    "Chunking strategies in RAG pipelines: fixed-size vs semantic document splitting",
+    "How to measure Precision vs Recall in production LLM applications",
+    "Context window management: why stuffing 1M tokens often degrades reasoning quality",
+    "Why golden test datasets are the only moat in enterprise generative AI products",
+    "Building AI confidence scoring UX: how to show uncertainty without losing user trust",
+    "Latency vs Cost vs Quality: the core trade-off triangle of production AI systems",
+    "Agent memory architectures: short-term context vs persistent vector storage",
+    "Why prompt engineering is evolving into deterministic workflow orchestration",
+    "How to test LLM applications for edge cases before shipping to customers",
+
+    # ── Fresher & Early Career Mastery (Actionable & High-Signal) ─────────
+    "How freshers can build a high-signal BA portfolio project without prior work experience",
+    "What hiring managers look for in a Business Analyst case study interview",
+    "How to turn messy stakeholder meeting notes into a clean Functional Spec",
+    "The 3 most common mistakes fresh graduates make in PM and BA technical interviews",
+    "How junior BAs can lead requirement elicitation workshops with confidence",
+    "Why understanding business domain logic matters 10x more than memorizing tools",
+    "The non-linear pathway: transitioning from Junior Business Analyst to Product Manager",
+    "How to build a product teardown portfolio that gets you noticed on LinkedIn",
+    "3 core questions every junior BA should ask during initial stakeholder discovery",
+    "How freshers can use AI tools as a learning copilot without hallucinating domain facts",
+
+    # ── Real-World Product Strategy & Field Lessons ───────────────────────
+    "Why feature roadmaps fail without an explicit Non-Goals section in the PRD",
+    "The difference between product delivery velocity and actual customer value",
+    "Why 80% of software features are rarely used and how to trim product bloat",
+    "How Business Analysts bridge the communication gap between business logic and tech stacks",
+    "The real cost of technical debt: why tech debt is a product strategy decision",
+    "Why customer interviews lie and actual user telemetry never does",
+    "The danger of building for loud vocal power users instead of your core ICP",
+    "How to handle executive stakeholder pushback without blowing up sprint commitments",
+    "Why product-led growth collapses without seamless product-led onboarding",
+    "The silent product killer: shipping features before defining the telemetry metrics",
+    "How to prioritize backlog items when engineering, sales, and executives disagree",
+    "The art of saying no to custom enterprise feature requests without losing the account",
 ]
 
 # ── Live trend sources (free, keyless) ───────────────────────────────
@@ -547,39 +521,60 @@ def pick_post_spec(client: genai.Client | None = None) -> dict:
 
 POST_FORMATS = [
     {
-        "name": "Contrarian / Mythbuster",
-        "instruction": "Structure the post as a contrarian take or mythbuster. Challenge a common misconception in tech/AI, using the topic to prove why conventional wisdom fails.",
+        "name": "Educational Framework Breakdown",
+        "instruction": (
+            "Teach a proven, authentic industry framework (e.g. INVEST, MoSCoW, BPMN 2.0, Kano Model, RACI, 5-Whys, Opportunity Solution Tree). "
+            "Structure: 1. The core challenge in teams ➔ 2. The Proven Framework with 3-4 clean structured bullets/points (e.g. • Letter/Step: meaning) ➔ 3. A crisp pro-tip or heuristic rule."
+        ),
     },
     {
-        "name": "Hard Field Lesson",
-        "instruction": "Structure the post around a sharp, pragmatic trade-off or hard-learned lesson. Focus on what teams get wrong vs what actually works in production.",
+        "name": "Step-by-Step Actionable Blueprint",
+        "instruction": (
+            "Deliver a clear, practitioner how-to guide with concrete, actionable steps. "
+            "Structure: 1. High-value objective ➔ 2. Clean numbered steps (1. [Action], 2. [Action], 3. [Action]) with specific details ➔ 3. Key takeaway or rule of thumb."
+        ),
     },
     {
-        "name": "Before vs. After Shift",
-        "instruction": "Structure the post as a mindset shift. Contrast how products used to be designed vs how AI-native systems must be built today.",
+        "name": "Before vs. After (Amateur vs. Pro) Teardown",
+        "instruction": (
+            "Contrast common beginner mistakes with senior practitioner execution. "
+            "Structure: 1. The core dilemma ➔ 2. 'Amateur approach:' vs 'Senior practitioner approach:' with clear contrast ➔ 3. Why this distinction decides project success."
+        ),
     },
     {
-        "name": "Rule of Thumb / Heuristic",
-        "instruction": "Structure the post as a crisp rule of thumb or mental model for product leaders and builders.",
+        "name": "Decision Matrix & Heuristic Cheat Sheet",
+        "instruction": (
+            "Provide a crisp decision tree for choosing between architectural or product paths (e.g. RAG vs Fine-tuning, Agent vs Script, Build vs Buy). "
+            "Structure: 1. The trade-off tension ➔ 2. Clean decision rules ('• If [Scenario] ➔ [Action]') ➔ 3. Strategic summary principle."
+        ),
     },
     {
-        "name": "Provocative Dilemma",
-        "instruction": "Structure the post around an underlying tension (e.g. speed vs reliability, autonomy vs control). Lead with a bold stance on that dilemma.",
+        "name": "Real-World Case Teardown (Proof-Backed)",
+        "instruction": (
+            "Analyze a well-documented, publicly verified industry case study (e.g. Stripe API design, Figma multiplayer architecture, Spotify squad evolution, Netflix chaos engineering). "
+            "Strictly grounded in authentic facts without inventing numbers. Structure: 1. The context/problem ➔ 2. The specific decision made ➔ 3. The actionable takeaway for everyday builders."
+        ),
     },
     {
-        "name": "Fresher & Aspirant Career Guide",
-        "instruction": "Structure the post as supportive, highly practical career advice for freshers, students, and early-career tech aspirants. Share a real lesson from your 3 years of hands-on experience on how to build high-signal skills, portfolios, or break into product/BA roles.",
+        "name": "Contrarian Field Insight",
+        "instruction": (
+            "Challenge a common industry myth or vanity practice with a sharp, experienced-backed observation from the trenches. "
+            "Structure: 1. Scroll-stopping counter-intuitive hook ➔ 2. Why conventional wisdom fails in production ➔ 3. The grounded alternative that actually delivers value."
+        ),
     },
     {
-        "name": "Industry Trend Reaction",
-        "instruction": "Structure the post as a real-time reaction to a breaking industry trend or headline. State the news context upfront and provide your pragmatic 3-year practitioner take on what this means for product builders, BAs, and freshers.",
+        "name": "Fresher & Career Masterclass",
+        "instruction": (
+            "High-signal, practical career mentorship for aspiring BAs, PMs, and tech freshers. "
+            "Structure: 1. The common resume/interview trap beginners fall into ➔ 2. The high-signal proof-of-work skill to build (with concrete artifacts like diagrams or PRDs) ➔ 3. Actionable drill to practice today."
+        ),
     },
 ]
 
 
 def format_linkedin_text(text: str) -> str:
-    """Ensure LinkedIn post text is cleanly formatted with punchy double line breaks (\\n\\n)
-    between 1-2 sentence paragraphs for high mobile readability. Never a dense wall of text."""
+    """Ensure LinkedIn post text is cleanly formatted with punchy spacing (\\n\\n)
+    between logical paragraphs while keeping numbered steps and list items clean and readable."""
     if not text:
         return text
 
@@ -587,26 +582,40 @@ def format_linkedin_text(text: str) -> str:
     hashtags = re.findall(r"#\w+", text)
     clean_text = re.sub(r"#\w+", "", text).strip()
 
-    # Split into paragraphs by existing newlines
-    paragraphs = [p.strip() for p in clean_text.split("\n") if p.strip()]
+    # Split into raw lines / paragraphs by existing newlines
+    raw_lines = [p.strip() for p in clean_text.split("\n") if p.strip()]
 
-    final_paragraphs = []
-    for p in paragraphs:
-        # If a paragraph is dense (longer than 150 chars with multiple sentences), break it up
-        if len(p) > 150 and "." in p:
-            sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", p) if s.strip()]
-            chunk = []
-            for s in sentences:
-                chunk.append(s)
-                if len(" ".join(chunk)) > 100 or len(chunk) >= 2:
-                    final_paragraphs.append(" ".join(chunk))
-                    chunk = []
-            if chunk:
-                final_paragraphs.append(" ".join(chunk))
+    final_blocks = []
+    current_list_block = []
+
+    for line in raw_lines:
+        is_list_item = bool(re.match(r"^(\d+[.)]|•|-|➔|\*)\s+", line)) or line.startswith("Before:") or line.startswith("After:") or line.startswith("Amateur:") or line.startswith("Senior:")
+        
+        if is_list_item:
+            current_list_block.append(line)
         else:
-            final_paragraphs.append(p)
+            if current_list_block:
+                final_blocks.append("\n".join(current_list_block))
+                current_list_block = []
+            
+            # If a paragraph is dense (longer than 180 chars with multiple sentences), break it up
+            if len(line) > 180 and "." in line:
+                sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", line) if s.strip()]
+                chunk = []
+                for s in sentences:
+                    chunk.append(s)
+                    if len(" ".join(chunk)) > 110 or len(chunk) >= 2:
+                        final_blocks.append(" ".join(chunk))
+                        chunk = []
+                if chunk:
+                    final_blocks.append(" ".join(chunk))
+            else:
+                final_blocks.append(line)
 
-    formatted_body = "\n\n".join(final_paragraphs)
+    if current_list_block:
+        final_blocks.append("\n".join(current_list_block))
+
+    formatted_body = "\n\n".join(final_blocks)
 
     if hashtags:
         seen = set()
@@ -853,58 +862,57 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
     print(f"[format] selected style: {post_format['name']}")
 
     system = dedent(f"""\
-        You are ghostwriting for {author_desc}, writing an authentic LinkedIn post.
+        You are ghostwriting for {author_desc}, writing an authentic, high-value LinkedIn post.
 
-        AUTHENTIC HUMAN VOICE (CRITICAL FOR TRUST & ORGANIC REPOSTS):
-        - Write like a sharp, in-the-trenches builder sharing a genuine observation with peers.
-        - ZERO AI BUBBLEGUM / ZERO MARKETING FLUFF. Never sound like a social media manager or a ChatGPT bot trying to be deep.
-        - NO CHEESY RHETORICAL OPENERS ("Does X measure that anymore?", "Is Y dead?", "Let that sink in").
-        - NO FORCED ENGAGEMENT BAIT ("Repost if you agree!", "What do you think? Drop a comment!").
-        - Speak the real, everyday observations of shipping products and working with AI tools with quiet conviction.
+        CORE MISSION: TEACH & SHARE AUTHENTIC, VERIFIED KNOWLEDGE:
+        - Deliver real educational value that teaches a specific skill, framework, decision tree, or operational lesson.
+        - Ground every concept in recognized, verifiable industry standards (BABOK business analysis, Agile/Scrum practices, real product discovery, production AI engineering).
+        - ZERO FLUFF / ZERO HAND-WAVING. Teach concrete steps, precise distinctions, and actionable rules.
 
-        BUSINESS & STRATEGY FOCUS (CRITICAL FOR BROAD READERSHIP):
-        - Focus on Business Value, Product Strategy, Requirement Elicitation, User Adoption, Team Alignment, and Career Guidance.
-        - ABSOLUTELY ZERO LOW-LEVEL CODE JARGON / ZERO INFRASTRUCTURE SPECIFICS. Never sound like a backend developer detailing code syntax or regex.
-        - Write so that Product Managers, Business Analysts, Founders, and Freshers can instantly understand, relate to, and repost every paragraph.
+        AUTHENTIC HUMAN VOICE:
+        - Write like a sharp, in-the-trenches practitioner sharing a masterclass insight with peers.
+        - ZERO AI BUBBLEGUM / ZERO MARKETING FLUFF. Never sound like an AI trying to sound inspirational or deep.
+        - NO FORMULAIC OPENERS ("Does X matter anymore?", "Is Y dead?", "Let that sink in", "We need to talk about X").
+        - NO FORCED ENGAGEMENT BAIT ("Repost if you agree!", "Drop a comment below!").
+        - Speak with quiet conviction, precision, and clarity.
 
-        LINE SPACING & FORMATTING (CRITICAL FOR READABILITY):
-        - NEVER write a wall of text paragraph.
-        - Maximum 1-2 sentences per paragraph.
-        - Leave a clear blank line (\\n\\n) between EVERY single paragraph.
-        - Place 3-5 clean hashtags on a separate line at the very bottom with a blank line before them.
+        FORMATTING & READABILITY:
+        - Structure for effortless mobile readability.
+        - When explaining steps, frameworks, or contrasts, use CLEAN list formatting (e.g. '1.', '2.', '3.' or '•' or 'Before:' / 'After:').
+        - Keep regular paragraphs short (1-2 sentences) with clear blank lines (\\n\\n) between major sections.
+        - Place 3-5 clean, relevant hashtags on a separate line at the very bottom with a blank line before them.
 
-        TONE & FORMAT:
-        - Grounded, pragmatic, and opinionated observations.
-        - 80-140 words MAX. Concise, crisp, impactful. Every word earns its place.
-        - Short sentences, natural line breaks, human conversational rhythm.
-        - NO bullet lists. NO numbered tips. NO emojis.
+        LENGTH & CADENCE:
+        - 90-200 words. Rich in insight, zero filler words.
+        - Avoid repetitive rhythmic patterns. Vary sentence lengths naturally.
+        - You may end with a punchy takeaway heuristic, an actionable pro-tip, a save-this-framework prompt, or an open thoughtful question. Do NOT force a generic question if a strong takeaway is more impactful.
 
-        TRUTHFULNESS:
-        - Share genuine opinions, observations, and widely-true insights.
-        - NEVER invent fake personal anecdotes ("Last week my team deleted production..."), fake metrics, or fake statistics.
+        TRUTHFULNESS & ACCURACY (CRITICAL):
+        - Share authentic, proof-backed methodologies and truthful observations.
+        - NEVER invent fake personal anecdotes ("Last week my team did X..."), fake metrics ("boosted efficiency by 84.7%"), or fake company case studies.
 
         Reply ONLY with JSON: {{"commentary": "...", "image_prompt": "...", "first_comment": "..."}}
         first_comment = a SHORT (1-2 sentences) follow-up the author drops as the
-        FIRST comment — a sharper angle or clarifying thought. Conversational.""")
+        FIRST comment — an extra practical pro-tip, nuance, or clarifying resource hint.""")
 
     user = dedent(f"""\
         Write a LinkedIn post anchored in your core niche ({CORE_THEMES}).
 
-        STRUCTURAL ANGLE FOR THIS POST:
-        Format Style: {post_format['name']}
+        STRUCTURAL ARCHETYPE FOR THIS POST:
+        Archetype Style: {post_format['name']}
         Structural Directive: {post_format['instruction']}
 
-        USER INPUT SPARK / TOPIC REFERENCE:
+        TOPIC / KNOWLEDGE FOCUS:
         Topic: {topic}""")
     if context:
         user += f"\nSpecific Context / Notes: {context}"
 
     user += dedent("""
 
-        HYBRID BLENDING DIRECTIONS:
-        - 50% Specific Detail: Weave the specific nuance, real-world detail, or core idea of the topic into the post so it feels authentic, fresh, and non-generic.
-        - 50% High-Level Umbrella: Connect it directly to the broader picture of AI products, LLM reliability, and product strategy so it resonates with founders, PMs, and tech leaders.
-        - Ensure this post has its own unique rhythm, sentence structure, and flow. Avoid repeating generic templates.""")
+        TEACHING & DEPTH DIRECTIVES:
+        - Deliver 1 concrete, actionable insight or framework rule that a reader can immediately apply in their BA / PM / AI workflow tomorrow.
+        - Balance specific technical precision with executive clarity.
+        - Avoid generic advice like 'communicate better' or 'align with stakeholders' — provide the exact HOW (e.g., using a RACI matrix, Gherkin criteria, or BPMN swimlanes).""")
 
     history = load_post_history(limit=15)
     if history:
@@ -930,7 +938,6 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
                 {top_summary}
 
                 SELF-LEARNING STYLE DIRECTIVE:
-                - Analyze why the top posts above resonated strongly with your audience.
                 - Mirror the depth, high conviction, and trench-builder clarity of those top-performing posts.""")
 
     if feedback:
@@ -953,7 +960,7 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
                 },
                 required=["commentary", "image_prompt", "first_comment"],
             ),
-            temperature=0.9,
+            temperature=0.85,
         ))
     data = _extract_json(resp.text)
     raw_commentary = str(data["commentary"]).strip()
@@ -983,19 +990,17 @@ def _extract_json(text: str) -> dict:
         raise
 
 
-RUBRIC_DIMS = ["hook", "insight", "authenticity", "relatability", "repostability", "originality"]
+RUBRIC_DIMS = ["hook", "insight", "educational_value", "authenticity", "repostability", "originality"]
 
 
 def guardrail_check(text: str) -> list[str]:
     """Deterministic format checks. Returns a list of issues (empty = clean)."""
     issues = []
     words = len(text.split())
-    if words < 60:
-        issues.append(f"Too short ({words} words; aim for 80-150).")
-    elif words > 180:
-        issues.append(f"Too long ({words} words; aim for 80-150).")
-    if "?" not in text[-160:]:
-        issues.append("Doesn't end with a question that invites discussion.")
+    if words < 70:
+        issues.append(f"Too short ({words} words; aim for 90-200 to provide real educational depth).")
+    elif words > 240:
+        issues.append(f"Too long ({words} words; aim for 90-200).")
     tags = re.findall(r"#\w+", text)
     if not (3 <= len(tags) <= 5):
         issues.append(f"Use 3-5 hashtags (found {len(tags)}).")
@@ -1014,24 +1019,23 @@ def evaluate_post(client: genai.Client, commentary: str) -> dict:
     Returns {'scores': {dim:int}, 'overall': float, 'feedback': str}.
     """
     rubric = dedent(f"""\
-        You are a tough LinkedIn content editor. Rate this post 1-10 on EACH:
-        - hook: does the FIRST line stop the scroll?
-        - insight: is there a real, specific idea (not generic advice)?
-        - authenticity: does it sound like a real person, not AI/marketing?
-        - relatability: is it deeply relatable to anyone working in tech, products, or business?
-        - repostability: is the central takeaway shareable enough that someone would hit Repost?
-        - originality: a fresh angle, not a cliche everyone has posted?
+        You are a tough LinkedIn content editor and senior tech practitioner. Rate this post 1-10 on EACH:
+        - hook: does the FIRST line immediately stop the scroll with an intriguing premise or observation?
+        - insight: is there a sharp, non-obvious observation (not generic advice)?
+        - educational_value: does it teach an authentic, actionable concept, framework, or practical rule?
+        - authenticity: does it sound like a real practitioner, not AI marketing fluff?
+        - repostability: is the central takeaway valuable enough that a professional would save or repost it?
+        - originality: a fresh, non-cliche perspective or breakdown?
 
         Also set "fabricated": true if the post presents ANY invented personal
-        anecdote, made-up event, fake metric/statistic, fake company/person/quote,
-        or specific claim stated as real fact that a ghostwriter couldn't verify.
-        Otherwise false.
+        anecdote ("my team deleted production"), fake metric/statistic ("boosted ROI by 82%"),
+        fake company/quote, or unverified factual claims. Otherwise false.
 
         Then write ONE sentence of concrete, actionable feedback on the single
         biggest weakness (what to change to score higher).
 
         Reply ONLY with JSON:
-        {{"hook":int,"insight":int,"authenticity":int,"relatability":int,"repostability":int,"originality":int,"fabricated":bool,"feedback":"..."}}
+        {{"hook":int,"insight":int,"educational_value":int,"authenticity":int,"repostability":int,"originality":int,"fabricated":bool,"feedback":"..."}}
 
         <post>
         {commentary}
