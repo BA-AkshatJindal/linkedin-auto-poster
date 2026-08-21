@@ -1155,20 +1155,20 @@ def generate_graphic_card(topic: str, commentary: str = "") -> bytes:
 
 IMAGE_AESTHETIC_STYLES = [
     {
-        "name": "Editorial Photography",
-        "style": "editorial photograph, 35mm lens, f/1.8 shallow depth of field, warm natural rim lighting, 8k resolution, cinematic color grading, magazine cover quality",
+        "name": "Executive Studio Still-Life",
+        "style": "minimalist executive studio still-life photography of an inanimate premium object on dark matte slate, 35mm lens, f/2.0 shallow depth of field, warm directional studio spotlight, 8k resolution, elegant composition, no people, no robots",
     },
     {
-        "name": "3D Glassmorphism & Octane Render",
-        "style": "3D glassmorphic art render, Octane render, smooth frosted glass and vibrant gradient lighting, soft shadows, sleek minimal tech aesthetic, 8k",
+        "name": "3D Frosted Glassmorphism & Octane Render",
+        "style": "abstract 3D geometric composition, frosted translucent glass shapes, glowing cyan and amber internal light refractions, soft studio shadows, Octane render, 8k resolution, minimalist luxury aesthetic, inanimate only",
     },
     {
-        "name": "Cinematic Dark Mode Tech",
-        "style": "cinematic dark mode photography, subtle cyan and amber accent neon rim lighting, modern high-tech workspace, moody atmosphere, sharp focus, 4k",
+        "name": "Architectural Modern Workspace",
+        "style": "clean architectural perspective of an ultra-modern high-tech glass studio office, sunbeams through floor-to-ceiling windows, polished concrete and warm oak wood textures, sharp focus, 8k, empty interior with no people",
     },
     {
-        "name": "Minimalist Conceptual Vector Art",
-        "style": "minimalist 3D vector illustration, bold geometric composition, vibrant harmonious colors, clean layout, modern digital art, soft ambient depth",
+        "name": "Minimalist Isometric Vector Artwork",
+        "style": "sleek minimalist isometric 3D conceptual illustration, crisp geometric lines, deep navy background with glowing sapphire and electric amber accents, modern digital artwork, clean luxury layout, no human or humanoid figures",
     },
 ]
 
@@ -1371,8 +1371,11 @@ def generate_carousel_pdf(topic: str, commentary: str = "") -> bytes:
 
 
 def generate_image_pollinations(image_prompt: str) -> bytes | None:
-    """Keyless free image generator (FLUX-Realism). Uses model=flux-realism for photorealistic rendering."""
-    styled = f"{image_prompt}. Professional editorial photograph, 35mm lens, 8k resolution, crisp studio lighting. No text, no words, no letters, no logos, no watermark."
+    """Keyless free image generator (FLUX-Realism). Uses model=flux-realism with strict negative safety tokens."""
+    styled = (
+        f"{image_prompt}. Professional executive studio still-life photograph, 35mm lens, 8k resolution, crisp architectural lighting. "
+        "No people, no humans, no women, no men, no faces, no bodies, no nudity, no suggestive imagery, no humanoid robots, no androids, no cyborgs, no distorted anatomy, no text, no words, no letters, no logos, no watermark."
+    )
     seed = random.randint(1000, 999999)
     url = (
         f"https://image.pollinations.ai/prompt/{quote(styled)}"
@@ -1470,25 +1473,27 @@ def craft_image_prompt(client: genai.Client, topic: str, commentary: str = "") -
     print(f"[image-style] selected visual style: {chosen_style['name']}")
 
     sys_msg = dedent(f"""\
-        You are an elite visual prompt engineer for FLUX image generator. Turn the LinkedIn
-        post below into ONE stunning, scroll-stopping visual prompt that is DEEPLY RELEVANT
+        You are an elite visual prompt engineer for FLUX image generator creating executive LinkedIn visuals.
+        Turn the LinkedIn post below into ONE stunning, scroll-stopping visual prompt that is DEEPLY RELEVANT
         to the post's central idea.
 
         VISUAL STYLE REQUIREMENT:
         Style Tag: {chosen_style['style']}
 
-        HARD RULES:
-        - ONE clear single subject that directly embodies the central message or metaphor of the post.
-        - Make it VIBRANT, ATTRACTIVE, and CONTRASTY so it immediately stops the scroll on LinkedIn.
-        - Describe a physical, real-world object, scene, or person that represents the core idea.
-        - Keep it simple, elegant, and uncluttered (no crowded multi-object scenes).
+        HARD SAFETY & PROFESSIONALISM RULES (CRITICAL):
+        - ABSOLUTELY NO HUMANS, NO PEOPLE, NO FACES, NO MALE/FEMALE FIGURES, NO FLESH TONES.
+        - ABSOLUTELY NO HUMANOID ROBOTS, NO ANDROIDS, NO CYBORGS, NO ANTHROPOMORPHIC FIGURES.
+        - Describe ONLY INANIMATE, TANGIBLE OBJECTS, ARCHITECTURAL INTERIORS, OR ABSTRACT GEOMETRY:
+          e.g. A vintage brass nautical compass, an hourglass on dark slate, a mechanical precision balance scale, an optical glass prism splitting light, frosted glass geometric cubes, an architectural modern glass office interior, or sleek server hardware with warm subtle LED glows.
+        - Make it clean, vibrant, elegant, and uncluttered.
         - NEVER include any text, words, letters, numbers, charts, diagrams, code, UI screens, logos, or watermarks.
-        - Under 45 words. Output ONLY the visual subject description — the style tag will be appended automatically.
+        - Under 35 words. Output ONLY the visual subject description — the style tag will be appended automatically.
 
-        Examples of strong visual transformations:
-        - Post on "fast shipping without feedback": "A sleek runner sprinting on a red athletic track at sunrise, carrying a glowing compass, intense focus, crisp action shot."
-        - Post on "AI memory & context window": "A glowing crystal sphere suspended over a minimalist oak desk, reflecting warm golden light rays."
-        - Post on "evals over model size": "A precise silver scale balancing a glowing diamond against heavy iron gears, studio light background."
+        Examples of strong professional inanimate transformations:
+        - Post on "MoSCoW / Prioritization": "A precision mechanical brass balance scale weighing a glowing sapphire cube against iron weights on dark matte granite."
+        - Post on "Process Mapping & BPMN": "An optical triangular glass prism refracting a single beam of pure light into clean geometric spectra on dark slate."
+        - Post on "AI Architecture & Memory": "A glowing frosted-glass sphere resting on a minimalist walnut executive desk with soft ambient rim lighting."
+        - Post on "Sprint Planning & Roadmaps": "An elegant vintage brass pocket compass resting on dark wet stone, pointing steadfastly north."
     """)
     content = f"TOPIC: {topic}\n\nPOST:\n{commentary}".strip()
     try:
