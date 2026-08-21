@@ -5,3 +5,5 @@ __pycache__/
 # runtime artifacts (persisted via Actions cache / uploaded as artifacts)
 topics_cache.json
 out_post.txt
+log*.txt
+*.log
