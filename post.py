@@ -148,20 +148,19 @@ def save_cached_topics(topics: list[str]) -> None:
 # fall through to the next — multiplying free capacity (~5x) and degrading
 # quality gracefully only when forced to.
 TEXT_MODELS = [
-    "gemini-2.5-pro",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash-lite",
+    "gemini-3.1-pro-preview",
     "gemini-2.5-flash",
-    "gemini-2.5-flash-lite",
-    "gemini-2.0-flash",
-    "gemini-2.0-flash-lite",
+    "gemini-2.5-pro",
 ]
 # Judge uses a different order so the writer and judge don't drain the same
 # bucket first.
 JUDGE_MODELS = [
-    "gemini-2.5-pro",
-    "gemini-2.0-flash",
-    "gemini-2.0-flash-lite",
+    "gemini-3.1-pro-preview",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash-lite",
     "gemini-2.5-flash",
-    "gemini-2.5-flash-lite",
 ]
 TEXT_MODEL = TEXT_MODELS[0]   # back-compat for any direct reference
 JUDGE_MODEL = JUDGE_MODELS[0]
