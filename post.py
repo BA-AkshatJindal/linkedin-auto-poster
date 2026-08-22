@@ -571,15 +571,47 @@ POST_FORMATS = [
 ]
 
 
-def format_linkedin_text(text: str) -> str:
-    """Ensure LinkedIn post text is cleanly formatted with punchy spacing (\\n\\n)
-    between logical paragraphs while keeping numbered steps and list items clean and readable."""
+def sanitize_linkedin_text(text: str) -> str:
+    """Sanitize commentary text for LinkedIn Posts API (/rest/posts).
+    
+    CRITICAL: LinkedIn's /rest/posts API parser contains a known bug where any
+    parentheses '()' or unescaped markdown bracket delimiters cause the server to
+    silently truncate and drop all text from that character onwards.
+    """
     if not text:
         return text
 
+    t = text
+    # Convert parenthetical expressions e.g. "(e.g., ...)" -> "— e.g., ... —"
+    t = re.sub(r"\s*\(([^)]+)\)\s*", r" — \1 — ", t)
+    # Replace any stray open or close parentheses with dashes
+    t = t.replace("(", " — ").replace(")", " — ")
+    # Strip square brackets and curly braces to prevent entity parsing breaks
+    t = t.replace("[", "").replace("]", "")
+    t = t.replace("{", "").replace("}", "")
+
+    # Clean up double dashes, colon formatting, and spacing
+    t = re.sub(r" —\s*— ", " — ", t)
+    t = re.sub(r" —\s*:", ":", t)
+    t = re.sub(r" —\s*\.", ".", t)
+    t = re.sub(r"[ \t]+", " ", t)
+
+    return t.strip()
+
+
+def format_linkedin_text(text: str) -> str:
+    """Ensure LinkedIn post text is cleanly formatted with punchy spacing (\\n\\n)
+    between logical paragraphs while keeping numbered steps and list items clean and readable.
+    Also sanitizes all parentheses and special delimiters to prevent LinkedIn API truncation."""
+    if not text:
+        return text
+
+    # Pre-sanitize text to prevent LinkedIn API truncation bugs
+    sanitized = sanitize_linkedin_text(text)
+
     # Extract hashtags at the end
-    hashtags = re.findall(r"#\w+", text)
-    clean_text = re.sub(r"#\w+", "", text).strip()
+    hashtags = re.findall(r"#\w+", sanitized)
+    clean_text = re.sub(r"#\w+", "", sanitized).strip()
 
     # Split into raw lines / paragraphs by existing newlines
     raw_lines = [p.strip() for p in clean_text.split("\n") if p.strip()]
@@ -881,6 +913,11 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         - Keep regular paragraphs short (1-2 sentences) with clear blank lines (\\n\\n) between major sections.
         - Place 3-5 clean, relevant hashtags on a separate line at the very bottom with a blank line before them.
 
+        CRITICAL LINKEDIN API TRUNCATION RULE:
+        - ABSOLUTELY NEVER USE PARENTHESES '(' or ')' or BRACKETS '[' or ']' in the commentary or first comment.
+        - LinkedIn's /rest/posts API has a known parser bug that silently truncates and drops all text from any parenthesis '('.
+        - Always use em-dashes '—', colons ':', hyphens '-', or commas ',' instead of parentheses.
+
         LENGTH & CADENCE:
         - 90-200 words. Rich in insight, zero filler words.
         - Avoid repetitive rhythmic patterns. Vary sentence lengths naturally.
@@ -1003,6 +1040,10 @@ def guardrail_check(text: str) -> list[str]:
     tags = re.findall(r"#\w+", text)
     if not (3 <= len(tags) <= 5):
         issues.append(f"Use 3-5 hashtags (found {len(tags)}).")
+    if "(" in text or ")" in text:
+        issues.append("Remove all parentheses '(' and ')' — use em-dashes '—' or commas instead so LinkedIn doesn't truncate the post.")
+    if "[" in text or "]" in text:
+        issues.append("Remove all brackets '[' and ']' — use clean text instead.")
     if EMOJI_RE.search(text):
         issues.append("Remove all emojis.")
     low = text.lower()
@@ -1575,10 +1616,13 @@ def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: byt
         "LinkedIn-Version": "202601",
         "Content-Type": "application/json",
     }
+    # Final safeguard against LinkedIn API truncation bugs
+    clean_commentary = sanitize_linkedin_text(commentary)
+
     with httpx.Client(timeout=60.0) as client:
         payload = {
             "author": person_urn,
-            "commentary": commentary,
+            "commentary": clean_commentary,
             "visibility": "PUBLIC",
             "distribution": {
                 "feedDistribution": "MAIN_FEED",
@@ -1595,8 +1639,8 @@ def publish_to_linkedin(token: str, person_urn: str, commentary: str, image: byt
         elif poll_data:
             payload["content"] = {
                 "poll": {
-                    "question": poll_data["question"],
-                    "options": [{"text": opt} for opt in poll_data["options"][:4]],
+                    "question": sanitize_linkedin_text(poll_data["question"]),
+                    "options": [{"text": sanitize_linkedin_text(opt)} for opt in poll_data["options"][:4]],
                     "settings": {
                         "duration": "THREE_DAYS"
                     }
@@ -1646,10 +1690,11 @@ def post_comment(token: str, person_urn: str, object_urn: str, text: str) -> str
         "X-Restli-Protocol-Version": "2.0.0",
         "Content-Type": "application/json",
     }
+    clean_text = sanitize_linkedin_text(text)
     r = httpx.post(
         f"https://api.linkedin.com/v2/socialActions/{enc}/comments",
         headers=headers,
-        json={"actor": person_urn, "object": object_urn, "message": {"text": text}},
+        json={"actor": person_urn, "object": object_urn, "message": {"text": clean_text}},
         timeout=30.0,
     )
     r.raise_for_status()
