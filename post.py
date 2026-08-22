@@ -599,10 +599,43 @@ def sanitize_linkedin_text(text: str) -> str:
     return t.strip()
 
 
-def format_linkedin_text(text: str) -> str:
+DEFAULT_NICHE_HASHTAGS = [
+    "#ProductManagement",
+    "#BusinessAnalysis",
+    "#ProductStrategy",
+    "#AIEngineering",
+    "#SystemDesign",
+    "#TechLeadership",
+]
+
+
+def generate_fallback_hashtags(topic: str = "", text: str = "") -> list[str]:
+    """Generate 3-5 relevant, high-signal hashtags based on topic and content keywords."""
+    tags = []
+    combined = (topic + " " + text).lower()
+
+    if any(k in combined for k in ["ba", "business analyst", "babok", "requirement", "bpmn", "user story", "gherkin"]):
+        tags.extend(["#BusinessAnalysis", "#RequirementsEngineering", "#Agile"])
+    if any(k in combined for k in ["pm", "product manager", "product management", "roadmap", "kano", "discovery"]):
+        tags.extend(["#ProductManagement", "#ProductStrategy", "#ProductOps"])
+    if any(k in combined for k in ["ai", "agent", "llm", "rag", "eval", "guardrail", "model", "prompt"]):
+        tags.extend(["#AIEngineering", "#ArtificialIntelligence", "#TechInnovation"])
+    if any(k in combined for k in ["fresher", "career", "interview", "resume", "entry-level", "portfolio", "hiring"]):
+        tags.extend(["#CareerAdvice", "#TechCareers", "#ContinuousLearning"])
+    if any(k in combined for k in ["engineering", "architecture", "scale", "system", "database", "api", "infra"]):
+        tags.extend(["#SystemDesign", "#SoftwareEngineering"])
+
+    for default_tag in DEFAULT_NICHE_HASHTAGS:
+        if default_tag not in tags:
+            tags.append(default_tag)
+
+    return tags[:5]
+
+
+def format_linkedin_text(text: str, topic: str = "") -> str:
     """Ensure LinkedIn post text is cleanly formatted with punchy spacing (\\n\\n)
     between logical paragraphs while keeping numbered steps and list items clean and readable.
-    Also sanitizes all parentheses and special delimiters to prevent LinkedIn API truncation."""
+    Also sanitizes all parentheses and guarantees 3-5 high-reach hashtags at the end."""
     if not text:
         return text
 
@@ -648,15 +681,26 @@ def format_linkedin_text(text: str) -> str:
 
     formatted_body = "\n\n".join(final_blocks)
 
-    if hashtags:
-        seen = set()
-        unique_tags = []
-        for tag in hashtags:
-            lower = tag.lower()
+    # Ensure 3-5 unique, high-signal hashtags are always present
+    seen = set()
+    unique_tags = []
+    for tag in hashtags:
+        clean_tag = re.sub(r"[^\w#]", "", tag)
+        if clean_tag.startswith("#") and len(clean_tag) > 1:
+            lower = clean_tag.lower()
             if lower not in seen:
                 seen.add(lower)
-                unique_tags.append(tag)
-        formatted_body += "\n\n" + " ".join(unique_tags[:5])
+                unique_tags.append(clean_tag)
+
+    if len(unique_tags) < 3:
+        for fallback_tag in generate_fallback_hashtags(topic, sanitized):
+            if fallback_tag.lower() not in seen:
+                seen.add(fallback_tag.lower())
+                unique_tags.append(fallback_tag)
+            if len(unique_tags) >= 5:
+                break
+
+    formatted_body += "\n\n" + " ".join(unique_tags[:5])
 
     return formatted_body
 
@@ -1000,7 +1044,7 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         ))
     data = _extract_json(resp.text)
     raw_commentary = str(data["commentary"]).strip()
-    formatted_commentary = format_linkedin_text(raw_commentary)
+    formatted_commentary = format_linkedin_text(raw_commentary, topic=topic)
 
     return {
         "commentary": formatted_commentary,
