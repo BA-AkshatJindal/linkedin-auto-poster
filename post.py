@@ -1871,9 +1871,8 @@ def main() -> None:
     # Save post URN to local history file for future performance tracking
     save_post_history(topic, commentary, urn=urn)
 
-    # First comment: drop the author's follow-up as the first comment to boost
-    # reach. ON by default (no workflow env needed) — set FIRST_COMMENT_MODE=false to disable.
-    if first_comment and os.environ.get("FIRST_COMMENT_MODE", "true").strip().lower() in ("1", "true", "yes"):
+    # First comment: OFF by default. Set FIRST_COMMENT_MODE=true to enable.
+    if first_comment and os.environ.get("FIRST_COMMENT_MODE", "false").strip().lower() in ("1", "true", "yes"):
         # A freshly published post needs a few seconds to propagate before the
         # social-actions endpoint accepts comments (else 404), so retry briefly.
         for attempt in range(1, 5):
