@@ -1,9 +1,6 @@
 name: Daily LinkedIn Post
 
 on:
-  schedule:
-    # Runs twice daily at 09:30 AM IST (04:00 UTC) and 07:30 PM IST (14:00 UTC)
-    - cron: '0 4,14 * * *'
   workflow_dispatch:
     inputs:
       topic:

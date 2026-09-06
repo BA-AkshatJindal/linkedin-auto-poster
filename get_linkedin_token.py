@@ -24,8 +24,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 import httpx
 
-CLIENT_ID = os.environ.get("LINKEDIN_CLIENT_ID", "PASTE_YOUR_CLIENT_ID")
-CLIENT_SECRET = os.environ.get("LINKEDIN_CLIENT_SECRET", "PASTE_YOUR_CLIENT_SECRET")
+CLIENT_ID = os.environ.get("LINKEDIN_CLIENT_ID", "")
+CLIENT_SECRET = os.environ.get("LINKEDIN_CLIENT_SECRET", "")
 REDIRECT_URI = "http://localhost:8765/callback"
 SCOPES = "openid profile w_member_social"
 
