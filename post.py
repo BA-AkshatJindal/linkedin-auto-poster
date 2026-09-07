@@ -37,80 +37,135 @@ try:
 except ImportError:
     pass
 
-# The niche this account posts about.
-CORE_THEMES = "Business Analysis, Product Management, AI & AI agents, Product Strategy, and Career Pathways in BA & PM for Freshers"
+# The strategic pillars this account covers across distinct audience tracks.
+CORE_THEMES = "Product Management, Business Analysis, Engineering Realities, Applied AI Utility, and Workplace Culture"
 
-# ── Static backup topics ──────────────────────────────────────────────
-# Used ONLY if the live trend engine fails. Keep them on-brand: Business
-# Analysis, Product Management, AI / agents, and Career Advice for BA & PM Freshers.
-TOPICS = [
-    # ── Educational Frameworks & Teardowns (BABOK / Agile / Product) ──────
-    "How to use the INVEST framework to write razor-sharp agile user stories",
-    "BPMN 2.0 process mapping essentials: how junior BAs should map business workflows",
-    "The MoSCoW prioritization method: how to prevent scope creep in sprint planning",
-    "How to run a 5-Whys root cause analysis session with stubborn stakeholders",
-    "Writing unambiguous Acceptance Criteria using Given-When-Then (Gherkin format)",
-    "The Kano Model: how to categorize features into Basic, Performance, and Delighters",
-    "Gap Analysis masterclass: mapping Current State to Future State step-by-step",
-    "How to build a RACI matrix that eliminates team role confusion in projects",
-    "Opportunity Solution Trees: how product teams connect user needs to real solutions",
-    "Non-Functional Requirements (NFRs): the 5 categories every Business Analyst must document",
-    "ICE vs RICE prioritization scoring: which framework fits your product stage?",
-    "How to write a 1-page PRD that engineering teams actually love reading",
-    "The difference between Outcome-Based Roadmaps and Feature Delivery Timelines",
-    "North Star Metric decomposition: how to map high-level goals to input metrics",
-    "The 4 essential UML diagrams every Business Analyst must master (Use Case, Activity, Sequence, State)",
-
-    # ── AI Engineering & AI Product Architecture (Proof-backed) ───────────
-    "Why eval-driven development beats prompt tweaking when building reliable AI products",
-    "RAG vs Fine-Tuning: the 4-question decision tree for AI product builders",
-    "How to design Human-in-the-Loop guardrails for autonomous AI agent workflows",
-    "Why structured tool-calling beats open-ended text generation for AI reliability",
-    "Chunking strategies in RAG pipelines: fixed-size vs semantic document splitting",
-    "How to measure Precision vs Recall in production LLM applications",
-    "Context window management: why stuffing 1M tokens often degrades reasoning quality",
-    "Why golden test datasets are the only moat in enterprise generative AI products",
-    "Building AI confidence scoring UX: how to show uncertainty without losing user trust",
-    "Latency vs Cost vs Quality: the core trade-off triangle of production AI systems",
-    "Agent memory architectures: short-term context vs persistent vector storage",
-    "Why prompt engineering is evolving into deterministic workflow orchestration",
-    "How to test LLM applications for edge cases before shipping to customers",
-
-    # ── Fresher & Early Career Mastery (Actionable & High-Signal) ─────────
-    "How freshers can build a high-signal BA portfolio project without prior work experience",
-    "What hiring managers look for in a Business Analyst case study interview",
-    "How to turn messy stakeholder meeting notes into a clean Functional Spec",
-    "The 3 most common mistakes fresh graduates make in PM and BA technical interviews",
-    "How junior BAs can lead requirement elicitation workshops with confidence",
-    "Why understanding business domain logic matters 10x more than memorizing tools",
-    "The non-linear pathway: transitioning from Junior Business Analyst to Product Manager",
-    "How to build a product teardown portfolio that gets you noticed on LinkedIn",
-    "3 core questions every junior BA should ask during initial stakeholder discovery",
-    "How freshers can use AI tools as a learning copilot without hallucinating domain facts",
-
-    # ── Real-World Product Strategy & Field Lessons ───────────────────────
-    "Why feature roadmaps fail without an explicit Non-Goals section in the PRD",
-    "The difference between product delivery velocity and actual customer value",
-    "Why 80% of software features are rarely used and how to trim product bloat",
-    "How Business Analysts bridge the communication gap between business logic and tech stacks",
-    "The real cost of technical debt: why tech debt is a product strategy decision",
-    "Why customer interviews lie and actual user telemetry never does",
-    "The danger of building for loud vocal power users instead of your core ICP",
-    "How to handle executive stakeholder pushback without blowing up sprint commitments",
-    "Why product-led growth collapses without seamless product-led onboarding",
-    "The silent product killer: shipping features before defining the telemetry metrics",
-    "How to prioritize backlog items when engineering, sales, and executives disagree",
-    "The art of saying no to custom enterprise feature requests without losing the account",
+# ── 5 Focused Audience Tracks (Single Clear Focus per Post) ───────────
+TRACKS = [
+    {
+        "id": "product_management",
+        "name": "Product Management & Strategy",
+        "target_audience": "Product Managers, Group PMs, Founders, and Product Leaders",
+        "persona": "a seasoned Product Manager who obsesses over customer value, hard trade-offs, and shipping real outcomes over vanity output",
+        "voice": "Strategic, candid, empathetic to user pain and cross-functional friction, speaking peer-to-peer with other PMs without buzzwords",
+        "hashtags": ["#ProductManagement", "#ProductStrategy", "#ProductDiscovery", "#ProductLeadership", "#TechStrategy"],
+        "topics": [
+            "Why most customer discovery fails: asking users what features they want instead of uncovering their painful workarounds",
+            "The art of saying no: how senior PMs reject good ideas to protect great product outcomes",
+            "Why feature roadmaps with strict quarterly deadlines destroy engineering trust and team morale",
+            "Outcome-based roadmaps vs delivery checklists: what changes when you measure user behavior instead of tickets shipped",
+            "The dangerous trap of designing for vocal power users while alienating your core 80% customer base",
+            "Why vanity metrics like signups and MAU give product teams false confidence while churn silently kills growth",
+            "How to write a 1-page PRD that engineers and designers actually read and reference daily",
+            "The silent killer of B2B SaaS: building complex custom enterprise features that only one client ever uses",
+            "The Kano Model in practice: why basic hygiene features won't delight users, but their absence causes immediate churn",
+            "How to run a high-signal customer interview without leading the witness or asking speculative questions",
+            "Why product telemetry should be designed alongside user stories, not as an afterthought post-launch",
+            "Pricing and packaging friction: why the best product feature is useless if the tiering makes no sense to users",
+            "Feature bloat vs core value: why deleting underused features is often the highest-ROI product move",
+            "The difference between solving a customer pain and building what the loudest sales executive promised",
+        ],
+    },
+    {
+        "id": "business_analysis",
+        "name": "Business Analysis & Systems Thinking",
+        "target_audience": "Business Analysts, Systems Analysts, Functional Consultants, and Scrum Masters",
+        "persona": "a detail-oriented Senior Business Analyst and systems thinker who masters turning messy stakeholder ambiguities into crisp, reliable system logic",
+        "voice": "Methodical, practical, experienced in project trenches, bridging business goals with technical constraints",
+        "hashtags": ["#BusinessAnalysis", "#RequirementsEngineering", "#SystemsThinking", "#Agile", "#ProcessMapping"],
+        "topics": [
+            "The biggest gap in requirements gathering: confusing what a stakeholder asked for with the actual problem they need solved",
+            "BPMN swimlane diagrams in practice: mapping the messy handoffs between humans and automated systems",
+            "Why 90% of production bugs are actually missed edge cases in business requirements, not bad code",
+            "How to handle a loud stakeholder who insists every single requirement is a 'Must Have' under MoSCoW prioritization",
+            "Writing bulletproof acceptance criteria with Given-When-Then without turning user stories into micro-management",
+            "The 5 Non-Functional Requirements that always get forgotten until system load spikes on launch day",
+            "How Business Analysts should handle scope creep during sprints without becoming the team's villain",
+            "Why mapping the Current State accurately is twice as valuable as imagining an idealized Future State",
+            "The 5-Whys root cause analysis technique: peeling back departmental friction to find the real operational bottleneck",
+            "How junior BAs can facilitate requirement elicitation workshops when senior stakeholders have conflicting agendas",
+            "Why understanding business domain economics matters 10x more for a Business Analyst than mastering diagramming tools",
+            "The RACI matrix reality check: why having multiple 'Accountable' names on a deliverable guarantees zero accountability",
+            "The silent danger of undocumented business rules hidden inside legacy spreadsheets",
+            "How to translate complex regulatory requirements into modular, testable functional specifications",
+        ],
+    },
+    {
+        "id": "engineering_leadership",
+        "name": "Engineering Realities & Modern Tech",
+        "target_audience": "Software Engineers, Tech Leads, Engineering Managers, and Architects",
+        "persona": "a pragmatic Tech Lead and software engineer who values simplicity, system reliability, and clean architecture over shiny new tools",
+        "voice": "Direct, respectful of developer velocity, no-nonsense, pragmatic about technical trade-offs",
+        "hashtags": ["#SoftwareEngineering", "#SystemDesign", "#TechLeadership", "#CleanCode", "#EngineeringCulture"],
+        "topics": [
+            "Why technical debt is ultimately a product business decision, not just an engineering complaint",
+            "The microservices tax: when breaking up a monolith too early slows down team velocity by 5x",
+            "Why clean, readable code with boring technology almost always beats clever, over-engineered architectures in production",
+            "API design as a product contract: why backward compatibility is the ultimate respect you show to your consumers",
+            "The real cost of cloud waste: how simple architectural oversights lead to ballooning monthly cloud bills",
+            "Why writing thorough integration tests saves 10x more developer hours than debating code formatting styles",
+            "How to conduct code reviews that actually elevate engineering standards instead of turning into pedantic nitpicking",
+            "Event-driven architecture trade-offs: the hidden debugging nightmare of asynchronous distributed systems",
+            "Why premature optimization is still the root of all evil: build for current scale with clear modular boundaries",
+            "The difference between engineering velocity (shipping commits) and engineering impact (solving user problems reliably)",
+            "Database index hygiene: why one missing index causes more downtime than complex logic bugs",
+            "How to communicate technical debt to non-technical leaders in terms of revenue risk and sprint velocity",
+        ],
+    },
+    {
+        "id": "applied_ai",
+        "name": "Applied AI & Real-World Tech Utility",
+        "target_audience": "Tech, Product, and Business professionals navigating real-world AI adoption",
+        "persona": "a pragmatic applied AI practitioner who cuts through industry hype to focus on what actually works reliably in production",
+        "voice": "Grounded, analytical, honest about limitations, focused on business utility rather than buzzwords",
+        "hashtags": ["#AppliedAI", "#TechTrends", "#ArtificialIntelligence", "#ProductOps", "#DigitalTransformation"],
+        "topics": [
+            "Why 80% of enterprise generative AI projects fail: treating probabilistic LLMs like deterministic calculators",
+            "The unglamorous truth of applied AI: 90% of model performance comes from clean data pipelines, not prompt wizardry",
+            "Why simple heuristics and rigid rule engines often beat complex AI models for mission-critical business workflows",
+            "Designing Human-in-the-Loop workflows: knowing exactly when an automated agent must hand off control to a human expert",
+            "The cost of AI latency: why a 4-second LLM response can destroy the user experience of an otherwise great feature",
+            "Golden evaluation test sets: why you cannot deploy or iterate on AI products without deterministic benchmark suites",
+            "The danger of letting AI do your primary thinking: why junior professionals must guard their mental problem-solving muscles",
+            "Small specialized models vs giant general LLMs: why domain-specific lightweight models are winning on enterprise ROI",
+            "Context window bloat: why stuffing 1M tokens often degrades retrieval precision and inflates API costs",
+            "Why prompt engineering is gradually being replaced by structured tool calling and deterministic state machines",
+        ],
+    },
+    {
+        "id": "career_and_culture",
+        "name": "Workplace Lessons & Career Growth",
+        "target_audience": "Aspiring BAs, PMs, tech freshers, and professionals navigating modern career growth",
+        "persona": "an observant mentor and relatable tech professional sharing authentic career lessons and workplace observations",
+        "voice": "Warm, candid, reflective, conversational, sharing honest lessons without preaching or corporate fluff",
+        "hashtags": ["#CareerAdvice", "#TechCareers", "#ProfessionalGrowth", "#Mentorship", "#WorkplaceCulture"],
+        "topics": [
+            "What early-career professionals get wrong about interviews: presenting generic textbook answers instead of showing how you think through messy problems",
+            "The power of building proof-of-work: why a single well-crafted teardown artifact beats a 2-page list of buzzwords on your resume",
+            "Dealing with imposter syndrome in cross-functional meetings: why asking the 'dumb' clarifying question is a superpower",
+            "How to manage upward effectively: keeping your manager informed on solutions, not just dumping unstructured problems on their desk",
+            "The transition from individual contributor to lead: learning that your job is no longer doing the work, but unblocking others",
+            "Why business domain curiosity is the single biggest career accelerator for analysts and junior builders",
+            "The hardest lesson about workplace communication: being right technically does not matter if you fail to bring stakeholders along with you",
+            "How to run effective 1-on-1s with your manager to drive your own career growth rather than just giving a status report",
+            "Why saying 'I don't know, but I'll find out and follow up by 3 PM' builds 10x more credibility than pretending to know",
+            "The difference between being busy with tickets and actually building career capital that compounds",
+        ],
+    },
 ]
 
-# ── Live trend sources (free, keyless) ───────────────────────────────
+# Static backup pool combining all tracks
+TOPICS = [t for track in TRACKS for t in track["topics"]]
+
+# ── Live trend sources across all 5 tracks ─────────────────────────────
 TRENDS_RSS = [
-    "https://news.google.com/rss/search?q=AI%20agents%20when:7d&hl=en-US&gl=US&ceid=US:en",
     "https://news.google.com/rss/search?q=%22Product%20Management%22%20OR%20%22Product%20Strategy%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=%22AI%20product%22%20OR%20LLM%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22Business%20Analysis%22%20OR%20%22Systems%20Analysis%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22Software%20Engineering%22%20OR%20%22System%20Design%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22Applied%20AI%22%20OR%20%22Tech%20Trends%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
 ]
 HN_SEARCH = "https://hn.algolia.com/api/v1/search?tags=story&query="
-HN_QUERIES = ("AI agents", "LLM", "product management", "product strategy")
+HN_QUERIES = ("product management", "business analysis", "software architecture", "engineering leadership", "applied AI", "career lessons tech")
 
 # Trend-topic cache: generate a fresh pool at most once per ~20h, then reuse it
 # for every run in between (0 API hits for topic selection). Persisted across
@@ -170,13 +225,19 @@ IMAGE_MODEL = "gemini-2.5-flash-image-preview"  # 404s on this key -> Pollinatio
 BANNED_PHRASES = [
     "leverage", "in today's landscape", "transformative", "game-changer",
     "game changer", "synergy", "delve", "tapestry", "unlock the power",
-    "in conclusion", "elevate your", "supercharge",
+    "in conclusion", "elevate your", "supercharge", "testament to",
+    "here is a 3-step", "here is a framework", "here's a 3-step", "here's a framework",
+    "3-step framework", "step-by-step framework", "let's dive in", "dive deep",
+    "it is important to remember", "at the end of the day", "fast-paced world",
+    "beacon of", "seamlessly integrate", "pivotal role",
 ]
 EMOJI_RE = re.compile(
     "[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F1E6-\U0001F1FF\U00002190-\U000021FF\U00002B00-\U00002BFF]"
 )
 QUALITY_BAR = 8.0  # avg rubric score needed to stop early
 HOOK_MIN = 8       # the hook must clear this on its own (reach depends on it)
+HUMAN_VOICE_MIN = 8  # post must sound genuinely human (not robotic AI listicle)
+SINGLE_FOCUS_MIN = 8  # post must strictly focus on one audience/domain
 
 
 # ── Transient-error retry ────────────────────────────────────────────
@@ -292,17 +353,22 @@ def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 
     """
     sig_text = "\n".join(f"- {s}" for s in signals) if signals else "(no feed signals available)"
     prompt = dedent(f"""\
-        You curate LinkedIn post topics for a builder who posts about {CORE_THEMES}.
+        You curate LinkedIn post topics for a modern professional writer who covers: {CORE_THEMES}.
         Use the LATEST real trends and these recent headlines as inspiration:
         {sig_text}
 
-        Produce {n} specific, fresh, opinionated LinkedIn POST TOPICS in this niche.
+        Produce {n} specific, fresh, opinionated LinkedIn POST TOPICS across our 5 audience tracks:
+        1. Product Management & Strategy (discovery, metrics, trade-offs, roadmap realities)
+        2. Business Analysis & Systems Thinking (requirements, edge cases, scope, process mapping)
+        3. Engineering Realities (technical debt, clean code, architecture trade-offs, dev velocity)
+        4. Applied AI Utility (practical ROI, human-in-the-loop, real workflow adoption)
+        5. Workplace Culture & Career Growth (mentorship, communication, proof-of-work)
+
+        RULES:
         - One topic per line, 6-14 words, a clear angle or hot take (don't copy headlines).
-        - Center on AI, AI agents / agentic systems, LLMs, and product building.
-        - ACCESSIBLE angles for a BROAD professional audience (founders, PMs, leaders):
-          the implication, lesson, or hot take — NOT deep-technical specs, protocol
-          names, or engineering internals.
-        - Mix timely (tied to current trends) with sharp evergreen angles.
+        - Ensure a balanced variety across all 5 pillars — DO NOT make every topic about AI or LLMs.
+        - Grounded, accessible, relatable angles for real professionals in tech and business.
+        - Mix timely industry developments with timeless workplace wisdom.
         - No numbering, no hashtags, no quotes. Just one topic per line.""")
 
     configs = []
@@ -432,49 +498,139 @@ def close_github_issue(issue_number: int, comment_text: str) -> None:
         print(f"[github-issue] Error closing issue #{issue_number}: {e}")
 
 
-def pick_topic(client: genai.Client | None = None) -> str:
-    """TOPIC override > live trend-generated topic > static backup pool."""
+def get_track_by_id(track_id: str) -> dict | None:
+    """Retrieve track config dict by its unique ID."""
+    if not track_id:
+        return None
+    for t in TRACKS:
+        if t["id"].lower() == track_id.lower().strip():
+            return t
+    return None
+
+
+def detect_track(text: str) -> dict:
+    """Infer the most appropriate track from a topic or draft string."""
+    low = text.lower()
+    scores = {t["id"]: 0 for t in TRACKS}
+
+    if any(k in low for k in ["pm", "product manager", "product management", "product strategy", "product discovery", "roadmap", "kano", "prd", "churn", "pricing", "feature bloat", "stakeholder trade-off", "outcomes over output"]):
+        scores["product_management"] += 3
+    if any(k in low for k in ["ba", "business analyst", "business analysis", "babok", "requirements", "bpmn", "swimlane", "moscow", "user story", "acceptance criteria", "given-when-then", "non-functional", "5-whys"]):
+        scores["business_analysis"] += 3
+    if any(k in low for k in ["code", "software engineer", "tech lead", "architect", "microservice", "monolith", "tech debt", "clean code", "api design", "integration test", "database index", "system design"]):
+        scores["engineering_leadership"] += 3
+    if any(k in low for k in ["ai", "llm", "generative ai", "human-in-the-loop", "data pipeline", "latency", "eval", "benchmark", "prompt", "fine-tuning", "rag", "small model"]):
+        scores["applied_ai"] += 3
+    if any(k in low for k in ["career", "interview", "resume", "fresher", "mentor", "imposter syndrome", "manage upward", "1-on-1", "proof-of-work", "junior", "individual contributor"]):
+        scores["career_and_culture"] += 3
+
+    best_id = max(scores, key=scores.get)
+    if scores[best_id] > 0:
+        return get_track_by_id(best_id)
+    return random.choice(TRACKS)
+
+
+def pick_next_track(history: list[dict] | None = None) -> dict:
+    """Select the least recently used track from history to ensure fair, diverse rotation."""
+    forced = os.environ.get("TRACK", "").strip().lower()
+    if forced:
+        t = get_track_by_id(forced)
+        if t:
+            return t
+        for t in TRACKS:
+            if forced in t["name"].lower() or forced in t["id"].lower():
+                return t
+
+    if history is None:
+        history = load_post_history(limit=15)
+
+    recent_track_ids = [item.get("track_id") for item in reversed(history) if item.get("track_id")]
+
+    all_track_ids = [t["id"] for t in TRACKS]
+    unused = [tid for tid in all_track_ids if tid not in recent_track_ids]
+    if unused:
+        chosen_id = random.choice(unused)
+        chosen_track = get_track_by_id(chosen_id)
+        print(f"[track-rotation] picked previously unused track: '{chosen_track['name']}'")
+        return chosen_track
+
+    # Otherwise pick the track used furthest back in time (least recently used)
+    recency = {}
+    for idx, tid in enumerate(recent_track_ids):
+        if tid not in recency:
+            recency[tid] = idx
+    least_recent_id = max(all_track_ids, key=lambda tid: recency.get(tid, 999))
+    chosen_track = get_track_by_id(least_recent_id)
+    print(f"[track-rotation] picked least recently used track: '{chosen_track['name']}'")
+    return chosen_track
+
+
+def pick_topic(client: genai.Client | None = None, track: dict | None = None) -> str:
+    """Select a fresh topic for the given track, avoiding recently used topics."""
     forced = os.environ.get("TOPIC", "").strip()
     if forced:
         return forced
+
+    if track is None:
+        track = pick_next_track()
+
+    history = load_post_history(limit=25)
+    recent_topics = [item.get("topic", "").strip().lower() for item in history]
+
+    # Filter out recently published topics from this track
+    available_topics = [tp for tp in track["topics"] if tp.strip().lower() not in recent_topics]
+    if not available_topics:
+        available_topics = track["topics"]
+
+    # Live trends cache check for track-matching topics
     if client and os.environ.get("TRENDS_MODE", "true").strip().lower() in ("1", "true", "yes"):
-        # 1) reuse a fresh cached pool — zero API hits
         cached, age = load_cached_topics()
         if cached:
-            choice = random.choice(cached)
-            print(f"[trends] cache hit ({len(cached)} topics, age {age:.1f}h, 0 API calls); picked: {choice}")
-            return choice
-        # 2) cache stale/missing -> refresh once, then cache it
-        try:
-            signals = gather_trend_signals()
-            topics = generate_trending_topics(client, signals)
-            if topics:
-                save_cached_topics(topics)
-                choice = random.choice(topics)
-                print(f"[trends] refreshed {len(topics)} topics (cached); picked: {choice}")
+            track_matches = [c for c in cached if detect_track(c)["id"] == track["id"] and c.strip().lower() not in recent_topics]
+            if track_matches:
+                choice = random.choice(track_matches)
+                print(f"[trends] cache hit for track '{track['id']}' ({len(track_matches)} topics, age {age:.1f}h); picked: {choice}")
                 return choice
-        except Exception as e:
-            print(f"[trends] engine failed, using backup list: {e}")
-    return random.choice(TOPICS)
+        else:
+            try:
+                signals = gather_trend_signals()
+                fresh_topics = generate_trending_topics(client, signals)
+                if fresh_topics:
+                    save_cached_topics(fresh_topics)
+                    track_matches = [c for c in fresh_topics if detect_track(c)["id"] == track["id"] and c.strip().lower() not in recent_topics]
+                    if track_matches:
+                        choice = random.choice(track_matches)
+                        print(f"[trends] refreshed trend topics for track '{track['id']}'; picked: {choice}")
+                        return choice
+            except Exception as e:
+                print(f"[trends] engine note: {e}")
+
+    choice = random.choice(available_topics)
+    print(f"[pool] picked topic for track '{track['id']}': '{choice}'")
+    return choice
 
 
 def pick_post_spec(client: genai.Client | None = None) -> dict:
-    """Returns {'topic': str, 'persona': str, 'context': str, 'issue_number': int|None}
+    """Returns {'track': dict, 'topic': str, 'persona': str, 'context': str, 'issue_number': int|None}
 
     Priority:
-    1. Environment variables (TOPIC, AGENT_PERSONA/PERSONA, CONTEXT)
+    1. Environment variables (TOPIC, AGENT_PERSONA/PERSONA, CONTEXT, TRACK)
     2. GitHub Issues from GitHub Mobile app
     3. upcoming_posts.json queue file
-    4. Live AI trend generator / cached trend topics / backup topic pool
+    4. Automated Track Rotation & Curated Topic Pool / Live Trends
     """
+    history = load_post_history(limit=15)
     forced_topic = os.environ.get("TOPIC", "").strip()
     forced_persona = os.environ.get("AGENT_PERSONA", "").strip() or os.environ.get("PERSONA", "").strip()
     forced_context = os.environ.get("CONTEXT", "").strip()
+    forced_track_id = os.environ.get("TRACK", "").strip().lower()
 
     if forced_topic:
+        track = get_track_by_id(forced_track_id) if forced_track_id else detect_track(forced_topic)
         return {
+            "track": track,
             "topic": forced_topic,
-            "persona": forced_persona,
+            "persona": forced_persona or track["persona"],
             "context": forced_context,
             "issue_number": None,
         }
@@ -482,11 +638,17 @@ def pick_post_spec(client: genai.Client | None = None) -> dict:
     # 2) GitHub Issues (GitHub Mobile)
     gh_spec = fetch_github_issue_spec()
     if gh_spec:
-        if forced_persona and not gh_spec["persona"]:
-            gh_spec["persona"] = forced_persona
-        if forced_context and not gh_spec["context"]:
-            gh_spec["context"] = forced_context
-        return gh_spec
+        topic = gh_spec["topic"]
+        track = get_track_by_id(forced_track_id) if forced_track_id else detect_track(topic)
+        persona = forced_persona or gh_spec.get("persona") or track["persona"]
+        context = forced_context or gh_spec.get("context")
+        return {
+            "track": track,
+            "topic": topic,
+            "persona": persona,
+            "context": context,
+            "issue_number": gh_spec.get("issue_number"),
+        }
 
     # 3) upcoming_posts.json queue
     if os.path.exists("upcoming_posts.json"):
@@ -498,21 +660,29 @@ def pick_post_spec(client: genai.Client | None = None) -> dict:
                 if isinstance(item, dict) and item.get("topic"):
                     with open("upcoming_posts.json", "w", encoding="utf-8") as f:
                         json.dump(queue, f, indent=2)
-                    print(f"[queue] Picked topic from upcoming_posts.json: '{item['topic']}'")
+                    topic = item["topic"]
+                    track_id = item.get("track") or item.get("track_id") or forced_track_id
+                    track = get_track_by_id(track_id) if track_id else detect_track(topic)
+                    persona = forced_persona or item.get("persona") or track["persona"]
+                    context = forced_context or item.get("context")
+                    print(f"[queue] Picked topic from upcoming_posts.json: '{topic}' (Track: {track['name']})")
                     return {
-                        "topic": item["topic"],
-                        "persona": item.get("persona") or item.get("agent_persona") or forced_persona,
-                        "context": item.get("context") or forced_context,
+                        "track": track,
+                        "topic": topic,
+                        "persona": persona,
+                        "context": context,
                         "issue_number": None,
                     }
         except Exception as e:
             print(f"[queue] Error reading upcoming_posts.json: {e}")
 
-    # 4) AI trend engine / backup pool
-    topic = pick_topic(client)
+    # 4) Automated Track Rotation & Topic Selection
+    track = pick_next_track(history)
+    topic = pick_topic(client, track=track)
     return {
+        "track": track,
         "topic": topic,
-        "persona": forced_persona,
+        "persona": forced_persona or track["persona"],
         "context": forced_context,
         "issue_number": None,
     }
@@ -520,52 +690,43 @@ def pick_post_spec(client: genai.Client | None = None) -> dict:
 
 POST_FORMATS = [
     {
-        "name": "Educational Framework Breakdown",
+        "name": "Trench Observation & Practical Lesson",
         "instruction": (
-            "Teach a proven, authentic industry framework (e.g. INVEST, MoSCoW, BPMN 2.0, Kano Model, RACI, 5-Whys, Opportunity Solution Tree). "
-            "Structure: 1. The core challenge in teams ➔ 2. The Proven Framework with 3-4 clean structured bullets/points (e.g. • Letter/Step: meaning) ➔ 3. A crisp pro-tip or heuristic rule."
+            "Share an authentic scenario or dynamic observed during everyday team execution. "
+            "Structure: 1. Hook with a vivid, relatable workplace moment or cross-team friction ➔ 2. Unpack why this happens in real projects (the underlying human or system cause) ➔ 3. The practical lesson or shift in approach that fixes it. "
+            "Write in natural, conversational paragraphs. Do NOT use formulaic numbered listicles (no '1. Do this, 2. Do that')."
         ),
     },
     {
-        "name": "Step-by-Step Actionable Blueprint",
+        "name": "The 'I Used to Believe' Retrospective",
         "instruction": (
-            "Deliver a clear, practitioner how-to guide with concrete, actionable steps. "
-            "Structure: 1. High-value objective ➔ 2. Clean numbered steps (1. [Action], 2. [Action], 3. [Action]) with specific details ➔ 3. Key takeaway or rule of thumb."
+            "A candid professional reflection showing personal growth and hard-won maturity. "
+            "Structure: 1. The common textbook belief or assumption ('Early in my career / For a long time, I believed X...') ➔ 2. The messy project reality or wake-up call that proved it wrong ➔ 3. The nuanced, battle-tested principle applied now. "
+            "Write with humility, conviction, and relatable practitioner voice."
         ),
     },
     {
-        "name": "Before vs. After (Amateur vs. Pro) Teardown",
+        "name": "Grounded Contrarian Take",
         "instruction": (
-            "Contrast common beginner mistakes with senior practitioner execution. "
-            "Structure: 1. The core dilemma ➔ 2. 'Amateur approach:' vs 'Senior practitioner approach:' with clear contrast ➔ 3. Why this distinction decides project success."
+            "Calmly challenge a popular industry dogma, buzzword, or over-hyped trend with trench realism. "
+            "Structure: 1. Scroll-stopping counter-intuitive hook questioning conventional advice ➔ 2. Why the standard playbook quietly breaks down in production or real meetings ➔ 3. The simpler, grounded alternative that actually works. "
+            "Sharp, analytical, and respectful — no aggressive clickbait."
         ),
     },
     {
-        "name": "Decision Matrix & Heuristic Cheat Sheet",
+        "name": "Practitioner Heuristic & Rule of Thumb",
         "instruction": (
-            "Provide a crisp decision tree for choosing between architectural or product paths (e.g. RAG vs Fine-tuning, Agent vs Script, Build vs Buy). "
-            "Structure: 1. The trade-off tension ➔ 2. Clean decision rules ('• If [Scenario] ➔ [Action]') ➔ 3. Strategic summary principle."
+            "Share a simple, battle-tested decision filter used in daily practice to cut through ambiguity. "
+            "Structure: 1. The hard trade-off or dilemma teams face constantly ➔ 2. The simple mental filter or rule of thumb used to make the call ➔ 3. How this heuristic saves hours of circular debate and protects delivery. "
+            "Provide crisp reasoning and clear application."
         ),
     },
     {
-        "name": "Real-World Case Teardown (Proof-Backed)",
+        "name": "Short Practitioner Reflection",
         "instruction": (
-            "Analyze a well-documented, publicly verified industry case study (e.g. Stripe API design, Figma multiplayer architecture, Spotify squad evolution, Netflix chaos engineering). "
-            "Strictly grounded in authentic facts without inventing numbers. Structure: 1. The context/problem ➔ 2. The specific decision made ➔ 3. The actionable takeaway for everyday builders."
-        ),
-    },
-    {
-        "name": "Contrarian Field Insight",
-        "instruction": (
-            "Challenge a common industry myth or vanity practice with a sharp, experienced-backed observation from the trenches. "
-            "Structure: 1. Scroll-stopping counter-intuitive hook ➔ 2. Why conventional wisdom fails in production ➔ 3. The grounded alternative that actually delivers value."
-        ),
-    },
-    {
-        "name": "Fresher & Career Masterclass",
-        "instruction": (
-            "High-signal, practical career mentorship for aspiring BAs, PMs, and tech freshers. "
-            "Structure: 1. The common resume/interview trap beginners fall into ➔ 2. The high-signal proof-of-work skill to build (with concrete artifacts like diagrams or PRDs) ➔ 3. Actionable drill to practice today."
+            "A concise, punchy observation on craft standards, communication clarity, or team dynamics. "
+            "Structure: 3-4 conversational paragraphs with breathing room. "
+            "Lead with a relatable observation, provide empathetic context, and close with a thought-provoking perspective that stays with the reader."
         ),
     },
 ]
@@ -632,9 +793,9 @@ def generate_fallback_hashtags(topic: str = "", text: str = "") -> list[str]:
     return tags[:5]
 
 
-def format_linkedin_text(text: str, topic: str = "") -> str:
+def format_linkedin_text(text: str, topic: str = "", track: dict | None = None) -> str:
     """Ensure LinkedIn post text is cleanly formatted with punchy spacing (\\n\\n)
-    between logical paragraphs while keeping numbered steps and list items clean and readable.
+    between logical paragraphs while keeping lists clean and readable.
     Also sanitizes all parentheses and guarantees 3-5 high-reach hashtags at the end."""
     if not text:
         return text
@@ -653,7 +814,7 @@ def format_linkedin_text(text: str, topic: str = "") -> str:
     current_list_block = []
 
     for line in raw_lines:
-        is_list_item = bool(re.match(r"^(\d+[.)]|•|-|➔|\*)\s+", line)) or line.startswith("Before:") or line.startswith("After:") or line.startswith("Amateur:") or line.startswith("Senior:")
+        is_list_item = bool(re.match(r"^(\d+[.)]|•|-|➔|\*)\s+", line)) or line.startswith("Before:") or line.startswith("After:")
         
         if is_list_item:
             current_list_block.append(line)
@@ -662,13 +823,13 @@ def format_linkedin_text(text: str, topic: str = "") -> str:
                 final_blocks.append("\n".join(current_list_block))
                 current_list_block = []
             
-            # If a paragraph is dense (longer than 180 chars with multiple sentences), break it up
-            if len(line) > 180 and "." in line:
+            # If a paragraph is dense (longer than 200 chars with multiple sentences), break it up naturally
+            if len(line) > 200 and "." in line:
                 sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", line) if s.strip()]
                 chunk = []
                 for s in sentences:
                     chunk.append(s)
-                    if len(" ".join(chunk)) > 110 or len(chunk) >= 2:
+                    if len(" ".join(chunk)) > 120 or len(chunk) >= 2:
                         final_blocks.append(" ".join(chunk))
                         chunk = []
                 if chunk:
@@ -681,7 +842,7 @@ def format_linkedin_text(text: str, topic: str = "") -> str:
 
     formatted_body = "\n\n".join(final_blocks)
 
-    # Ensure 3-5 unique, high-signal hashtags are always present
+    # Ensure 3-5 unique, high-signal hashtags are present
     seen = set()
     unique_tags = []
     for tag in hashtags:
@@ -691,6 +852,16 @@ def format_linkedin_text(text: str, topic: str = "") -> str:
             if lower not in seen:
                 seen.add(lower)
                 unique_tags.append(clean_tag)
+
+    # If needed, fill from track hashtags first
+    track_tags = track.get("hashtags", []) if track else []
+    for tag in track_tags:
+        clean_tag = re.sub(r"[^\w#]", "", tag)
+        if clean_tag.lower() not in seen:
+            seen.add(clean_tag.lower())
+            unique_tags.append(clean_tag)
+        if len(unique_tags) >= 4:
+            break
 
     if len(unique_tags) < 3:
         for fallback_tag in generate_fallback_hashtags(topic, sanitized):
@@ -719,14 +890,19 @@ def load_post_history(filepath: str = "history_posts.json", limit: int = 15) -> 
     return []
 
 
-def save_post_history(topic: str, commentary: str, urn: str = "", filepath: str = "history_posts.json", limit: int = 15):
+def save_post_history(topic: str, commentary: str, urn: str = "", track_id: str = "", filepath: str = "history_posts.json", limit: int = 25):
     """Append the newly published post to the history file, capping at `limit` items."""
     history = load_post_history(filepath, limit=100)
     lines = [line.strip() for line in commentary.split("\n") if line.strip() and not line.strip().startswith("#")]
     hook = lines[0] if lines else topic
 
+    if not track_id:
+        inferred = detect_track(topic + " " + commentary)
+        track_id = inferred["id"]
+
     entry = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
+        "track_id": track_id,
         "topic": topic,
         "hook": hook,
         "urn": urn,
@@ -740,7 +916,7 @@ def save_post_history(topic: str, commentary: str, urn: str = "", filepath: str 
     try:
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(history, f, indent=2)
-        print(f"[history] saved post history to {filepath} ({len(history)} total entries)")
+        print(f"[history] saved post history (track='{track_id}') to {filepath} ({len(history)} total entries)")
     except Exception as e:
         print(f"[history] error writing {filepath}: {e}")
 
@@ -926,73 +1102,91 @@ def reply_to_follower_comments(client: genai.Client, token: str, person_urn: str
 
 # ── Gemini: write the post ───────────────────────────────────────────
 
-def generate_post(client: genai.Client, topic: str, persona: str = "", context: str = "", feedback: str = "") -> dict:
-    """Return {'commentary': str, 'image_prompt': str}.
+def generate_post(client: genai.Client, topic: str, persona: str = "", context: str = "", track: dict | None = None, feedback: str = "") -> dict:
+    """Return {'commentary': str, 'image_prompt': str, 'first_comment': str}.
 
     If `feedback` is given (from the eval agent), the model must fix those
     specific weaknesses in this draft — this is the reflexion loop.
     """
-    author_desc = f"a real {persona}" if persona else "a pragmatic product builder and Business Analyst with 3 years of hands-on experience in tech"
+    if track is None:
+        track = detect_track(topic)
+
+    author_desc = f"a real {persona}" if persona else track["persona"]
+    target_audience = track["target_audience"]
+    track_voice = track["voice"]
+    track_name = track["name"]
+
     post_format = random.choice(POST_FORMATS)
-    print(f"[format] selected style: {post_format['name']}")
+    print(f"[format] selected style: {post_format['name']} (Track: {track_name})")
 
     system = dedent(f"""\
-        You are ghostwriting for {author_desc}, writing an authentic, high-value LinkedIn post.
+        You are ghostwriting for {author_desc}.
+        You are writing an authentic, human, highly relatable LinkedIn post for a specific professional audience.
 
-        CORE MISSION: TEACH & SHARE AUTHENTIC, VERIFIED KNOWLEDGE:
-        - Deliver real educational value that teaches a specific skill, framework, decision tree, or operational lesson.
-        - Ground every concept in recognized, verifiable industry standards (BABOK business analysis, Agile/Scrum practices, real product discovery, production AI engineering).
-        - ZERO FLUFF / ZERO HAND-WAVING. Teach concrete steps, precise distinctions, and actionable rules.
+        TARGET AUDIENCE:
+        {target_audience}
 
-        AUTHENTIC HUMAN VOICE:
-        - Write like a sharp, in-the-trenches practitioner sharing a masterclass insight with peers.
-        - ZERO AI BUBBLEGUM / ZERO MARKETING FLUFF. Never sound like an AI trying to sound inspirational or deep.
-        - NO FORMULAIC OPENERS ("Does X matter anymore?", "Is Y dead?", "Let that sink in", "We need to talk about X").
-        - NO FORCED ENGAGEMENT BAIT ("Repost if you agree!", "Drop a comment below!").
-        - Speak with quiet conviction, precision, and clarity.
+        YOUR SPECIFIC VOICE & PERSONA FOR THIS POST:
+        {track_voice}
 
-        FORMATTING & READABILITY:
-        - Structure for effortless mobile readability.
-        - When explaining steps, frameworks, or contrasts, use CLEAN list formatting (e.g. '1.', '2.', '3.' or '•' or 'Before:' / 'After:').
-        - Keep regular paragraphs short (1-2 sentences) with clear blank lines (\\n\\n) between major sections.
-        - Place 3-5 clean, relevant hashtags on a separate line at the very bottom with a blank line before them.
+        CORE POSITIONING DIRECTIVES (CRITICAL):
+        1. STRICT SINGLE AUDIENCE FOCUS:
+           - This post is 100% written FOR: {target_audience}.
+           - DO NOT MIX AUDIENCES OR ROLES.
+           - If this is Product Management: stay focused on discovery, roadmap trade-offs, metrics, and customer outcomes. Do NOT delve into system architecture, code, or BA diagram specifications.
+           - If this is Business Analysis: stay focused on requirements, edge cases, scope, and system logic. Do NOT wander into executive marketing.
+           - If this is Engineering: talk directly about code realities, technical debt, architecture, and developer velocity.
+           - If this is Applied AI: focus on practical utility, data pipelines, latency, and real human workflows — cut through the hype.
+           - If this is Career & Culture: speak with warmth and honesty about career growth, communication, and craft.
 
-        CRITICAL LINKEDIN API TRUNCATION RULE:
-        - ABSOLUTELY NEVER USE PARENTHESES '(' or ')' or BRACKETS '[' or ']' in the commentary or first comment.
-        - LinkedIn's /rest/posts API has a known parser bug that silently truncates and drops all text from any parenthesis '('.
-        - Always use em-dashes '—', colons ':', hyphens '-', or commas ',' instead of parentheses.
+        2. GENUINELY HUMAN, CONVERSATIONAL VOICE (NOT ROBOTIC AI):
+           - Write like a real practitioner sharing a genuine reflection, story, or hard-won lesson with peers.
+           - NO AI LISTICLES. NEVER write 'Here is a 3-step framework', '1. [Action], 2. [Action], 3. [Action]', 'Let's dive in', 'In today's fast-paced world', or generic textbook definitions.
+           - Use natural paragraph breaks (1-3 sentences per paragraph). Let the text breathe.
+           - Use authentic first-person or conversational framing ('I used to believe...', 'One of the hardest lessons in...', 'A recurring pattern I see in teams...').
+           - Speak with grounded conviction, quiet confidence, and zero corporate fluff.
 
-        LENGTH & CADENCE:
-        - 90-200 words. Rich in insight, zero filler words.
-        - Avoid repetitive rhythmic patterns. Vary sentence lengths naturally.
-        - You may end with a punchy takeaway heuristic, an actionable pro-tip, a save-this-framework prompt, or an open thoughtful question. Do NOT force a generic question if a strong takeaway is more impactful.
+        3. DELIVER ONE MEMORABLE TAKEAWAY:
+           - Leave the reader with one sharp, battle-tested heuristic, mindset shift, or practical rule they will think about during their workday tomorrow.
 
-        TRUTHFULNESS & ACCURACY (CRITICAL):
-        - Share authentic, proof-backed methodologies and truthful observations.
-        - NEVER invent fake personal anecdotes ("Last week my team did X..."), fake metrics ("boosted efficiency by 84.7%"), or fake company case studies.
+        4. CRITICAL LINKEDIN API TRUNCATION RULE:
+           - ABSOLUTELY NEVER USE PARENTHESES '(' or ')' or BRACKETS '[' or ']' in commentary or first_comment.
+           - LinkedIn's /rest/posts API parser silently truncates all text from any parenthesis '('.
+           - Always use em-dashes '—', colons ':', or commas ',' instead of parentheses.
+
+        5. LENGTH & CADENCE:
+           - 90 to 210 words. Rich in substance, zero filler words.
+           - Avoid repetitive rhythmic patterns. Vary sentence lengths naturally.
+
+        6. TRUTHFULNESS & ACCURACY (CRITICAL):
+           - Share authentic observations and truthful principles.
+           - NEVER invent fake personal anecdotes ('Last week my team did X...'), fake metrics ('boosted efficiency by 84.7%'), or fake company case studies.
 
         Reply ONLY with JSON: {{"commentary": "...", "image_prompt": "...", "first_comment": "..."}}
         first_comment = a SHORT (1-2 sentences) follow-up the author drops as the
-        FIRST comment — an extra practical pro-tip, nuance, or clarifying resource hint.""")
+        FIRST comment — an extra practical nuance or thought-provoking prompt.""")
 
     user = dedent(f"""\
-        Write a LinkedIn post anchored in your core niche ({CORE_THEMES}).
+        Write a LinkedIn post strictly for the {track_name} track.
+
+        TARGET AUDIENCE:
+        {target_audience}
 
         STRUCTURAL ARCHETYPE FOR THIS POST:
         Archetype Style: {post_format['name']}
         Structural Directive: {post_format['instruction']}
 
-        TOPIC / KNOWLEDGE FOCUS:
-        Topic: {topic}""")
+        TOPIC / CORE FOCUS:
+        {topic}""")
     if context:
         user += f"\nSpecific Context / Notes: {context}"
 
-    user += dedent("""
+    user += dedent(f"""
 
-        TEACHING & DEPTH DIRECTIVES:
-        - Deliver 1 concrete, actionable insight or framework rule that a reader can immediately apply in their BA / PM / AI workflow tomorrow.
-        - Balance specific technical precision with executive clarity.
-        - Avoid generic advice like 'communicate better' or 'align with stakeholders' — provide the exact HOW (e.g., using a RACI matrix, Gherkin criteria, or BPMN swimlanes).""")
+        CONTENT REQUIREMENTS:
+        - Speak strictly to {target_audience}. Do NOT fuse multiple roles or blur into other domains.
+        - Conversational, human, relatable practitioner voice. Avoid rigid listicles, numbered step-by-step formats, or textbook definitions.
+        - End with 3-5 relevant hashtags: {' '.join(track.get('hashtags', [])[:5])}""")
 
     history = load_post_history(limit=15)
     if history:
@@ -1018,7 +1212,7 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
                 {top_summary}
 
                 SELF-LEARNING STYLE DIRECTIVE:
-                - Mirror the depth, high conviction, and trench-builder clarity of those top-performing posts.""")
+                - Mirror the depth, high conviction, and relatable practitioner clarity of those top-performing posts.""")
 
     if feedback:
         user += dedent(f"""
@@ -1044,7 +1238,7 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         ))
     data = _extract_json(resp.text)
     raw_commentary = str(data["commentary"]).strip()
-    formatted_commentary = format_linkedin_text(raw_commentary, topic=topic)
+    formatted_commentary = format_linkedin_text(raw_commentary, topic=topic, track=track)
 
     return {
         "commentary": formatted_commentary,
@@ -1070,17 +1264,17 @@ def _extract_json(text: str) -> dict:
         raise
 
 
-RUBRIC_DIMS = ["hook", "insight", "educational_value", "authenticity", "repostability", "originality"]
+RUBRIC_DIMS = ["single_focus", "human_voice", "hook", "insight", "readability"]
 
 
 def guardrail_check(text: str) -> list[str]:
     """Deterministic format checks. Returns a list of issues (empty = clean)."""
     issues = []
     words = len(text.split())
-    if words < 70:
-        issues.append(f"Too short ({words} words; aim for 90-200 to provide real educational depth).")
+    if words < 75:
+        issues.append(f"Too short ({words} words; aim for 90-210 words).")
     elif words > 240:
-        issues.append(f"Too long ({words} words; aim for 90-200).")
+        issues.append(f"Too long ({words} words; aim for 90-210 words).")
     tags = re.findall(r"#\w+", text)
     if not (3 <= len(tags) <= 5):
         issues.append(f"Use 3-5 hashtags (found {len(tags)}).")
@@ -1093,33 +1287,31 @@ def guardrail_check(text: str) -> list[str]:
     low = text.lower()
     found = [p for p in BANNED_PHRASES if p in low]
     if found:
-        issues.append("Remove corporate jargon: " + ", ".join(found))
+        issues.append("Remove corporate/AI jargon: " + ", ".join(found))
     return issues
 
 
-def evaluate_post(client: genai.Client, commentary: str) -> dict:
+def evaluate_post(client: genai.Client, commentary: str, track: dict | None = None) -> dict:
     """The eval agent: multi-dimension rubric score + actionable feedback.
 
-    Returns {'scores': {dim:int}, 'overall': float, 'feedback': str}.
+    Returns {'scores': {dim:int}, 'overall': float, 'fabricated': bool, 'feedback': str}.
     """
+    target_audience = track["target_audience"] if track else "tech and product professionals"
     rubric = dedent(f"""\
-        You are a tough LinkedIn content editor and senior tech practitioner. Rate this post 1-10 on EACH:
-        - hook: does the FIRST line immediately stop the scroll with an intriguing premise or observation?
-        - insight: is there a sharp, non-obvious observation (not generic advice)?
-        - educational_value: does it teach an authentic, actionable concept, framework, or practical rule?
-        - authenticity: does it sound like a real practitioner, not AI marketing fluff?
-        - repostability: is the central takeaway valuable enough that a professional would save or repost it?
-        - originality: a fresh, non-cliche perspective or breakdown?
+        You are an experienced LinkedIn content editor and practitioner evaluating a draft written specifically for: {target_audience}.
+        Rate this post 1-10 on EACH dimension:
+        - single_focus: does this post maintain a clear, single focus strictly tailored for {target_audience}? (Score <= 5 if it confuses the reader by blending PM strategy, BA artifacts, and low-level code all into one post).
+        - human_voice: does it sound like an authentic human practitioner sharing a relatable observation, story, or reflection? (Score <= 5 if it reads like a robotic AI listicle, uses 'Here is a 3-step framework', '1. [Action] 2. [Action]', or generic textbook definitions).
+        - hook: does the FIRST line immediately stop the scroll with an intriguing premise, tension, or relatable workplace observation?
+        - insight: is there a sharp, non-obvious practical takeaway, heuristic, or mindset shift?
+        - readability: is the flow natural, conversational, and effortless to read on mobile (short paragraphs with clean spacing)?
 
-        Also set "fabricated": true if the post presents ANY invented personal
-        anecdote ("my team deleted production"), fake metric/statistic ("boosted ROI by 82%"),
-        fake company/quote, or unverified factual claims. Otherwise false.
+        Also set "fabricated": true if the post presents ANY invented personal anecdote ("my team deleted production"), fake metric/statistic ("boosted ROI by 82%"), fake company/quote, or unverified factual claims. Otherwise false.
 
-        Then write ONE sentence of concrete, actionable feedback on the single
-        biggest weakness (what to change to score higher).
+        Then write ONE sentence of concrete, actionable feedback on how to make it sound even more human, relatable, and sharply focused.
 
         Reply ONLY with JSON:
-        {{"hook":int,"insight":int,"educational_value":int,"authenticity":int,"repostability":int,"originality":int,"fabricated":bool,"feedback":"..."}}
+        {{"single_focus":int,"human_voice":int,"hook":int,"insight":int,"readability":int,"fabricated":bool,"feedback":"..."}}
 
         <post>
         {commentary}
@@ -1727,12 +1919,13 @@ def main() -> None:
     reply_to_follower_comments(client, li_token, person_urn)
 
     spec = pick_post_spec(client)
+    track = spec["track"]
     topic = spec["topic"]
     persona = spec["persona"]
     context = spec["context"]
     issue_number = spec["issue_number"]
 
-    print(f"[post_spec] topic: '{topic}' | persona: '{persona}' | issue: {issue_number}")
+    print(f"[post_spec] track: '{track['name']}' ({track['id']}) | topic: '{topic}' | persona: '{persona}' | issue: {issue_number}")
 
     # Eval agent: up to 3 tries. Each draft is checked by deterministic
     # guardrails + an LLM rubric judge; the judge's feedback is fed into the
@@ -1742,7 +1935,7 @@ def main() -> None:
     attempts = max(1, int(os.environ.get("MAX_ATTEMPTS", "3")))
     for attempt in range(1, attempts + 1):
         try:
-            post = generate_post(client, topic, persona=persona, context=context, feedback=feedback)
+            post = generate_post(client, topic, persona=persona, context=context, track=track, feedback=feedback)
         except Exception as e:
             # A malformed model reply must never kill the whole run — just retry.
             print(f"[draft] attempt {attempt}: generation/parse failed ({type(e).__name__}: {e}) -> regenerate")
@@ -1759,9 +1952,11 @@ def main() -> None:
                 best = (0.0, post)
             continue
 
-        ev = evaluate_post(client, commentary)   # judge only clean drafts
+        ev = evaluate_post(client, commentary, track=track)   # judge only clean drafts
         score = ev["overall"]
         hook = ev["scores"].get("hook", 0)
+        human_voice = ev["scores"].get("human_voice", 0)
+        single_focus = ev["scores"].get("single_focus", 0)
         feedback = ev["feedback"]
 
         # Hard reject fabricated content — never post invented stories/claims.
@@ -1774,14 +1969,23 @@ def main() -> None:
                 best = (0.0, post)
             continue
 
+        if single_focus < SINGLE_FOCUS_MIN:
+            feedback = (f"The post blurred different personas/domains (single_focus scored {single_focus}/10) — "
+                        f"focus strictly and exclusively on {track['target_audience']}. " + feedback)
+
+        if human_voice < HUMAN_VOICE_MIN:
+            feedback = (f"The post scored {human_voice}/10 on human voice — it feels too much like an AI listicle. "
+                        f"Rewrite in an authentic, conversational practitioner voice with natural paragraphs. Avoid numbered listicles. " + feedback)
+
         if hook < HOOK_MIN:
             feedback = (f"The opening hook scored {hook}/10 — rewrite the FIRST line "
                         f"to be far more scroll-stopping. " + feedback)
-        print(f"[draft] attempt {attempt}: clean, rubric {ev['scores']} avg={score:.1f} hook={hook}")
+
+        print(f"[draft] attempt {attempt}: clean, rubric {ev['scores']} avg={score:.1f} hook={hook} human={human_voice} focus={single_focus}")
 
         if best is None or score > best[0]:
             best = (score, post)
-        if score >= QUALITY_BAR and hook >= HOOK_MIN:   # reach hinges on the hook
+        if score >= QUALITY_BAR and hook >= HOOK_MIN and human_voice >= HUMAN_VOICE_MIN and single_focus >= SINGLE_FOCUS_MIN:
             break
 
     if best is None:
@@ -1812,7 +2016,7 @@ def main() -> None:
         with open(out_file, "wb") as f:
             f.write(image)
     with open("out_post.txt", "w", encoding="utf-8") as f:
-        f.write(f"TOPIC: {topic}\n\n{commentary}\n\n"
+        f.write(f"TRACK: {track['name']} ({track['id']})\nTOPIC: {topic}\n\n{commentary}\n\n"
                 f"FIRST COMMENT: {first_comment}\n\nIMAGE PROMPT: {image_prompt}\n")
 
     # Preview mode: generate everything but skip publishing to LinkedIn.
@@ -1821,7 +2025,7 @@ def main() -> None:
               f"Media saved to {out_file} (download it from the Actions artifact).")
         print(f"[dry-run] first comment would be: {first_comment}")
         if issue_number:
-            close_github_issue(issue_number, f"✅ [DRY RUN] Generated preview post for topic: **{topic}**")
+            close_github_issue(issue_number, f"✅ [DRY RUN] Generated preview post for topic: **{topic}** (Track: {track['name']})")
         return
 
     poll_data = None
@@ -1839,7 +2043,7 @@ def main() -> None:
     print(f"[done] published: {urn}")
 
     # Save post URN to local history file for future performance tracking
-    save_post_history(topic, commentary, urn=urn)
+    save_post_history(topic, commentary, urn=urn, track_id=track["id"])
 
     # First comment: OFF by default. Set FIRST_COMMENT_MODE=true to enable.
     if first_comment and os.environ.get("FIRST_COMMENT_MODE", "false").strip().lower() in ("1", "true", "yes"):
