@@ -1479,45 +1479,10 @@ def generate_image_pollinations(image_prompt: str) -> bytes | None:
 
 
 def generate_image(client: genai.Client, image_prompt: str, topic: str = "", commentary: str = "") -> tuple[bytes, bool]:
-    """Returns tuple of (media_bytes, is_pdf). Automatically picks optimal format based on day of week if default:
-    - Wednesday: Interactive Poll
-    - Monday / Thursday: PDF Carousel
-    - Other days: FLUX / DALL-E 3 Studio Photo
-    """
-    raw_mode = os.environ.get("IMAGE_MODE", "auto").strip().lower()
-    
-    # Auto day-of-week & morning/evening schedule rotation if IMAGE_MODE is 'auto' or 'ai'
-    now_utc = datetime.now(timezone.utc)
-    weekday = now_utc.weekday() # 0=Mon, 1=Tue, 2=Wed, 3=Thu, 4=Fri, 5=Sat, 6=Sun
-    is_evening = now_utc.hour >= 10  # 07:30 PM IST = 14:00 UTC (is_evening = True)
+    """Returns tuple of (media_bytes, is_pdf). Defaults to text-only (no image) unless IMAGE_MODE is explicitly set."""
+    raw_mode = os.environ.get("IMAGE_MODE", "none").strip().lower()
 
-    if raw_mode in ("auto", "ai") and not os.environ.get("EXPLICIT_IMAGE_MODE"):
-        if weekday == 6: # Sunday
-            if is_evening:
-                print("[schedule] Sunday Evening detected -> Auto-scheduling Interactive Sunday Poll")
-                mode = "poll"
-            else:
-                print("[schedule] Sunday Morning detected -> Auto-scheduling Studio AI Photo / Fresher Guide")
-                mode = "ai"
-        elif weekday == 2: # Wednesday
-            if is_evening:
-                print("[schedule] Wednesday Evening detected -> Auto-scheduling Interactive Wednesday Poll")
-                mode = "poll"
-            else:
-                print("[schedule] Wednesday Morning detected -> Auto-scheduling 3-Slide PDF Carousel")
-                mode = "carousel"
-        elif weekday in (0, 3): # Monday, Thursday
-            if (weekday == 0 and not is_evening) or (weekday == 3 and is_evening):
-                print("[schedule] Mon Morn / Thu Eve detected -> Auto-scheduling 3-Slide PDF Carousel")
-                mode = "carousel"
-            else:
-                mode = "ai"
-        else:
-            mode = "ai"
-    else:
-        mode = raw_mode
-
-    if mode in ("none", "off", "text", "false", "0"):
+    if raw_mode in ("", "none", "off", "text", "false", "0"):
         print("[image-gen] IMAGE_MODE=none -> text-only post (no image attached)")
         return b"", False
     if mode in ("carousel", "pdf", "slides"):
@@ -1827,20 +1792,25 @@ def main() -> None:
     print(f"[draft] using best draft (score {score:.1f})")
     print(f"[post]\n{commentary}\n")
 
-    # Image-prompt agent: rewrite the writer's rough idea into a clean, concrete,
-    # FLUX-optimized prompt (falls back to the writer's prompt if the agent fails).
-    crafted = craft_image_prompt(client, topic, commentary)
-    if crafted:
-        print(f"[image-prompt] {crafted}")
-        image_prompt = crafted
-    image, is_pdf = generate_image(client, image_prompt, topic=topic, commentary=commentary)
+    # Image generation (OFF by default for clean text-only posts)
+    mode_check = os.environ.get("IMAGE_MODE", "none").strip().lower()
+    if mode_check not in ("", "none", "off", "text", "false", "0"):
+        crafted = craft_image_prompt(client, topic, commentary)
+        if crafted:
+            print(f"[image-prompt] {crafted}")
+            image_prompt = crafted
+        image, is_pdf = generate_image(client, image_prompt, topic=topic, commentary=commentary)
+    else:
+        print("[image-gen] text-only mode active — skipping image generation")
+        image, is_pdf = b"", False
+
     print(f"[image] {len(image)} bytes (is_pdf={is_pdf})")
 
     # Save outputs so a workflow run can upload them as a downloadable artifact
-    # (lets you SEE the post + image/carousel from the Actions tab).
     out_file = "out_carousel.pdf" if is_pdf else "out_image.png"
-    with open(out_file, "wb") as f:
-        f.write(image)
+    if image:
+        with open(out_file, "wb") as f:
+            f.write(image)
     with open("out_post.txt", "w", encoding="utf-8") as f:
         f.write(f"TOPIC: {topic}\n\n{commentary}\n\n"
                 f"FIRST COMMENT: {first_comment}\n\nIMAGE PROMPT: {image_prompt}\n")

@@ -19,12 +19,12 @@ on:
         description: "Image Mode: 'ai' (DALL-E 3 / Recraft V3 / FLUX photo), 'carousel' (3-slide PDF Carousel), 'poll' (Interactive Poll), 'none' (text-only), or 'card'"
         type: choice
         options:
+          - none
           - ai
           - carousel
           - poll
-          - none
           - card
-        default: ai
+        default: none
       dry_run:
         description: "Preview only: generate post + image/carousel, save as artifact, do NOT post"
         type: boolean
@@ -67,7 +67,7 @@ jobs:
           TOPIC: ${{ inputs.topic }}
           PERSONA: ${{ inputs.persona }}
           CONTEXT: ${{ inputs.context }}
-          IMAGE_MODE: ${{ inputs.image_mode || 'ai' }}
+          IMAGE_MODE: ${{ inputs.image_mode || 'none' }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: python post.py
 
