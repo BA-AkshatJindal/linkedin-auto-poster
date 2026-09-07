@@ -209,6 +209,11 @@ BANNED_PHRASES = [
     "degrade gracefully", "sensory complexity", "severs context",
     "crucial aspect", "fundamental shift", "serves as a reminder",
     "in the realm of", "it goes without saying",
+    # Fancy / academic whitepaper jargon:
+    "foundation models", "parameter count", "data ingestion layer",
+    "metadata filtering", "retrieval precision", "chunking strategy",
+    "semantic search", "model capacity", "internal documentation",
+    "cutting-edge", "cutting edge", "spearhead",
     # Fake anecdote and simulated personal memory triggers:
     "my wake-up call came", "my wake up call came", "early in my career i",
     "early in my career,", "last week my team", "i remember when",
@@ -1148,18 +1153,21 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
            - INSTEAD, anchor posts entirely in OBJECTIVE WORKPLACE OBSERVATIONS, SYSTEM PRINCIPLES, RECURRING TEAM DYNAMICS, and PRACTICAL DECISION HEURISTICS.
            - Speak from observed industry patterns: "A recurring failure mode in cross-functional teams is...", "When business assumptions meet production APIs, the breakdown usually hides in...", "In data mapping and system integrations, edge cases are rarely technical — they are almost always...", "A simple heuristic for scoping technical requirements: ...".
 
-        5. HUMANIZED LANGUAGE & EVERYDAY VOCABULARY (CRITICAL):
-           - Write like a real human typing a quick, sharp thought to a coworker.
-           - CHOOSE SIMPLE, NATURAL HUMAN WORDS over stiff corporate or AI vocabulary.
-           - BANNED ROBOTIC / AI JARGON: Never use words like 'leverage', 'seamless', 'holistic', 'paradigm', 'tapestry', 'delve', 'nuanced', 'imperative', 'multifaceted', 'foster', 'empower', 'bespoke', 'comprehensive', 'orchestrate', 'robust', 'vital role', 'pivotal role', 'severs context', 'degrades gracefully', 'sensory complexity'.
-           - USE DIRECT, PLAIN-ENGLISH HUMAN WORDS:
-             * Say 'breaks' or 'fails' instead of 'degrades or produces suboptimal outcomes'.
-             * Say 'makes things up' or 'gives garbage answers' instead of 'generates hallucinatory artifacts'.
-             * Say 'cuts a sentence in half' instead of 'severs context mid-sentence'.
-             * Say 'hours wasted arguing' instead of 'cross-functional friction'.
-             * Say 'catches bugs before QA' instead of 'mitigates downstream defect propagation'.
-             * Say 'clear rules' instead of 'deterministic algorithmic frameworks'.
-           - If you would not say the sentence out loud to a coworker standing next to your desk, DO NOT write it.
+        5. ZERO FANCY WORDS / PLAIN HUMAN TALK (CRITICAL):
+           - Write in plain, blunt, simple English — like a real human texting a coworker.
+           - STRICTLY FORBIDDEN FANCY / ACADEMIC WORDS:
+             * NO 'foundation models', 'parameter count', 'data ingestion layer', 'metadata filtering', 'retrieval precision', 'chunking strategy', 'semantic search', 'model capacity', 'internal documentation', 'deterministic state machines', 'functional specification'.
+             * NO corporate buzzwords: 'leverage', 'seamless', 'holistic', 'paradigm', 'tapestry', 'delve', 'nuanced', 'imperative', 'multifaceted', 'foster', 'empower', 'bespoke', 'comprehensive', 'orchestrate', 'robust', 'vital role', 'pivotal role'.
+           - HOW A REAL HUMAN WRITES:
+             * Don't say "messy internal documentation" ➔ Say "messy docs" or "bad PDFs".
+             * Don't say "semantic search grabs fragmented paragraphs" ➔ Say "the search grabs random junk".
+             * Don't say "generates hallucinatory artifacts" ➔ Say "the AI makes stuff up".
+             * Don't say "fix your data ingestion layer" ➔ Say "clean up your files first".
+             * Don't say "precision beats parameter count" ➔ Say "clean data beats a bigger model every time".
+             * Don't say "functional specifications" ➔ Say "specs" or "requirements".
+             * Don't say "exception queues" ➔ Say "error logs".
+           - Use short, punchy sentences (often 5 to 10 words). Use simple contractions: don't, isn't, won't, that's.
+           - If a word sounds like it belongs in a research paper, product brochure, or tech keynote, IT IS BANNED.
            - NO AI LISTICLES. NEVER write 'Here is a 3-step framework', '1. [Action], 2. [Action], 3. [Action]', 'Let's dive in', or generic textbook definitions.
            - Use natural paragraph breaks (1-3 sentences per paragraph). Let the text breathe.
 
@@ -1323,10 +1331,10 @@ def evaluate_post(client: genai.Client, commentary: str, track: dict | None = No
         You are an experienced LinkedIn content editor and practitioner evaluating a draft written specifically for: {target_audience}.
         Rate this post 1-10 on EACH dimension:
         - single_focus: does this post maintain a clear, single focus strictly tailored for {target_audience}? (Score <= 5 if it confuses the reader by blending PM strategy, BA artifacts, and low-level code all into one post).
-        - human_voice: does it sound like a real human typing a sharp, direct thought to a colleague? (Score <= 5 if it uses stiff AI jargon like 'severs context', 'vital role', 'holistic', 'leverage', 'robust', sounds academic/robotic, or uses words nobody says out loud in real meetings).
+        - human_voice: does it sound like a real human speaking in plain, blunt English? (Score <= 5 if it uses ANY fancy words, academic phrasing, or textbook jargon like 'semantic search', 'data ingestion layer', 'parameter count', 'retrieval precision', 'foundation models', 'holistic', 'robust', or sounds like a whitepaper instead of a human typing from their desk).
         - hook: does the FIRST line immediately stop the scroll with a provocative truth, sharp tension, or punchy workplace reality?
         - insight: is there a sharp, non-obvious practical takeaway, heuristic, or mindset shift?
-        - readability: is it ruthlessly concise (60-110 words), punchy, and effortless to read on mobile? (Score <= 5 if it exceeds 120 words, rambles, or uses irrelevant analogies outside software/data).
+        - readability: is it ruthlessly concise (50-100 words), punchy, and effortless to read on mobile? (Score <= 5 if it exceeds 110 words, rambles, or uses fancy wording).
 
         Also set "fabricated": true if the post presents ANY invented personal anecdote or simulated personal memory (e.g., "My wake-up call came when...", "Early in my career I...", "Last week my team...", "I remember when..."), fake metric/statistic ("boosted ROI by 82%"), fake company/quote, or unverified factual claims. Posts MUST focus on objective systems observations, recurring cross-functional dynamics, and practical heuristics, NOT fabricated personal stories. Otherwise false.
 
