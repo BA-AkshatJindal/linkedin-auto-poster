@@ -37,119 +37,91 @@ try:
 except ImportError:
     pass
 
-# The strategic pillars this account covers across distinct audience tracks.
-CORE_THEMES = "Product Management, Business Analysis, Engineering Realities, Applied AI Utility, and Workplace Culture"
+# The strategic pillars this account covers across Akshat Jindal's authentic domain tracks.
+CORE_THEMES = "Technical Business Analysis, Mission-Critical Systems (Healthcare RCM & FinTech), Pragmatic Applied AI, and the Non-CS Builder's Journey to Product Leadership"
 
-# ── 5 Focused Audience Tracks (Single Clear Focus per Post) ───────────
+# ── 4 Focused Audience Tracks (Anchored in Akshat Jindal's Real DNA) ───
 TRACKS = [
     {
-        "id": "product_management",
-        "name": "Product Management & Strategy",
-        "target_audience": "Product Managers, Group PMs, Founders, and Product Leaders",
-        "persona": "a seasoned Product Manager who obsesses over customer value, hard trade-offs, and shipping real outcomes over vanity output",
-        "voice": "Strategic, candid, empathetic to user pain and cross-functional friction, speaking peer-to-peer with other PMs without buzzwords",
-        "hashtags": ["#ProductManagement", "#ProductStrategy", "#ProductDiscovery", "#ProductLeadership", "#TechStrategy"],
+        "id": "technical_ba_trenches",
+        "name": "Technical BA Trenches & System Specifications",
+        "target_audience": "Technical Business Analysts, Systems Analysts, Product Owners, and Agile Delivery Teams",
+        "persona": "Akshat Jindal, a hands-on Technical Business Analyst who bridges business intent with technical architecture through crisp API specs, data mapping, and edge-case design",
+        "voice": "Grounded, sharp, witty about everyday project chaos, practical, speaking as an in-the-trenches builder who knows what breaks in the database",
+        "hashtags": ["#TechnicalBusinessAnalyst", "#BusinessAnalysis", "#SystemDesign", "#APIDesign", "#AgileDelivery"],
         "topics": [
-            "Why most customer discovery fails: asking users what features they want instead of uncovering their painful workarounds",
-            "The art of saying no: how senior PMs reject good ideas to protect great product outcomes",
-            "Why feature roadmaps with strict quarterly deadlines destroy engineering trust and team morale",
-            "Outcome-based roadmaps vs delivery checklists: what changes when you measure user behavior instead of tickets shipped",
-            "The dangerous trap of designing for vocal power users while alienating your core 80% customer base",
-            "Why vanity metrics like signups and MAU give product teams false confidence while churn silently kills growth",
-            "How to write a 1-page PRD that engineers and designers actually read and reference daily",
-            "The silent killer of B2B SaaS: building complex custom enterprise features that only one client ever uses",
-            "The Kano Model in practice: why basic hygiene features won't delight users, but their absence causes immediate churn",
-            "How to run a high-signal customer interview without leading the witness or asking speculative questions",
-            "Why product telemetry should be designed alongside user stories, not as an afterthought post-launch",
-            "Pricing and packaging friction: why the best product feature is useless if the tiering makes no sense to users",
-            "Feature bloat vs core value: why deleting underused features is often the highest-ROI product move",
-            "The difference between solving a customer pain and building what the loudest sales executive promised",
+            "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
+            "Why 85% of production bugs are not bad code, but unhandled edge cases in the functional specification",
+            "The art of data mapping: why field-level validation rules and exception queues matter more than pretty wireframes",
+            "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
+            "Why I stopped asking stakeholders what features they want, and started asking what manual spreadsheet they hate the most",
+            "The silent killer of Agile sprints: moving tickets to 'In Progress' before the API payload contracts are agreed upon",
+            "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
+            "Sequence diagrams over 20-page requirement docs: why visual system handoffs prevent multi-week build rework",
+            "The difference between an amateur BA who collects wishlists and a Technical BA who stress-tests data flows",
+            "Designing for failure: why your requirement spec must define what happens when a third-party API times out",
+            "Why mapping the messy Current State accurately is twice as valuable as imagining an idealized Future State",
+            "The hidden cost of undocumented business rules living inside legacy Excel sheets",
         ],
     },
     {
-        "id": "business_analysis",
-        "name": "Business Analysis & Systems Thinking",
-        "target_audience": "Business Analysts, Systems Analysts, Functional Consultants, and Scrum Masters",
-        "persona": "a detail-oriented Senior Business Analyst and systems thinker who masters turning messy stakeholder ambiguities into crisp, reliable system logic",
-        "voice": "Methodical, practical, experienced in project trenches, bridging business goals with technical constraints",
-        "hashtags": ["#BusinessAnalysis", "#RequirementsEngineering", "#SystemsThinking", "#Agile", "#ProcessMapping"],
+        "id": "mission_critical_systems",
+        "name": "Mission-Critical Systems (Healthcare RCM & FinTech)",
+        "target_audience": "Enterprise Software Builders, FinTech & Healthcare Product Teams, and Solutions Analysts",
+        "persona": "Akshat Jindal, a Technical BA with hands-on delivery experience in US Healthcare Revenue Cycle Management (RCM) and regulated FinTech workflows",
+        "voice": "Analytical, battle-tested, insightful about complex data pipelines, compliance constraints, and operational realities",
+        "hashtags": ["#HealthTech", "#HealthcareRCM", "#FinTech", "#DataPipelines", "#EnterpriseSoftware"],
         "topics": [
-            "The biggest gap in requirements gathering: confusing what a stakeholder asked for with the actual problem they need solved",
-            "BPMN swimlane diagrams in practice: mapping the messy handoffs between humans and automated systems",
-            "Why 90% of production bugs are actually missed edge cases in business requirements, not bad code",
-            "How to handle a loud stakeholder who insists every single requirement is a 'Must Have' under MoSCoW prioritization",
-            "Writing bulletproof acceptance criteria with Given-When-Then without turning user stories into micro-management",
-            "The 5 Non-Functional Requirements that always get forgotten until system load spikes on launch day",
-            "How Business Analysts should handle scope creep during sprints without becoming the team's villain",
-            "Why mapping the Current State accurately is twice as valuable as imagining an idealized Future State",
-            "The 5-Whys root cause analysis technique: peeling back departmental friction to find the real operational bottleneck",
-            "How junior BAs can facilitate requirement elicitation workshops when senior stakeholders have conflicting agendas",
-            "Why understanding business domain economics matters 10x more for a Business Analyst than mastering diagramming tools",
-            "The RACI matrix reality check: why having multiple 'Accountable' names on a deliverable guarantees zero accountability",
-            "The silent danger of undocumented business rules hidden inside legacy spreadsheets",
-            "How to translate complex regulatory requirements into modular, testable functional specifications",
+            "What US Healthcare RCM taught me about data: when an EHR integration sends malformed claim data, thousands of dollars get lost in denials",
+            "Compliance by design: why bolting on regulatory checks at the end of a FinTech onboarding flow guarantees customer churn",
+            "The reality of US Healthcare claim denials: why the highest-ROI fix is tracing rejections back to root cause upstream in data intake",
+            "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
+            "Why regulated financial journeys cannot afford vague business rules: designing deterministic state machines for onboarding",
+            "The unglamorous side of enterprise SaaS: building custom reports and reconciliation pipelines that finance teams can actually trust",
+            "Handling high-volume transactional data: why exception queues are the unsung hero of operational enterprise systems",
+            "Why user adoption in billing and operations teams fails: designing systems for real human workflows, not idealized process diagrams",
+            "Payer-specific workflow quirks: why Medicare and commercial insurers require completely distinct data validation paths",
+            "How automating claim work-queue allocation cuts 30% of manual triage overhead in operational teams",
         ],
     },
     {
-        "id": "engineering_leadership",
-        "name": "Engineering Realities & Modern Tech",
-        "target_audience": "Software Engineers, Tech Leads, Engineering Managers, and Architects",
-        "persona": "a pragmatic Tech Lead and software engineer who values simplicity, system reliability, and clean architecture over shiny new tools",
-        "voice": "Direct, respectful of developer velocity, no-nonsense, pragmatic about technical trade-offs",
-        "hashtags": ["#SoftwareEngineering", "#SystemDesign", "#TechLeadership", "#CleanCode", "#EngineeringCulture"],
+        "id": "applied_ai_utility",
+        "name": "Pragmatic Applied AI & Workflow Utility",
+        "target_audience": "Tech professionals, Product Leaders, and Builders navigating real-world GenAI and Agentic adoption",
+        "persona": "Akshat Jindal, a pragmatic AI Product Analyst who cuts through AI hype to design production-ready workflows, intelligent routing, and RAG systems",
+        "voice": "Realist, utility-focused, cutting through LinkedIn buzzwords to talk about what actually runs reliably in production",
+        "hashtags": ["#AppliedAI", "#GenerativeAI", "#AIEngineering", "#WorkflowAutomation", "#ProductOps"],
         "topics": [
-            "Why technical debt is ultimately a product business decision, not just an engineering complaint",
-            "The microservices tax: when breaking up a monolith too early slows down team velocity by 5x",
-            "Why clean, readable code with boring technology almost always beats clever, over-engineered architectures in production",
-            "API design as a product contract: why backward compatibility is the ultimate respect you show to your consumers",
-            "The real cost of cloud waste: how simple architectural oversights lead to ballooning monthly cloud bills",
-            "Why writing thorough integration tests saves 10x more developer hours than debating code formatting styles",
-            "How to conduct code reviews that actually elevate engineering standards instead of turning into pedantic nitpicking",
-            "Event-driven architecture trade-offs: the hidden debugging nightmare of asynchronous distributed systems",
-            "Why premature optimization is still the root of all evil: build for current scale with clear modular boundaries",
-            "The difference between engineering velocity (shipping commits) and engineering impact (solving user problems reliably)",
-            "Database index hygiene: why one missing index causes more downtime than complex logic bugs",
-            "How to communicate technical debt to non-technical leaders in terms of revenue risk and sprint velocity",
+            "Why 90% of enterprise GenAI success comes from clean data normalization and deterministic rules, not prompt wizardry",
+            "Intelligent work-queue routing: why simple decision trees and scoring algorithms often beat complex LLM agents",
+            "Building RAG for real operations: why chunking strategy and retrieval precision matter 10x more than model token size",
+            "The hidden trap of multilingual voice agents: what happens when users code-switch in real calls and how to design graceful fallbacks",
+            "Designing human-in-the-loop workflows: knowing the exact confidence threshold where an automated system must hand off to a human",
+            "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
+            "Why we need golden evaluation test sets before deploying any AI feature to production",
+            "Proof of work over talk: why building my own end-to-end AI automation agents taught me more than reading 50 whitepapers",
+            "Why structured tool calling and deterministic state machines are replacing fragile free-form prompt engineering",
+            "Context window bloat: why stuffing 500k tokens into an LLM often degrades search accuracy and inflates cloud costs",
         ],
     },
     {
-        "id": "applied_ai",
-        "name": "Applied AI & Real-World Tech Utility",
-        "target_audience": "Tech, Product, and Business professionals navigating real-world AI adoption",
-        "persona": "a pragmatic applied AI practitioner who cuts through industry hype to focus on what actually works reliably in production",
-        "voice": "Grounded, analytical, honest about limitations, focused on business utility rather than buzzwords",
-        "hashtags": ["#AppliedAI", "#TechTrends", "#ArtificialIntelligence", "#ProductOps", "#DigitalTransformation"],
+        "id": "ba_to_product_journey",
+        "name": "The Non-CS Builder & Path to Product Leadership",
+        "target_audience": "Aspiring Product Managers, Technical BAs, career switchers, and non-CS professionals in tech",
+        "persona": "Akshat Jindal, a Commerce & Business graduate who self-taught technical systems (SQL, APIs, schemas) to bridge dev and business, now pursuing a DBA and transitioning to Technical Product Management",
+        "voice": "Candid, humble, encouraging, relatable, proof-of-work driven, with honest reflections on learning tech without an engineering degree",
+        "hashtags": ["#CareerGrowth", "#ProductManagement", "#TechnicalProductManager", "#NonTechInTech", "#ContinuousLearning"],
         "topics": [
-            "Why 80% of enterprise generative AI projects fail: treating probabilistic LLMs like deterministic calculators",
-            "The unglamorous truth of applied AI: 90% of model performance comes from clean data pipelines, not prompt wizardry",
-            "Why simple heuristics and rigid rule engines often beat complex AI models for mission-critical business workflows",
-            "Designing Human-in-the-Loop workflows: knowing exactly when an automated agent must hand off control to a human expert",
-            "The cost of AI latency: why a 4-second LLM response can destroy the user experience of an otherwise great feature",
-            "Golden evaluation test sets: why you cannot deploy or iterate on AI products without deterministic benchmark suites",
-            "The danger of letting AI do your primary thinking: why junior professionals must guard their mental problem-solving muscles",
-            "Small specialized models vs giant general LLMs: why domain-specific lightweight models are winning on enterprise ROI",
-            "Context window bloat: why stuffing 1M tokens often degrades retrieval precision and inflates API costs",
-            "Why prompt engineering is gradually being replaced by structured tool calling and deterministic state machines",
-        ],
-    },
-    {
-        "id": "career_and_culture",
-        "name": "Workplace Lessons & Career Growth",
-        "target_audience": "Aspiring BAs, PMs, tech freshers, and professionals navigating modern career growth",
-        "persona": "an observant mentor and relatable tech professional sharing authentic career lessons and workplace observations",
-        "voice": "Warm, candid, reflective, conversational, sharing honest lessons without preaching or corporate fluff",
-        "hashtags": ["#CareerAdvice", "#TechCareers", "#ProfessionalGrowth", "#Mentorship", "#WorkplaceCulture"],
-        "topics": [
-            "What early-career professionals get wrong about interviews: presenting generic textbook answers instead of showing how you think through messy problems",
-            "The power of building proof-of-work: why a single well-crafted teardown artifact beats a 2-page list of buzzwords on your resume",
-            "Dealing with imposter syndrome in cross-functional meetings: why asking the 'dumb' clarifying question is a superpower",
-            "How to manage upward effectively: keeping your manager informed on solutions, not just dumping unstructured problems on their desk",
-            "The transition from individual contributor to lead: learning that your job is no longer doing the work, but unblocking others",
-            "Why business domain curiosity is the single biggest career accelerator for analysts and junior builders",
-            "The hardest lesson about workplace communication: being right technically does not matter if you fail to bring stakeholders along with you",
-            "How to run effective 1-on-1s with your manager to drive your own career growth rather than just giving a status report",
-            "Why saying 'I don't know, but I'll find out and follow up by 3 PM' builds 10x more credibility than pretending to know",
-            "The difference between being busy with tickets and actually building career capital that compounds",
+            "You do not need a Computer Science degree to understand system architecture: how a commerce graduate learned to speak fluent developer",
+            "The biggest career unlock for a Business Analyst: learning SQL, reading API payloads, and refusing to be a passive note-taker",
+            "The shift from BA to Technical Product Manager: moving from 'What features do you want?' to 'What business outcome are we solving for?'",
+            "How to earn the respect of senior engineers when you don't have a coding degree: ask about data flows, edge cases, and respect their velocity",
+            "Why having a business and marketing background makes you a better technical builder: you never forget the customer or the revenue",
+            "The power of building tangible proof of work: why a working GitHub project or teardown beats 10 certificates on a resume",
+            "Overcoming imposter syndrome in cross-functional tech reviews: why asking the 'dumb' clarifying question saves the sprint",
+            "Why I am pursuing a Doctorate in Business Administration (DBA) while working in tech: grounding daily technical execution in long-term strategic depth",
+            "The trap of being 'busy with Jira tickets': how to build compounding career capital as a technical analyst",
+            "Managing upward when you are the bridge: how to keep executives informed on solutions without dumping unstructured chaos on their desk",
         ],
     },
 ]
@@ -157,15 +129,15 @@ TRACKS = [
 # Static backup pool combining all tracks
 TOPICS = [t for track in TRACKS for t in track["topics"]]
 
-# ── Live trend sources across all 5 tracks ─────────────────────────────
+# ── Live trend sources across Akshat's core tracks ─────────────────────
 TRENDS_RSS = [
-    "https://news.google.com/rss/search?q=%22Product%20Management%22%20OR%20%22Product%20Strategy%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=%22Business%20Analysis%22%20OR%20%22Systems%20Analysis%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=%22Software%20Engineering%22%20OR%20%22System%20Design%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
-    "https://news.google.com/rss/search?q=%22Applied%20AI%22%20OR%20%22Tech%20Trends%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22Technical%20Business%20Analyst%22%20OR%20%22Systems%20Analysis%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22Healthcare%20RCM%22%20OR%20%22Revenue%20Cycle%20Management%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22Product%20Management%22%20OR%20%22Technical%20Product%20Manager%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
+    "https://news.google.com/rss/search?q=%22Applied%20AI%22%20OR%20%22Agentic%20AI%22%20when:7d&hl=en-US&gl=US&ceid=US:en",
 ]
 HN_SEARCH = "https://hn.algolia.com/api/v1/search?tags=story&query="
-HN_QUERIES = ("product management", "business analysis", "software architecture", "engineering leadership", "applied AI", "career lessons tech")
+HN_QUERIES = ("business analysis", "system design", "product management", "health tech", "applied AI", "technical debt")
 
 # Trend-topic cache: generate a fresh pool at most once per ~20h, then reuse it
 # for every run in between (0 API hits for topic selection). Persisted across
@@ -513,16 +485,14 @@ def detect_track(text: str) -> dict:
     low = text.lower()
     scores = {t["id"]: 0 for t in TRACKS}
 
-    if any(k in low for k in ["pm", "product manager", "product management", "product strategy", "product discovery", "roadmap", "kano", "prd", "churn", "pricing", "feature bloat", "stakeholder trade-off", "outcomes over output"]):
-        scores["product_management"] += 3
-    if any(k in low for k in ["ba", "business analyst", "business analysis", "babok", "requirements", "bpmn", "swimlane", "moscow", "user story", "acceptance criteria", "given-when-then", "non-functional", "5-whys"]):
-        scores["business_analysis"] += 3
-    if any(k in low for k in ["code", "software engineer", "tech lead", "architect", "microservice", "monolith", "tech debt", "clean code", "api design", "integration test", "database index", "system design"]):
-        scores["engineering_leadership"] += 3
-    if any(k in low for k in ["ai", "llm", "generative ai", "human-in-the-loop", "data pipeline", "latency", "eval", "benchmark", "prompt", "fine-tuning", "rag", "small model"]):
-        scores["applied_ai"] += 3
-    if any(k in low for k in ["career", "interview", "resume", "fresher", "mentor", "imposter syndrome", "manage upward", "1-on-1", "proof-of-work", "junior", "individual contributor"]):
-        scores["career_and_culture"] += 3
+    if any(k in low for k in ["ba", "business analyst", "business analysis", "api", "payload", "contract", "data mapping", "validation", "edge case", "error queue", "user story", "acceptance criteria", "given-when-then", "bpmn", "swimlane", "moscow", "sprint", "grooming", "spec", "jira", "spreadsheet"]):
+        scores["technical_ba_trenches"] += 3
+    if any(k in low for k in ["health", "healthcare", "rcm", "claim", "denial", "ehr", "emr", "payer", "medicare", "medicaid", "billing", "revenue cycle", "fintech", "compliance", "insurance", "onboarding", "reconciliation", "operational"]):
+        scores["mission_critical_systems"] += 3
+    if any(k in low for k in ["ai", "llm", "generative ai", "agent", "agentic", "rag", "routing", "decision engine", "voice agent", "ivr", "latency", "benchmark", "prompt", "code-switch", "eval", "tool calling"]):
+        scores["applied_ai_utility"] += 3
+    if any(k in low for k in ["product manager", "product management", "tpm", "technical product", "non-cs", "commerce", "bba", "dba", "career", "interview", "resume", "proof of work", "imposter syndrome", "manage upward", "transition", "self-taught", "learning"]):
+        scores["ba_to_product_journey"] += 3
 
     best_id = max(scores, key=scores.get)
     if scores[best_id] > 0:
@@ -761,12 +731,11 @@ def sanitize_linkedin_text(text: str) -> str:
 
 
 DEFAULT_NICHE_HASHTAGS = [
-    "#ProductManagement",
+    "#TechnicalBusinessAnalyst",
     "#BusinessAnalysis",
-    "#ProductStrategy",
-    "#AIEngineering",
     "#SystemDesign",
-    "#TechLeadership",
+    "#ProductManagement",
+    "#AppliedAI",
 ]
 
 
@@ -775,16 +744,16 @@ def generate_fallback_hashtags(topic: str = "", text: str = "") -> list[str]:
     tags = []
     combined = (topic + " " + text).lower()
 
-    if any(k in combined for k in ["ba", "business analyst", "babok", "requirement", "bpmn", "user story", "gherkin"]):
-        tags.extend(["#BusinessAnalysis", "#RequirementsEngineering", "#Agile"])
-    if any(k in combined for k in ["pm", "product manager", "product management", "roadmap", "kano", "discovery"]):
-        tags.extend(["#ProductManagement", "#ProductStrategy", "#ProductOps"])
-    if any(k in combined for k in ["ai", "agent", "llm", "rag", "eval", "guardrail", "model", "prompt"]):
-        tags.extend(["#AIEngineering", "#ArtificialIntelligence", "#TechInnovation"])
-    if any(k in combined for k in ["fresher", "career", "interview", "resume", "entry-level", "portfolio", "hiring"]):
-        tags.extend(["#CareerAdvice", "#TechCareers", "#ContinuousLearning"])
-    if any(k in combined for k in ["engineering", "architecture", "scale", "system", "database", "api", "infra"]):
-        tags.extend(["#SystemDesign", "#SoftwareEngineering"])
+    if any(k in combined for k in ["ba", "business analyst", "spec", "requirement", "bpmn", "user story", "acceptance criteria", "data mapping"]):
+        tags.extend(["#TechnicalBusinessAnalyst", "#BusinessAnalysis", "#SystemDesign"])
+    if any(k in combined for k in ["health", "rcm", "claim", "denial", "ehr", "emr", "payer"]):
+        tags.extend(["#HealthcareRCM", "#HealthTech", "#DataPipelines"])
+    if any(k in combined for k in ["fintech", "compliance", "insurance", "onboarding"]):
+        tags.extend(["#FinTech", "#Compliance", "#EnterpriseSoftware"])
+    if any(k in combined for k in ["ai", "agent", "llm", "rag", "routing", "eval", "automation"]):
+        tags.extend(["#AppliedAI", "#GenerativeAI", "#WorkflowAutomation"])
+    if any(k in combined for k in ["product", "tpm", "non-cs", "career", "interview", "journey", "learning"]):
+        tags.extend(["#ProductManagement", "#TechnicalProductManager", "#CareerGrowth"])
 
     for default_tag in DEFAULT_NICHE_HASHTAGS:
         if default_tag not in tags:
@@ -1111,7 +1080,13 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
     if track is None:
         track = detect_track(topic)
 
-    author_desc = f"a real {persona}" if persona else track["persona"]
+    author_bio = (
+        "Akshat Jindal, a hands-on Technical Business Analyst and aspiring Technical Product Manager (TPM). "
+        "He has a Commerce & Marketing background (BBA, MBA in IT, pursuing a DBA), but intentionally built deep "
+        "technical systems muscle in the trenches (SQL, REST API contracts, data mapping, EHR/EMR integrations in US Healthcare RCM, FinTech compliance, and applied GenAI). "
+        "He acts as the pragmatic translator and calm voice of reason between business stakeholders and developers."
+    )
+    author_desc = f"a real {persona}" if persona else author_bio
     target_audience = track["target_audience"]
     track_voice = track["voice"]
     track_name = track["name"]
@@ -1130,20 +1105,26 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         {track_voice}
 
         CORE POSITIONING DIRECTIVES (CRITICAL):
-        1. STRICT SINGLE AUDIENCE FOCUS:
+        1. WHO YOU ARE (AUTHENTIC PRACTITIONER DNA):
+           - You speak as Akshat Jindal: practical, observant, grounded in real project delivery.
+           - You understand the developer's pain (breaking APIs, technical debt, vague tickets, database schema integrity).
+           - You understand the business stakeholder's urgency (revenue impact, regulatory compliance, customer churn).
+           - Your superpower is standing in the middle — translating messy human ambiguity into clean, bulletproof technical specs and product outcomes.
+           - You write with humility, quiet conviction, subtle relatable wit, and ZERO corporate pretentiousness.
+
+        2. STRICT SINGLE AUDIENCE FOCUS:
            - This post is 100% written FOR: {target_audience}.
            - DO NOT MIX AUDIENCES OR ROLES.
-           - If this is Product Management: stay focused on discovery, roadmap trade-offs, metrics, and customer outcomes. Do NOT delve into system architecture, code, or BA diagram specifications.
-           - If this is Business Analysis: stay focused on requirements, edge cases, scope, and system logic. Do NOT wander into executive marketing.
-           - If this is Engineering: talk directly about code realities, technical debt, architecture, and developer velocity.
-           - If this is Applied AI: focus on practical utility, data pipelines, latency, and real human workflows — cut through the hype.
-           - If this is Career & Culture: speak with warmth and honesty about career growth, communication, and craft.
+           - If writing for Technical BAs (track: technical_ba_trenches): stay laser-focused on data mapping, API contracts, edge cases, error queues, and requirement elicitation.
+           - If writing for Mission-Critical Systems (track: mission_critical_systems): focus on Healthcare RCM, EHR integration realities, claim denials, and FinTech compliance.
+           - If writing for Applied AI (track: applied_ai_utility): focus on pragmatic utility, intelligent work routing, RAG on messy docs, and clean data over prompt wizardry.
+           - If writing for Non-CS Builders & Aspiring Product Leaders (track: ba_to_product_journey): reflect honestly on learning tech from a business background, self-taught depth, and transitioning from ticket-taking to owning product outcomes.
 
-        2. GENUINELY HUMAN, CONVERSATIONAL VOICE (NOT ROBOTIC AI):
-           - Write like a real practitioner sharing a genuine reflection, story, or hard-won lesson with peers.
+        3. GENUINELY HUMAN, CONVERSATIONAL VOICE (NOT ROBOTIC AI):
+           - Write like a real practitioner sharing an authentic observation, story, or hard-won lesson over coffee with peers.
            - NO AI LISTICLES. NEVER write 'Here is a 3-step framework', '1. [Action], 2. [Action], 3. [Action]', 'Let's dive in', 'In today's fast-paced world', or generic textbook definitions.
            - Use natural paragraph breaks (1-3 sentences per paragraph). Let the text breathe.
-           - Use authentic first-person or conversational framing ('I used to believe...', 'One of the hardest lessons in...', 'A recurring pattern I see in teams...').
+           - Use authentic first-person or conversational framing ('In my experience with healthcare data...', 'A recurring pattern I see between dev and business...', 'Early on, I used to think...').
            - Speak with grounded conviction, quiet confidence, and zero corporate fluff.
 
         3. DELIVER ONE MEMORABLE TAKEAWAY:
