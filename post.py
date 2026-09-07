@@ -722,6 +722,7 @@ def sanitize_linkedin_text(text: str) -> str:
     t = t.replace("{", "").replace("}", "")
 
     # Clean up double dashes, colon formatting, and spacing
+    t = re.sub(r"\s*—\s*", " — ", t)
     t = re.sub(r" —\s*— ", " — ", t)
     t = re.sub(r" —\s*:", ":", t)
     t = re.sub(r" —\s*\.", ".", t)
