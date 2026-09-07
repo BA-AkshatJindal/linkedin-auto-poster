@@ -329,18 +329,17 @@ def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 
         Use the LATEST real trends and these recent headlines as inspiration:
         {sig_text}
 
-        Produce {n} specific, fresh, opinionated LinkedIn POST TOPICS across our 5 audience tracks:
-        1. Product Management & Strategy (discovery, metrics, trade-offs, roadmap realities)
-        2. Business Analysis & Systems Thinking (requirements, edge cases, scope, process mapping)
-        3. Engineering Realities (technical debt, clean code, architecture trade-offs, dev velocity)
-        4. Applied AI Utility (practical ROI, human-in-the-loop, real workflow adoption)
-        5. Workplace Culture & Career Growth (mentorship, communication, proof-of-work)
+        Produce {n} specific, fresh, opinionated LinkedIn POST TOPICS across our 4 tracks:
+        1. Technical BA Trenches & System Specifications (data mapping, API payload contracts, edge cases, Given-When-Then criteria, sprint planning)
+        2. Mission-Critical Systems (US Healthcare RCM, claim denials, EHR/EMR data normalization, FinTech compliance by design, reconciliation pipelines)
+        3. Applied AI Utility (intelligent work routing, RAG on internal docs, voice agents, data pipelines over prompt wizardry)
+        4. The Non-CS Builder & Path to Product Leadership (Commerce to Technical PM, learning SQL/APIs, moving from requirements to product outcomes)
 
-        RULES:
-        - One topic per line, 6-14 words, a clear angle or hot take (don't copy headlines).
-        - Ensure a balanced variety across all 5 pillars — DO NOT make every topic about AI or LLMs.
+        STRICT TOPIC DIVERSITY RULE (CRITICAL):
+        - At least 75% of the generated topics MUST be about non-AI topics (pure Technical BA, Healthcare RCM, API specs, and Product Management).
+        - Maximum 25% of topics may touch Applied AI.
+        - DO NOT flood the list with AI or LLM topics. Focus on real systems, requirements, data pipelines, and career growth.
         - Grounded, accessible, relatable angles for real professionals in tech and business.
-        - Mix timely industry developments with timeless workplace wisdom.
         - No numbering, no hashtags, no quotes. Just one topic per line.""")
 
     configs = []
@@ -552,8 +551,10 @@ def pick_topic(client: genai.Client | None = None, track: dict | None = None) ->
     if not available_topics:
         available_topics = track["topics"]
 
-    # Live trends cache check for track-matching topics
-    if client and os.environ.get("TRENDS_MODE", "true").strip().lower() in ("1", "true", "yes"):
+    # Prioritize Akshat's authentic, battle-tested topic pool (70% of runs)
+    # Use live trend topics 30% of the time when enabled, preventing external AI hype from dominating
+    use_live_trends = os.environ.get("TRENDS_MODE", "true").strip().lower() in ("1", "true", "yes")
+    if client and use_live_trends and random.random() < 0.30:
         cached, age = load_cached_topics()
         if cached:
             track_matches = [c for c in cached if detect_track(c)["id"] == track["id"] and c.strip().lower() not in recent_topics]
