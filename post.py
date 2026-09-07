@@ -632,20 +632,22 @@ def pick_post_spec(client: genai.Client | None = None) -> dict:
                 queue = json.load(f)
             if isinstance(queue, list) and len(queue) > 0:
                 item = queue.pop(0)
-                if isinstance(item, dict) and item.get("topic"):
+                if isinstance(item, dict) and (item.get("topic") or item.get("commentary")):
                     with open("upcoming_posts.json", "w", encoding="utf-8") as f:
                         json.dump(queue, f, indent=2)
-                    topic = item["topic"]
+                    topic = item.get("topic") or "Pre-approved Post"
                     track_id = item.get("track") or item.get("track_id") or forced_track_id
                     track = get_track_by_id(track_id) if track_id else detect_track(topic)
                     persona = forced_persona or item.get("persona") or track["persona"]
                     context = forced_context or item.get("context")
-                    print(f"[queue] Picked topic from upcoming_posts.json: '{topic}' (Track: {track['name']})")
+                    print(f"[queue] Picked item from upcoming_posts.json: '{topic}' (Track: {track['name']})")
                     return {
                         "track": track,
                         "topic": topic,
                         "persona": persona,
                         "context": context,
+                        "commentary": item.get("commentary"),
+                        "first_comment": item.get("first_comment"),
                         "issue_number": None,
                     }
         except Exception as e:
@@ -1922,66 +1924,79 @@ def main() -> None:
 
     print(f"[post_spec] track: '{track['name']}' ({track['id']}) | topic: '{topic}' | persona: '{persona}' | issue: {issue_number}")
 
-    # Eval agent: up to 3 tries. Each draft is checked by deterministic
-    # guardrails + an LLM rubric judge; the judge's feedback is fed into the
-    # next draft (reflexion). We keep the BEST-scoring draft, not the first pass.
     best = None  # (score, post_dict)
     feedback = ""
-    attempts = max(1, int(os.environ.get("MAX_ATTEMPTS", "3")))
-    for attempt in range(1, attempts + 1):
-        try:
-            post = generate_post(client, topic, persona=persona, context=context, track=track, feedback=feedback)
-        except Exception as e:
-            # A malformed model reply must never kill the whole run — just retry.
-            print(f"[draft] attempt {attempt}: generation/parse failed ({type(e).__name__}: {e}) -> regenerate")
-            feedback = ("Return STRICTLY valid minified JSON with exactly the keys "
-                        "commentary, image_prompt, first_comment and nothing else.")
-            continue
-        commentary = post["commentary"]
 
-        issues = guardrail_check(commentary)
-        if issues:
-            feedback = "Fix these format issues: " + " ".join(issues)
-            print(f"[draft] attempt {attempt}: guardrail fail {issues} -> regenerate (no judge call)")
-            if best is None:           # keep a fallback so we always have something
-                best = (0.0, post)
-            continue
+    # If pre-approved commentary is provided, use it directly
+    if spec.get("commentary"):
+        print("[post] using pre-approved commentary from queue")
+        raw_commentary = str(spec["commentary"]).strip()
+        formatted_commentary = format_linkedin_text(raw_commentary, topic=topic, track=track)
+        post = {
+            "commentary": formatted_commentary,
+            "image_prompt": "",
+            "first_comment": str(spec.get("first_comment", "")).strip(),
+        }
+        best = (10.0, post)
+    else:
+        # Eval agent: up to 3 tries. Each draft is checked by deterministic
+        # guardrails + an LLM rubric judge; the judge's feedback is fed into the
+        # next draft (reflexion). We keep the BEST-scoring draft, not the first pass.
+        attempts = max(1, int(os.environ.get("MAX_ATTEMPTS", "3")))
+        for attempt in range(1, attempts + 1):
+            try:
+                post = generate_post(client, topic, persona=persona, context=context, track=track, feedback=feedback)
+            except Exception as e:
+                # A malformed model reply must never kill the whole run — just retry.
+                print(f"[draft] attempt {attempt}: generation/parse failed ({type(e).__name__}: {e}) -> regenerate")
+                feedback = ("Return STRICTLY valid minified JSON with exactly the keys "
+                            "commentary, image_prompt, first_comment and nothing else.")
+                continue
+            commentary = post["commentary"]
 
-        ev = evaluate_post(client, commentary, track=track)   # judge only clean drafts
-        score = ev["overall"]
-        hook = ev["scores"].get("hook", 0)
-        human_voice = ev["scores"].get("human_voice", 0)
-        single_focus = ev["scores"].get("single_focus", 0)
-        feedback = ev["feedback"]
+            issues = guardrail_check(commentary)
+            if issues:
+                feedback = "Fix these format issues: " + " ".join(issues)
+                print(f"[draft] attempt {attempt}: guardrail fail {issues} -> regenerate (no judge call)")
+                if best is None:           # keep a fallback so we always have something
+                    best = (0.0, post)
+                continue
 
-        # Hard reject fabricated content — never post invented stories/claims.
-        if ev.get("fabricated"):
-            feedback = ("The post contains an invented personal anecdote, simulated memory, or unverifiable claim — "
-                        "rewrite focusing strictly on OBJECTIVE system observations, recurring team dynamics, or practical heuristics. "
-                        "DO NOT invent personal scenes or fake past events. " + feedback)
-            print(f"[draft] attempt {attempt}: REJECTED (fabricated content) -> regenerate")
-            if best is None:                 # keep only as last-resort fallback
-                best = (0.0, post)
-            continue
+            ev = evaluate_post(client, commentary, track=track)   # judge only clean drafts
+            score = ev["overall"]
+            hook = ev["scores"].get("hook", 0)
+            human_voice = ev["scores"].get("human_voice", 0)
+            single_focus = ev["scores"].get("single_focus", 0)
+            feedback = ev["feedback"]
 
-        if single_focus < SINGLE_FOCUS_MIN:
-            feedback = (f"The post blurred different personas/domains (single_focus scored {single_focus}/10) — "
-                        f"focus strictly and exclusively on {track['target_audience']}. " + feedback)
+            # Hard reject fabricated content — never post invented stories/claims.
+            if ev.get("fabricated"):
+                feedback = ("The post contains an invented personal anecdote, simulated memory, or unverifiable claim — "
+                            "rewrite focusing strictly on OBJECTIVE system observations, recurring team dynamics, or practical heuristics. "
+                            "DO NOT invent personal scenes or fake past events. " + feedback)
+                print(f"[draft] attempt {attempt}: REJECTED (fabricated content) -> regenerate")
+                if best is None:                 # keep only as last-resort fallback
+                    best = (0.0, post)
+                continue
 
-        if human_voice < HUMAN_VOICE_MIN:
-            feedback = (f"The post scored {human_voice}/10 on human voice — it feels too much like an AI listicle. "
-                        f"Rewrite in an authentic, conversational practitioner voice with natural paragraphs. Avoid numbered listicles. " + feedback)
+            if single_focus < SINGLE_FOCUS_MIN:
+                feedback = (f"The post blurred different personas/domains (single_focus scored {single_focus}/10) — "
+                            f"focus strictly and exclusively on {track['target_audience']}. " + feedback)
 
-        if hook < HOOK_MIN:
-            feedback = (f"The opening hook scored {hook}/10 — rewrite the FIRST line "
-                        f"to be far more scroll-stopping. " + feedback)
+            if human_voice < HUMAN_VOICE_MIN:
+                feedback = (f"The post scored {human_voice}/10 on human voice — it feels too much like an AI listicle. "
+                            f"Rewrite in an authentic, conversational practitioner voice with natural paragraphs. Avoid numbered listicles. " + feedback)
 
-        print(f"[draft] attempt {attempt}: clean, rubric {ev['scores']} avg={score:.1f} hook={hook} human={human_voice} focus={single_focus}")
+            if hook < HOOK_MIN:
+                feedback = (f"The opening hook scored {hook}/10 — rewrite the FIRST line "
+                            f"to be far more scroll-stopping. " + feedback)
 
-        if best is None or score > best[0]:
-            best = (score, post)
-        if score >= QUALITY_BAR and hook >= HOOK_MIN and human_voice >= HUMAN_VOICE_MIN and single_focus >= SINGLE_FOCUS_MIN:
-            break
+            print(f"[draft] attempt {attempt}: clean, rubric {ev['scores']} avg={score:.1f} hook={hook} human={human_voice} focus={single_focus}")
+
+            if best is None or score > best[0]:
+                best = (score, post)
+            if score >= QUALITY_BAR and hook >= HOOK_MIN and human_voice >= HUMAN_VOICE_MIN and single_focus >= SINGLE_FOCUS_MIN:
+                break
 
     if best is None:
         raise SystemExit("[fatal] no valid draft after all attempts — nothing posted")
