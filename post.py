@@ -673,8 +673,7 @@ POST_FORMATS = [
         "instruction": (
             "Analyze a recurring operational friction or cross-team breakdown in delivery (e.g., business assumptions vs API payload reality, vague tickets vs database constraints, sales promises vs architectural debt). "
             "Structure: 1. Hook highlighting a common, unstated friction point teams experience in delivery ➔ 2. Unpack why this breakdown occurs at the systems/process level (the underlying root cause) ➔ 3. The practical shift in boundary-setting, requirement clarity, or spec design that prevents it. "
-            "Focus on objective workplace dynamics. NEVER invent fake personal anecdotes or simulated project memories. "
-            "Write in natural, conversational paragraphs. Do NOT use numbered listicles."
+            "Tone: Sharp, punchy, high-conviction. Total length: 70 to 110 words. ZERO analogies outside software/data. No filler."
         ),
     },
     {
@@ -682,7 +681,7 @@ POST_FORMATS = [
         "instruction": (
             "Calmly challenge a popular industry dogma, buzzword, or over-hyped trend with production realism. "
             "Structure: 1. Scroll-stopping counter-intuitive hook questioning conventional advice ➔ 2. Why the standard playbook quietly breaks down in real systems, legacy databases, or edge cases ➔ 3. The simpler, battle-tested principle that actually holds up in production. "
-            "Sharp, analytical, and respectful — no aggressive clickbait, no fabricated personal vignettes."
+            "Tone: Sharp, analytical, high-contrast. Total length: 70 to 110 words. No aggressive clickbait, no fluff."
         ),
     },
     {
@@ -690,7 +689,7 @@ POST_FORMATS = [
         "instruction": (
             "Share a simple, battle-tested mental filter used in daily practice to cut through technical or scoping ambiguity. "
             "Structure: 1. The recurring trade-off or dilemma teams debate endlessly (e.g., custom build vs standard schema, LLM agent vs deterministic rules, strict schema validation vs silent drops) ➔ 2. The simple mental filter or rule of thumb used to make the call ➔ 3. Why this heuristic protects sprint velocity and system reliability. "
-            "Crisp reasoning and clear practitioner application without fake anecdotes."
+            "Tone: Crisp, pragmatic, immediately usable. Total length: 70 to 110 words."
         ),
     },
     {
@@ -698,7 +697,7 @@ POST_FORMATS = [
         "instruction": (
             "Deconstruct why mission-critical processes or data workflows quietly fail in production (e.g., claim rejections in Healthcare RCM, unhandled error queues, silent data drops in ETL pipelines, undocumented business logic). "
             "Structure: 1. The visible symptom teams notice in production ➔ 2. The actual upstream data, schema, or contract disconnect where the failure originated ➔ 3. The defensive design principle or validation standard that eliminates the failure mode. "
-            "Deeply technical, analytical, and grounded in real system mechanics."
+            "Tone: Deeply technical, concise, authoritative. Total length: 70 to 110 words."
         ),
     },
     {
@@ -706,7 +705,7 @@ POST_FORMATS = [
         "instruction": (
             "Explore how effective technical builders master complex system architecture through data flows, boundary contracts, state transitions, and edge cases rather than low-level syntax. "
             "Structure: 1. A clear perspective on systems thinking and input/output contracts over syntax ➔ 2. How mapping state transitions and error paths unlocks 90% of architectural clarity ➔ 3. A takeaway rule for aspiring TPMs and technical BAs bridging business and engineering. "
-            "Deliver pure, actionable value for the reader's craft. ZERO self-narrative or autobiographical framing."
+            "Tone: High-density insight, pure craft value. Total length: 70 to 110 words. No autobiographical fluff."
         ),
     },
 ]
@@ -1158,9 +1157,12 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
            - LinkedIn's /rest/posts API parser silently truncates all text from any parenthesis '('.
            - Always use em-dashes '—', colons ':', or commas ',' instead of parentheses.
 
-        8. LENGTH & CADENCE:
-           - 90 to 210 words. Rich in substance, zero filler words.
-           - Avoid repetitive rhythmic patterns. Vary sentence lengths naturally.
+        8. STRICT CONCISENESS & HIGH DENSITY (70 TO 115 WORDS MAXIMUM — CRITICAL):
+           - NEVER write long, academic, or vague posts. Cut every single unnecessary word or filler sentence.
+           - NO abstract metaphors, detached comparisons, or irrelevant analogies (e.g. NEVER bring up cars, planes, sports, cooking, or general science). Stay 100% inside real software delivery and system reality.
+           - 3 to 4 short, punchy paragraphs with breathing room. Each sentence must hit with crisp practitioner authority.
+           - High conviction and sharp contrast: contrast the common mistake vs the trench reality.
+           - Total length MUST be between 70 and 115 words. If it feels like an essay or article, it is too long.
 
         9. TRUTHFULNESS & ACCURACY (CRITICAL):
            - Share authentic observations and truthful principles.
@@ -1189,7 +1191,8 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
 
         CONTENT REQUIREMENTS:
         - Speak strictly to {target_audience}. Do NOT fuse multiple roles or blur into other domains.
-        - Conversational, human, relatable practitioner voice. Avoid rigid listicles, numbered step-by-step formats, or textbook definitions.
+        - Punchy, high-conviction, human practitioner voice. No rigid listicles, no academic tone.
+        - RUTHLESSLY CONCISE (70-115 words total): No long-winded explanations, no off-topic analogies (e.g. cars/planes/cooking). Pure trench software reality.
         - STRICTLY ZERO fabricated personal stories: do not invent scenes like 'My wake-up call came when...' or 'Early in my career I...'. Ground the post in objective system dynamics, failure modes, and practical heuristics.
         - End with 3-5 relevant hashtags: {' '.join(track.get('hashtags', [])[:5])}""")
 
@@ -1276,10 +1279,10 @@ def guardrail_check(text: str) -> list[str]:
     """Deterministic format checks. Returns a list of issues (empty = clean)."""
     issues = []
     words = len(text.split())
-    if words < 75:
-        issues.append(f"Too short ({words} words; aim for 90-210 words).")
-    elif words > 240:
-        issues.append(f"Too long ({words} words; aim for 90-210 words).")
+    if words < 55:
+        issues.append(f"Too short ({words} words; aim for 70-115 words).")
+    elif words > 135:
+        issues.append(f"Too long ({words} words; aim for 70-115 words — be ruthlessly punchy and cut the fluff).")
     tags = re.findall(r"#\w+", text)
     if not (3 <= len(tags) <= 5):
         issues.append(f"Use 3-5 hashtags (found {len(tags)}).")
@@ -1306,10 +1309,10 @@ def evaluate_post(client: genai.Client, commentary: str, track: dict | None = No
         You are an experienced LinkedIn content editor and practitioner evaluating a draft written specifically for: {target_audience}.
         Rate this post 1-10 on EACH dimension:
         - single_focus: does this post maintain a clear, single focus strictly tailored for {target_audience}? (Score <= 5 if it confuses the reader by blending PM strategy, BA artifacts, and low-level code all into one post).
-        - human_voice: does it sound like an authentic human practitioner sharing a relatable observation, dynamic, or heuristic? (Score <= 5 if it reads like a robotic AI listicle, uses 'Here is a 3-step framework', '1. [Action] 2. [Action]', or generic textbook definitions).
-        - hook: does the FIRST line immediately stop the scroll with an intriguing premise, tension, or relatable workplace observation?
+        - human_voice: does it sound like an authentic, high-conviction practitioner in the trenches? (Score <= 5 if it reads weak, overly polite, academic, generic, or like a robotic AI listicle).
+        - hook: does the FIRST line immediately stop the scroll with a provocative truth, sharp tension, or punchy workplace reality?
         - insight: is there a sharp, non-obvious practical takeaway, heuristic, or mindset shift?
-        - readability: is the flow natural, conversational, and effortless to read on mobile (short paragraphs with clean spacing)?
+        - readability: is it ruthlessly concise (70-115 words), punchy, and effortless to read on mobile? (Score <= 5 if it exceeds 125 words, rambles, or uses irrelevant analogies outside software/data).
 
         Also set "fabricated": true if the post presents ANY invented personal anecdote or simulated personal memory (e.g., "My wake-up call came when...", "Early in my career I...", "Last week my team...", "I remember when..."), fake metric/statistic ("boosted ROI by 82%"), fake company/quote, or unverified factual claims. Posts MUST focus on objective systems observations, recurring cross-functional dynamics, and practical heuristics, NOT fabricated personal stories. Otherwise false.
 
