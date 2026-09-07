@@ -202,6 +202,10 @@ BANNED_PHRASES = [
     "3-step framework", "step-by-step framework", "let's dive in", "dive deep",
     "it is important to remember", "at the end of the day", "fast-paced world",
     "beacon of", "seamlessly integrate", "pivotal role",
+    # Fake anecdote and simulated personal memory triggers:
+    "my wake-up call came", "my wake up call came", "early in my career i",
+    "early in my career,", "last week my team", "i remember when",
+    "one day early in", "back when i was starting out", "a project i worked on early",
 ]
 EMOJI_RE = re.compile(
     "[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F1E6-\U0001F1FF\U00002190-\U000021FF\U00002B00-\U00002BFF]"
@@ -661,43 +665,44 @@ def pick_post_spec(client: genai.Client | None = None) -> dict:
 
 POST_FORMATS = [
     {
-        "name": "Trench Observation & Practical Lesson",
+        "name": "System Dynamic & Reality Check",
         "instruction": (
-            "Share an authentic scenario or dynamic observed during everyday team execution. "
-            "Structure: 1. Hook with a vivid, relatable workplace moment or cross-team friction ➔ 2. Unpack why this happens in real projects (the underlying human or system cause) ➔ 3. The practical lesson or shift in approach that fixes it. "
-            "Write in natural, conversational paragraphs. Do NOT use formulaic numbered listicles (no '1. Do this, 2. Do that')."
+            "Analyze a recurring operational friction or cross-team breakdown in delivery (e.g., business assumptions vs API payload reality, vague tickets vs database constraints, sales promises vs architectural debt). "
+            "Structure: 1. Hook highlighting a common, unstated friction point teams experience in delivery ➔ 2. Unpack why this breakdown occurs at the systems/process level (the underlying root cause) ➔ 3. The practical shift in boundary-setting, requirement clarity, or spec design that prevents it. "
+            "Focus on objective workplace dynamics. NEVER invent fake personal anecdotes or simulated project memories. "
+            "Write in natural, conversational paragraphs. Do NOT use numbered listicles."
         ),
     },
     {
-        "name": "The 'I Used to Believe' Retrospective",
+        "name": "Grounded Contrarian Principle",
         "instruction": (
-            "A candid professional reflection showing personal growth and hard-won maturity. "
-            "Structure: 1. The common textbook belief or assumption ('Early in my career / For a long time, I believed X...') ➔ 2. The messy project reality or wake-up call that proved it wrong ➔ 3. The nuanced, battle-tested principle applied now. "
-            "Write with humility, conviction, and relatable practitioner voice."
+            "Calmly challenge a popular industry dogma, buzzword, or over-hyped trend with production realism. "
+            "Structure: 1. Scroll-stopping counter-intuitive hook questioning conventional advice ➔ 2. Why the standard playbook quietly breaks down in real systems, legacy databases, or edge cases ➔ 3. The simpler, battle-tested principle that actually holds up in production. "
+            "Sharp, analytical, and respectful — no aggressive clickbait, no fabricated personal vignettes."
         ),
     },
     {
-        "name": "Grounded Contrarian Take",
+        "name": "Practitioner Heuristic & Decision Filter",
         "instruction": (
-            "Calmly challenge a popular industry dogma, buzzword, or over-hyped trend with trench realism. "
-            "Structure: 1. Scroll-stopping counter-intuitive hook questioning conventional advice ➔ 2. Why the standard playbook quietly breaks down in production or real meetings ➔ 3. The simpler, grounded alternative that actually works. "
-            "Sharp, analytical, and respectful — no aggressive clickbait."
+            "Share a simple, battle-tested mental filter used in daily practice to cut through technical or scoping ambiguity. "
+            "Structure: 1. The recurring trade-off or dilemma teams debate endlessly (e.g., custom build vs standard schema, LLM agent vs deterministic rules, strict schema validation vs silent drops) ➔ 2. The simple mental filter or rule of thumb used to make the call ➔ 3. Why this heuristic protects sprint velocity and system reliability. "
+            "Crisp reasoning and clear practitioner application without fake anecdotes."
         ),
     },
     {
-        "name": "Practitioner Heuristic & Rule of Thumb",
+        "name": "Root-Cause System Teardown",
         "instruction": (
-            "Share a simple, battle-tested decision filter used in daily practice to cut through ambiguity. "
-            "Structure: 1. The hard trade-off or dilemma teams face constantly ➔ 2. The simple mental filter or rule of thumb used to make the call ➔ 3. How this heuristic saves hours of circular debate and protects delivery. "
-            "Provide crisp reasoning and clear application."
+            "Deconstruct why mission-critical processes or data workflows quietly fail in production (e.g., claim rejections in Healthcare RCM, unhandled error queues, silent data drops in ETL pipelines, undocumented business logic). "
+            "Structure: 1. The visible symptom teams notice in production ➔ 2. The actual upstream data, schema, or contract disconnect where the failure originated ➔ 3. The defensive design principle or validation standard that eliminates the failure mode. "
+            "Deeply technical, analytical, and grounded in real system mechanics."
         ),
     },
     {
-        "name": "Short Practitioner Reflection",
+        "name": "The Non-CS Systems Framework",
         "instruction": (
-            "A concise, punchy observation on craft standards, communication clarity, or team dynamics. "
-            "Structure: 3-4 conversational paragraphs with breathing room. "
-            "Lead with a relatable observation, provide empathetic context, and close with a thought-provoking perspective that stays with the reader."
+            "Explore how non-traditional tech builders master complex system architecture through data flows, boundary contracts, and edge cases rather than low-level syntax. "
+            "Structure: 1. A clear perspective on systems thinking and input/output contracts over syntax ➔ 2. How mapping state transitions and error paths unlocks 90% of architectural clarity ➔ 3. A takeaway rule for aspiring TPMs and technical BAs bridging business and engineering. "
+            "Thoughtful, analytical, and focused on principles and craft."
         ),
     },
 ]
@@ -1122,28 +1127,34 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
            - If writing for Applied AI (track: applied_ai_utility): focus on pragmatic utility, intelligent work routing, RAG on messy docs, and clean data over prompt wizardry.
            - If writing for Non-CS Builders & Aspiring Product Leaders (track: ba_to_product_journey): reflect honestly on learning tech from a business background, self-taught depth, and transitioning from ticket-taking to owning product outcomes.
 
-        3. GENUINELY HUMAN, CONVERSATIONAL VOICE (NOT ROBOTIC AI):
-           - Write like a real practitioner sharing an authentic observation, story, or hard-won lesson over coffee with peers.
+        3. STRICT ZERO-FABRICATED-STORIES DIRECTIVE (CRITICAL):
+           - NEVER invent fake personal anecdotes, simulated memories, or fictional project incidents.
+           - DO NOT write: "My wake-up call came when...", "Early in my career I...", "Last week my team...", "I remember when...", "One day I realized...".
+           - You are an AI assistant ghostwriting on Akshat's behalf. You do NOT have access to his private episodic memories. Making up fake personal scenes destroys credibility and sounds artificial.
+           - INSTEAD, anchor posts entirely in OBJECTIVE WORKPLACE OBSERVATIONS, SYSTEM PRINCIPLES, RECURRING TEAM DYNAMICS, and PRACTICAL DECISION HEURISTICS.
+           - Speak from observed industry patterns: "A recurring failure mode in cross-functional teams is...", "When business assumptions meet production APIs, the breakdown usually hides in...", "In data mapping and system integrations, edge cases are rarely technical — they are almost always...", "A simple heuristic for scoping technical requirements: ...".
+
+        4. GENUINELY HUMAN, CONVERSATIONAL VOICE (NOT ROBOTIC AI):
+           - Write like a seasoned practitioner discussing craft principles with peers over coffee.
            - NO AI LISTICLES. NEVER write 'Here is a 3-step framework', '1. [Action], 2. [Action], 3. [Action]', 'Let's dive in', 'In today's fast-paced world', or generic textbook definitions.
            - Use natural paragraph breaks (1-3 sentences per paragraph). Let the text breathe.
-           - Use authentic first-person or conversational framing ('In my experience with healthcare data...', 'A recurring pattern I see between dev and business...', 'Early on, I used to think...').
-           - Speak with grounded conviction, quiet confidence, and zero corporate fluff.
+           - Speak with quiet conviction, thoughtful nuance, and zero corporate fluff.
 
-        3. DELIVER ONE MEMORABLE TAKEAWAY:
+        5. DELIVER ONE MEMORABLE TAKEAWAY:
            - Leave the reader with one sharp, battle-tested heuristic, mindset shift, or practical rule they will think about during their workday tomorrow.
 
-        4. CRITICAL LINKEDIN API TRUNCATION RULE:
+        6. CRITICAL LINKEDIN API TRUNCATION RULE:
            - ABSOLUTELY NEVER USE PARENTHESES '(' or ')' or BRACKETS '[' or ']' in commentary or first_comment.
            - LinkedIn's /rest/posts API parser silently truncates all text from any parenthesis '('.
            - Always use em-dashes '—', colons ':', or commas ',' instead of parentheses.
 
-        5. LENGTH & CADENCE:
+        7. LENGTH & CADENCE:
            - 90 to 210 words. Rich in substance, zero filler words.
            - Avoid repetitive rhythmic patterns. Vary sentence lengths naturally.
 
-        6. TRUTHFULNESS & ACCURACY (CRITICAL):
+        8. TRUTHFULNESS & ACCURACY (CRITICAL):
            - Share authentic observations and truthful principles.
-           - NEVER invent fake personal anecdotes ('Last week my team did X...'), fake metrics ('boosted efficiency by 84.7%'), or fake company case studies.
+           - NEVER invent fake metrics ('boosted efficiency by 84.7%') or fake company case studies.
 
         Reply ONLY with JSON: {{"commentary": "...", "image_prompt": "...", "first_comment": "..."}}
         first_comment = a SHORT (1-2 sentences) follow-up the author drops as the
@@ -1169,6 +1180,7 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         CONTENT REQUIREMENTS:
         - Speak strictly to {target_audience}. Do NOT fuse multiple roles or blur into other domains.
         - Conversational, human, relatable practitioner voice. Avoid rigid listicles, numbered step-by-step formats, or textbook definitions.
+        - STRICTLY ZERO fabricated personal stories: do not invent scenes like 'My wake-up call came when...' or 'Early in my career I...'. Ground the post in objective system dynamics, failure modes, and practical heuristics.
         - End with 3-5 relevant hashtags: {' '.join(track.get('hashtags', [])[:5])}""")
 
     history = load_post_history(limit=15)
@@ -1284,12 +1296,12 @@ def evaluate_post(client: genai.Client, commentary: str, track: dict | None = No
         You are an experienced LinkedIn content editor and practitioner evaluating a draft written specifically for: {target_audience}.
         Rate this post 1-10 on EACH dimension:
         - single_focus: does this post maintain a clear, single focus strictly tailored for {target_audience}? (Score <= 5 if it confuses the reader by blending PM strategy, BA artifacts, and low-level code all into one post).
-        - human_voice: does it sound like an authentic human practitioner sharing a relatable observation, story, or reflection? (Score <= 5 if it reads like a robotic AI listicle, uses 'Here is a 3-step framework', '1. [Action] 2. [Action]', or generic textbook definitions).
+        - human_voice: does it sound like an authentic human practitioner sharing a relatable observation, dynamic, or heuristic? (Score <= 5 if it reads like a robotic AI listicle, uses 'Here is a 3-step framework', '1. [Action] 2. [Action]', or generic textbook definitions).
         - hook: does the FIRST line immediately stop the scroll with an intriguing premise, tension, or relatable workplace observation?
         - insight: is there a sharp, non-obvious practical takeaway, heuristic, or mindset shift?
         - readability: is the flow natural, conversational, and effortless to read on mobile (short paragraphs with clean spacing)?
 
-        Also set "fabricated": true if the post presents ANY invented personal anecdote ("my team deleted production"), fake metric/statistic ("boosted ROI by 82%"), fake company/quote, or unverified factual claims. Otherwise false.
+        Also set "fabricated": true if the post presents ANY invented personal anecdote or simulated personal memory (e.g., "My wake-up call came when...", "Early in my career I...", "Last week my team...", "I remember when..."), fake metric/statistic ("boosted ROI by 82%"), fake company/quote, or unverified factual claims. Posts MUST focus on objective systems observations, recurring cross-functional dynamics, and practical heuristics, NOT fabricated personal stories. Otherwise false.
 
         Then write ONE sentence of concrete, actionable feedback on how to make it sound even more human, relatable, and sharply focused.
 
@@ -1944,9 +1956,9 @@ def main() -> None:
 
         # Hard reject fabricated content — never post invented stories/claims.
         if ev.get("fabricated"):
-            feedback = ("The post contains an invented story or unverifiable claim — "
-                        "rewrite with ONLY truthful opinions and observations, no made-up "
-                        "anecdotes, metrics, or events. " + feedback)
+            feedback = ("The post contains an invented personal anecdote, simulated memory, or unverifiable claim — "
+                        "rewrite focusing strictly on OBJECTIVE system observations, recurring team dynamics, or practical heuristics. "
+                        "DO NOT invent personal scenes or fake past events. " + feedback)
             print(f"[draft] attempt {attempt}: REJECTED (fabricated content) -> regenerate")
             if best is None:                 # keep only as last-resort fallback
                 best = (0.0, post)
