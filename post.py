@@ -38,7 +38,7 @@ except ImportError:
     pass
 
 # The strategic pillars this account covers across Akshat Jindal's authentic domain tracks.
-CORE_THEMES = "Technical Business Analysis, Mission-Critical Systems (Healthcare RCM & FinTech), Pragmatic Applied AI, and the Non-CS Builder's Journey to Product Leadership"
+CORE_THEMES = "Technical Business Analysis, Mission-Critical Systems (Healthcare RCM & FinTech), Pragmatic Applied AI Utility, and Systems Thinking / Technical Product Leadership"
 
 # ── 4 Focused Audience Tracks (Anchored in Akshat Jindal's Real DNA) ───
 TRACKS = [
@@ -54,7 +54,7 @@ TRACKS = [
             "Why 85% of production bugs are not bad code, but unhandled edge cases in the functional specification",
             "The art of data mapping: why field-level validation rules and exception queues matter more than pretty wireframes",
             "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
-            "Why I stopped asking stakeholders what features they want, and started asking what manual spreadsheet they hate the most",
+            "Stop asking stakeholders what features they want: ask what manual spreadsheet they hate the most",
             "The silent killer of Agile sprints: moving tickets to 'In Progress' before the API payload contracts are agreed upon",
             "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
             "Sequence diagrams over 20-page requirement docs: why visual system handoffs prevent multi-week build rework",
@@ -72,7 +72,7 @@ TRACKS = [
         "voice": "Analytical, battle-tested, insightful about complex data pipelines, compliance constraints, and operational realities",
         "hashtags": ["#HealthTech", "#HealthcareRCM", "#FinTech", "#DataPipelines", "#EnterpriseSoftware"],
         "topics": [
-            "What US Healthcare RCM taught me about data: when an EHR integration sends malformed claim data, thousands of dollars get lost in denials",
+            "In US Healthcare RCM, when an EHR integration sends malformed claim data, thousands of dollars get lost in denials: why upstream intake fixes beat downstream rework",
             "Compliance by design: why bolting on regulatory checks at the end of a FinTech onboarding flow guarantees customer churn",
             "The reality of US Healthcare claim denials: why the highest-ROI fix is tracing rejections back to root cause upstream in data intake",
             "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
@@ -99,29 +99,31 @@ TRACKS = [
             "Designing human-in-the-loop workflows: knowing the exact confidence threshold where an automated system must hand off to a human",
             "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
             "Why we need golden evaluation test sets before deploying any AI feature to production",
-            "Proof of work over talk: why building my own end-to-end AI automation agents taught me more than reading 50 whitepapers",
+            "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
             "Why structured tool calling and deterministic state machines are replacing fragile free-form prompt engineering",
             "Context window bloat: why stuffing 500k tokens into an LLM often degrades search accuracy and inflates cloud costs",
         ],
     },
     {
-        "id": "ba_to_product_journey",
-        "name": "The Non-CS Builder & Path to Product Leadership",
-        "target_audience": "Aspiring Product Managers, Technical BAs, career switchers, and non-CS professionals in tech",
-        "persona": "Akshat Jindal, a Commerce & Business graduate who self-taught technical systems (SQL, APIs, schemas) to bridge dev and business, now pursuing a DBA and transitioning to Technical Product Management",
-        "voice": "Candid, humble, encouraging, relatable, proof-of-work driven, with honest reflections on learning tech without an engineering degree",
-        "hashtags": ["#CareerGrowth", "#ProductManagement", "#TechnicalProductManager", "#NonTechInTech", "#ContinuousLearning"],
+        "id": "technical_product_leadership",
+        "name": "Technical Product Management & Systems Thinking",
+        "target_audience": "Technical Product Managers, Business Analysts, System Builders, and Engineers",
+        "persona": "Akshat Jindal, a Technical BA and Product Specialist bridging business and engineering with systems thinking and pragmatic delivery",
+        "voice": "Pragmatic, value-driven, analytical, offering clear mental models on decomposing complex features, managing technical debt, and driving product outcomes",
+        "hashtags": ["#ProductManagement", "#TechnicalProductManager", "#SystemDesign", "#ProductStrategy", "#TechLeadership"],
         "topics": [
-            "You do not need a Computer Science degree to understand system architecture: how a commerce graduate learned to speak fluent developer",
-            "The biggest career unlock for a Business Analyst: learning SQL, reading API payloads, and refusing to be a passive note-taker",
-            "The shift from BA to Technical Product Manager: moving from 'What features do you want?' to 'What business outcome are we solving for?'",
-            "How to earn the respect of senior engineers when you don't have a coding degree: ask about data flows, edge cases, and respect their velocity",
-            "Why having a business and marketing background makes you a better technical builder: you never forget the customer or the revenue",
-            "The power of building tangible proof of work: why a working GitHub project or teardown beats 10 certificates on a resume",
-            "Overcoming imposter syndrome in cross-functional tech reviews: why asking the 'dumb' clarifying question saves the sprint",
-            "Why I am pursuing a Doctorate in Business Administration (DBA) while working in tech: grounding daily technical execution in long-term strategic depth",
-            "The trap of being 'busy with Jira tickets': how to build compounding career capital as a technical analyst",
-            "Managing upward when you are the bridge: how to keep executives informed on solutions without dumping unstructured chaos on their desk",
+            "Moving from requirement-taker to product outcome owner: how to frame technical debt in terms of business risk",
+            "How to decompose a 6-month monolith feature into 2-week independently shippable increments",
+            "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
+            "Why the best Product Managers understand data models: how database schemas dictate feature feasibility",
+            "Handling technical trade-offs: when to build custom architecture vs when to adopt standard SaaS APIs",
+            "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
+            "The difference between feature velocity and value velocity: why shipping fewer, tighter specs wins",
+            "Graceful degradation in product design: what modern software roadmaps can learn from safety-critical architectures",
+            "Why Given-When-Then acceptance criteria eliminate 80% of sprint QA churn",
+            "How to prioritize technical debt on a product roadmap using financial and operational risk scoring",
+            "The silent killer of Agile delivery: jumping straight to wireframes before system integration flows are validated",
+            "Managing upward with clarity: how to present trade-off matrices to executives instead of open-ended ambiguity",
         ],
     },
 ]
@@ -337,7 +339,7 @@ def generate_trending_topics(client: genai.Client, signals: list[str], n: int = 
         1. Technical BA Trenches & System Specifications (data mapping, API payload contracts, edge cases, Given-When-Then criteria, sprint planning)
         2. Mission-Critical Systems (US Healthcare RCM, claim denials, EHR/EMR data normalization, FinTech compliance by design, reconciliation pipelines)
         3. Applied AI Utility (intelligent work routing, RAG on internal docs, voice agents, data pipelines over prompt wizardry)
-        4. The Non-CS Builder & Path to Product Leadership (Commerce to Technical PM, learning SQL/APIs, moving from requirements to product outcomes)
+        4. Technical Product Management & Systems Thinking (decomposing monolith features, scope negotiation, framing tech debt as business risk, outcome ownership)
 
         STRICT TOPIC DIVERSITY RULE (CRITICAL):
         - At least 75% of the generated topics MUST be about non-AI topics (pure Technical BA, Healthcare RCM, API specs, and Product Management).
@@ -494,8 +496,8 @@ def detect_track(text: str) -> dict:
         scores["mission_critical_systems"] += 3
     if any(k in low for k in ["ai", "llm", "generative ai", "agent", "agentic", "rag", "routing", "decision engine", "voice agent", "ivr", "latency", "benchmark", "prompt", "code-switch", "eval", "tool calling"]):
         scores["applied_ai_utility"] += 3
-    if any(k in low for k in ["product manager", "product management", "tpm", "technical product", "non-cs", "commerce", "bba", "dba", "career", "interview", "resume", "proof of work", "imposter syndrome", "manage upward", "transition", "self-taught", "learning"]):
-        scores["ba_to_product_journey"] += 3
+    if any(k in low for k in ["product manager", "product management", "tpm", "technical product", "roadmap", "feature", "scope", "decomposition", "systems thinking", "consensus", "trade-off", "risk scoring", "non-cs", "tech leadership"]):
+        scores["technical_product_leadership"] += 3
 
     best_id = max(scores, key=scores.get)
     if scores[best_id] > 0:
@@ -700,11 +702,11 @@ POST_FORMATS = [
         ),
     },
     {
-        "name": "The Non-CS Systems Framework",
+        "name": "Systems Thinking Framework",
         "instruction": (
-            "Explore how non-traditional tech builders master complex system architecture through data flows, boundary contracts, and edge cases rather than low-level syntax. "
+            "Explore how effective technical builders master complex system architecture through data flows, boundary contracts, state transitions, and edge cases rather than low-level syntax. "
             "Structure: 1. A clear perspective on systems thinking and input/output contracts over syntax ➔ 2. How mapping state transitions and error paths unlocks 90% of architectural clarity ➔ 3. A takeaway rule for aspiring TPMs and technical BAs bridging business and engineering. "
-            "Thoughtful, analytical, and focused on principles and craft."
+            "Deliver pure, actionable value for the reader's craft. ZERO self-narrative or autobiographical framing."
         ),
     },
 ]
@@ -1114,47 +1116,53 @@ def generate_post(client: genai.Client, topic: str, persona: str = "", context: 
         {track_voice}
 
         CORE POSITIONING DIRECTIVES (CRITICAL):
-        1. WHO YOU ARE (AUTHENTIC PRACTITIONER DNA):
+        1. YOU ARE HERE TO ADD VALUE (NOT WRITE ABOUT YOURSELF):
+           - You are NOT on LinkedIn to talk about yourself, write personal memoirs, or recap your resume.
+           - DO NOT write self-referential or self-aggrandizing posts (e.g. NEVER start with 'As a BA...', 'In my journey...', 'How I learned...', 'My background in...').
+           - The spotlight belongs 100% on the reader, the technical challenge, the system failure mode, and the practical mental model that solves it.
+           - Every single post must deliver high-signal craft value that makes Technical BAs, Product Managers, and Builders noticeably sharper at their craft.
+
+        2. WHO YOU ARE (AUTHENTIC PRACTITIONER DNA):
            - You speak as Akshat Jindal: practical, observant, grounded in real project delivery.
            - You understand the developer's pain (breaking APIs, technical debt, vague tickets, database schema integrity).
            - You understand the business stakeholder's urgency (revenue impact, regulatory compliance, customer churn).
            - Your superpower is standing in the middle — translating messy human ambiguity into clean, bulletproof technical specs and product outcomes.
            - You write with humility, quiet conviction, subtle relatable wit, and ZERO corporate pretentiousness.
 
-        2. STRICT SINGLE AUDIENCE FOCUS:
+        3. STRICT SINGLE AUDIENCE FOCUS:
            - This post is 100% written FOR: {target_audience}.
            - DO NOT MIX AUDIENCES OR ROLES.
            - If writing for Technical BAs (track: technical_ba_trenches): stay laser-focused on data mapping, API contracts, edge cases, error queues, and requirement elicitation.
            - If writing for Mission-Critical Systems (track: mission_critical_systems): focus on Healthcare RCM, EHR integration realities, claim denials, and FinTech compliance.
            - If writing for Applied AI (track: applied_ai_utility): focus on pragmatic utility, intelligent work routing, RAG on messy docs, and clean data over prompt wizardry.
-           - If writing for Non-CS Builders & Aspiring Product Leaders (track: ba_to_product_journey): reflect honestly on learning tech from a business background, self-taught depth, and transitioning from ticket-taking to owning product outcomes.
+           - If writing for Technical Product Management & Systems Thinking (track: technical_product_leadership): focus on decomposing monolith features, managing technical debt, trade-off matrices, and bridging business outcomes with engineering architecture.
 
-        3. STRICT ZERO-FABRICATED-STORIES DIRECTIVE (CRITICAL):
+        4. STRICT ZERO-FABRICATED-STORIES DIRECTIVE (CRITICAL):
            - NEVER invent fake personal anecdotes, simulated memories, or fictional project incidents.
            - DO NOT write: "My wake-up call came when...", "Early in my career I...", "Last week my team...", "I remember when...", "One day I realized...".
            - You are an AI assistant ghostwriting on Akshat's behalf. You do NOT have access to his private episodic memories. Making up fake personal scenes destroys credibility and sounds artificial.
            - INSTEAD, anchor posts entirely in OBJECTIVE WORKPLACE OBSERVATIONS, SYSTEM PRINCIPLES, RECURRING TEAM DYNAMICS, and PRACTICAL DECISION HEURISTICS.
            - Speak from observed industry patterns: "A recurring failure mode in cross-functional teams is...", "When business assumptions meet production APIs, the breakdown usually hides in...", "In data mapping and system integrations, edge cases are rarely technical — they are almost always...", "A simple heuristic for scoping technical requirements: ...".
 
-        4. GENUINELY HUMAN, CONVERSATIONAL VOICE (NOT ROBOTIC AI):
+        5. GENUINELY HUMAN, CONVERSATIONAL VOICE (NOT ROBOTIC AI):
            - Write like a seasoned practitioner discussing craft principles with peers over coffee.
            - NO AI LISTICLES. NEVER write 'Here is a 3-step framework', '1. [Action], 2. [Action], 3. [Action]', 'Let's dive in', 'In today's fast-paced world', or generic textbook definitions.
            - Use natural paragraph breaks (1-3 sentences per paragraph). Let the text breathe.
            - Speak with quiet conviction, thoughtful nuance, and zero corporate fluff.
 
-        5. DELIVER ONE MEMORABLE TAKEAWAY:
+        6. DELIVER ONE MEMORABLE TAKEAWAY:
            - Leave the reader with one sharp, battle-tested heuristic, mindset shift, or practical rule they will think about during their workday tomorrow.
 
-        6. CRITICAL LINKEDIN API TRUNCATION RULE:
+        7. CRITICAL LINKEDIN API TRUNCATION RULE:
            - ABSOLUTELY NEVER USE PARENTHESES '(' or ')' or BRACKETS '[' or ']' in commentary or first_comment.
            - LinkedIn's /rest/posts API parser silently truncates all text from any parenthesis '('.
            - Always use em-dashes '—', colons ':', or commas ',' instead of parentheses.
 
-        7. LENGTH & CADENCE:
+        8. LENGTH & CADENCE:
            - 90 to 210 words. Rich in substance, zero filler words.
            - Avoid repetitive rhythmic patterns. Vary sentence lengths naturally.
 
-        8. TRUTHFULNESS & ACCURACY (CRITICAL):
+        9. TRUTHFULNESS & ACCURACY (CRITICAL):
            - Share authentic observations and truthful principles.
            - NEVER invent fake metrics ('boosted efficiency by 84.7%') or fake company case studies.
 
