@@ -1,9 +1,1 @@
-[
-  {
-    "topic": "Prioritizing complexity: ADAS lessons for any product roadmap",
-    "track": "ba_to_product_journey",
-    "persona": "Akshat Jindal, a Commerce & Business graduate who self-taught technical systems (SQL, APIs, schemas) to bridge dev and business, now pursuing a DBA and transitioning to Technical Product Management",
-    "commentary": "When non-CS professionals transition into product roles, the steepest learning curve is rarely mastering project management tooling.\n\nIt is learning how to untangle technical complexity when engineering teams push back on feature scope. A recurring friction point in cross-functional delivery is treating all technical debt as an equal blocker.\n\nTeams often stall because product roadmaps present features as binary choices rather than spectrums of risk and engineering effort.\n\nLooking at how advanced driver-assistance systems handle sensory complexity offers a clear parallel for product strategy.\n\nWhen an ADAS encounters ambiguous sensor data, it does not freeze or crash the entire system \u2014 it degrades gracefully, falls back to a safer operational state, or prompts the human driver for clarification.\n\nProduct roadmaps need the same architectural mindset. When business urgency collides with hard system constraints, the goal is not to force an impossible architecture through sheer willpower.\n\nThe real skill for a modern product builder lies in decomposing complex features into smaller layers, separating core user value from auxiliary technical polish, and designing graceful fallbacks before writing a single ticket.\n\n#CareerGrowth #ProductManagement #TechnicalProductManager #NonTechInTech #ContinuousLearning",
-    "first_comment": "How do you usually handle the pushback when engineering says a feature request is too complex for the current sprint?"
-  }
-]
+[]

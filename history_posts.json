@@ -1,0 +1,157 @@
+[
+  {
+    "timestamp": "2026-09-03T03:35:51.789565+00:00",
+    "topic": "Safety isn't optional for LLMs, it's a core product feature.",
+    "hook": "Most junior PMs and BAs showcase portfolio projects featuring custom prompts or personality tweaks. When asked about AI safety in interviews, they offer generic responses about ethics or prompt guardrails.",
+    "urn": "urn:li:share:7501120751001989121",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-03T08:49:01.460065+00:00",
+    "topic": "AI's new cyber threats demand proactive product security strategies.",
+    "hook": "Integrating AI agents into enterprise systems introduces sophisticated threat vectors that standard cybersecurity reviews miss entirely.",
+    "urn": "urn:li:share:7501199561684574208",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-03T17:43:32.556163+00:00",
+    "topic": "Here are 24 specific, fresh, and opinionated LinkedIn post topics for a builder focused on Business Analysis, Product Management, AI & AI agents, Product Strategy, and Career Pathways:",
+    "hook": "Standard user stories break down when writing requirements for AI agents that trigger enterprise API calls.",
+    "urn": "urn:li:ugcPost:7501334077795655680",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-04T03:31:44.673001+00:00",
+    "topic": "Ransomware by AI: Is your product strategy ready for agentic threats?",
+    "hook": "Most product teams secure AI agents at the API level, yet agentic ransomware operates through indirect prompt injection: bad actors embed malicious instructions inside unverified data sources that force an agent to manipulate files or leak keys.",
+    "urn": "urn:li:share:7501482104002732032",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-04T08:42:49.874611+00:00",
+    "topic": "AI's operational reality: Focus on ROI, not just hype.",
+    "hook": "Most teams evaluate AI features by model accuracy scores instead of operational unit economics. Shipping a feature with 90% accuracy sounds great until the remaining 10% edge cases require manual human remediation that cancels out all cost savings.",
+    "urn": "urn:li:share:7501560391626416128",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-04T14:05:09.506801+00:00",
+    "topic": "Delegating to AI agents: Product managers, embrace the shift.",
+    "hook": "Most PMs write specifications for AI agents like they are building deterministic microservices, then act surprised when production non-determinism breaks the workflow.",
+    "urn": "urn:li:share:7501641505560834048",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-04T17:30:30.548485+00:00",
+    "topic": "Fragile LLM safety: Products must design for inherent risks.",
+    "hook": "In late 2023, Chevrolet of Watsonville deployed an LLM-powered customer service assistant. Within hours, users manipulated the system prompt via prompt injection, tricking the bot into agreeing to sell a $58,000 Chevrolet Tahoe for $1.",
+    "urn": "urn:li:share:7501693185979686912",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-05T03:32:41.524718+00:00",
+    "topic": "AI-infused BA: Interpreting data, not just providing it.",
+    "hook": "Most junior business analysts treat AI agents as advanced search engines that merely retrieve data on demand. That passive approach turns high-value enterprise analysts into expensive query typists.",
+    "urn": "urn:li:share:7501844728880001024",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-05T08:13:46.002758+00:00",
+    "topic": "Why every PM needs an AI agent incident response plan now.",
+    "hook": "Most incident response playbooks assume software fails loudly through 500 status codes or memory spikes.",
+    "urn": "urn:li:share:7501915463120154624",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-05T14:02:29.802272+00:00",
+    "topic": "Product strategy in 2026: Agent oversight is the new competitive edge.",
+    "hook": "Most junior PMs and BAs prep for AI strategy roles by highlighting agent autonomy\u2014building models that execute workflows with zero human intervention.",
+    "urn": "urn:li:share:7502003222866444288",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-05T16:40:15.918329+00:00",
+    "topic": "The real value of LLMs isn't scale; it's specialized, vertical AI agents.",
+    "hook": "Chasing enterprise value by deploying massive, open-ended foundation models is a costly trap.",
+    "urn": "urn:li:share:7502042927565598720",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-06T03:32:47.852136+00:00",
+    "topic": "The real value of LLMs isn't scale; it's specialized, vertical AI agents.",
+    "hook": "General-purpose foundation models are terrible business analysts.",
+    "urn": "urn:li:share:7502207141362171904",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-06T08:32:49.224779+00:00",
+    "topic": "Freshers: How AI agents reshape business analysis roles.",
+    "hook": "Entry-level business analysis is no longer about documenting static software\u2014it is about designing non-deterministic workflows.",
+    "urn": "urn:li:share:7502282647260348416",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-06T14:04:50.431109+00:00",
+    "topic": "AI agent failures reveal flaws in our product's trust models.",
+    "hook": "In Moffatt v. Air Canada, an AI agent promised a customer a retroactive bereavement discount that contradicted official airline policy.",
+    "urn": "urn:li:ugcPost:7502366202581839872",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-07T03:31:31.937579+00:00",
+    "topic": "Open-source AI agents: The next big product disruption?",
+    "hook": "Choosing between open-source agent frameworks, proprietary managed APIs, or traditional deterministic code is the core architecture decision facing product builders today.",
+    "urn": "urn:li:ugcPost:7502569214017372160",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-07T14:01:17.058683+00:00",
+    "track_id": "applied_ai",
+    "topic": "Beyond the hype: Real ROI from applied AI initiatives.",
+    "hook": "Every product team faces the same dilemma when hunting for real AI ROI: do we build flashy customer-facing generation features, or fix unsexy internal workflow bottlenecks?",
+    "urn": "urn:li:share:7502727696062267393",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-07T17:31:31.746548+00:00",
+    "track_id": "ba_to_product_journey",
+    "topic": "Prioritizing complexity: ADAS lessons for any product roadmap",
+    "hook": "When non-CS professionals transition into product roles, the steepest learning curve is rarely mastering project management tooling.",
+    "urn": "urn:li:share:7502780605319987200",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  }
+]
