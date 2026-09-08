@@ -163,5 +163,15 @@
     "likes": 0,
     "comments": 0,
     "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-08T14:03:44.951125+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "The difference between feature velocity and value velocity: why shipping fewer, tighter specs wins",
+    "hook": "High sprint velocity is usually a sign of a dying system, not a healthy team.",
+    "urn": "urn:li:share:7503090704404017153",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
   }
 ]
