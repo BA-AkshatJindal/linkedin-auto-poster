@@ -173,5 +173,15 @@
     "likes": 0,
     "comments": 0,
     "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-09T03:33:07.915852+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Why 85% of production bugs are not bad code, but unhandled edge cases in the functional specification",
+    "hook": "Most production bugs are not caused by bad code. They hide in unhandled edge cases inside the spec.",
+    "urn": "urn:li:share:7503294392212905984",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
   }
 ]
