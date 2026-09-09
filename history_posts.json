@@ -183,5 +183,15 @@
     "likes": 0,
     "comments": 0,
     "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-09T14:05:20.527146+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "The Art of Reconciliation Pipelines: Ensuring Absolute Data Integrity in Financial Systems.",
+    "hook": "Most teams try to fix financial reconciliation breaks by building real-time streaming alerts and complex auto-retry loops.",
+    "urn": "urn:li:share:7503453493416882176",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
   }
 ]
