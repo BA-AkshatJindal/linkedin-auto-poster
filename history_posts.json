@@ -213,5 +213,15 @@
     "likes": 0,
     "comments": 0,
     "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-10T14:01:17.324872+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "Managing upward with clarity: how to present trade-off matrices to executives instead of open-ended ambiguity",
+    "hook": "Engineering roadmaps stall in executive reviews when teams ask open-ended questions like: Should we rewrite the database schema or keep patching it?",
+    "urn": "urn:li:share:7503814860753838084",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
   }
 ]
