@@ -69,6 +69,7 @@ jobs:
           CONTEXT: ${{ inputs.context }}
           IMAGE_MODE: ${{ inputs.image_mode || 'none' }}
           DRY_RUN: ${{ inputs.dry_run }}
+          FIRST_COMMENT_MODE: "true"
         run: python post.py
 
       - name: Commit & push updated post history

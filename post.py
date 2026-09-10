@@ -2088,8 +2088,12 @@ def main() -> None:
     # Save post URN to local history file for future performance tracking
     save_post_history(topic, commentary, urn=urn, track_id=track["id"])
 
-    # First comment: OFF by default. Set FIRST_COMMENT_MODE=true to enable.
-    if first_comment and os.environ.get("FIRST_COMMENT_MODE", "false").strip().lower() in ("1", "true", "yes"):
+    # First comment: post if provided and (FIRST_COMMENT_MODE is enabled or explicitly provided in spec/queue)
+    should_post_comment = bool(first_comment and (
+        os.environ.get("FIRST_COMMENT_MODE", "false").strip().lower() in ("1", "true", "yes")
+        or spec.get("first_comment")
+    ))
+    if should_post_comment:
         # A freshly published post needs a few seconds to propagate before the
         # social-actions endpoint accepts comments (else 404), so retry briefly.
         for attempt in range(1, 5):
