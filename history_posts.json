@@ -193,5 +193,15 @@
     "likes": 0,
     "comments": 0,
     "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-10T03:31:26.999919+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Building RAG for real operations: why chunking strategy and retrieval precision matter 10x more than model token size",
+    "hook": "Throwing a giant context window at bad docs sounds like an easy win until your AI starts pulling random junk from messy files.",
+    "urn": "urn:li:share:7503656356655071232",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
   }
 ]
