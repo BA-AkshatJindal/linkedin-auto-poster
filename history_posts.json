@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-03T03:35:51.789565+00:00",
-    "topic": "Safety isn't optional for LLMs, it's a core product feature.",
-    "hook": "Most junior PMs and BAs showcase portfolio projects featuring custom prompts or personality tweaks. When asked about AI safety in interviews, they offer generic responses about ethics or prompt guardrails.",
-    "urn": "urn:li:share:7501120751001989121",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-03T08:49:01.460065+00:00",
     "topic": "AI's new cyber threats demand proactive product security strategies.",
     "hook": "Integrating AI agents into enterprise systems introduces sophisticated threat vectors that standard cybersecurity reviews miss entirely.",
@@ -230,6 +221,16 @@
     "topic": "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
     "hook": "\"It is just a simple UI button\" is the most dangerous line in sprint planning.",
     "urn": "urn:li:share:7504018718780243968",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-11T14:05:39.737950+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
+    "hook": "Teams integrating EHRs constantly argue: do we normalize messy payload variations at the edge, or push custom parsing logic down to every payment and billing service?",
+    "urn": "urn:li:share:7504178349100052480",
     "likes": 0,
     "comments": 0,
     "engagement": 0
