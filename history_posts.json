@@ -223,5 +223,15 @@
     "likes": 0,
     "comments": 0,
     "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-11T03:31:20.894277+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
+    "hook": "\"It is just a simple UI button\" is the most dangerous line in sprint planning.",
+    "urn": "urn:li:share:7504018718780243968",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
   }
 ]
