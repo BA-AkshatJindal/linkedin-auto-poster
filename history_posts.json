@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-03T08:49:01.460065+00:00",
-    "topic": "AI's new cyber threats demand proactive product security strategies.",
-    "hook": "Integrating AI agents into enterprise systems introduces sophisticated threat vectors that standard cybersecurity reviews miss entirely.",
-    "urn": "urn:li:share:7501199561684574208",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-03T17:43:32.556163+00:00",
     "topic": "Here are 24 specific, fresh, and opinionated LinkedIn post topics for a builder focused on Business Analysis, Product Management, AI & AI agents, Product Strategy, and Career Pathways:",
     "hook": "Standard user stories break down when writing requirements for AI agents that trigger enterprise API calls.",
@@ -231,6 +222,16 @@
     "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
     "hook": "Teams integrating EHRs constantly argue: do we normalize messy payload variations at the edge, or push custom parsing logic down to every payment and billing service?",
     "urn": "urn:li:share:7504178349100052480",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-12T03:37:58.404292+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Why platform network effects fail when technical product managers optimize for feature velocity over core architecture stability",
+    "hook": "Rushing out features to show quick wins on your AI roadmap usually destroys your platform stability.",
+    "urn": "urn:li:share:7504382773965713408",
     "likes": 0,
     "comments": 0,
     "engagement": 0
