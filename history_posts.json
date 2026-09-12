@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-03T17:43:32.556163+00:00",
-    "topic": "Here are 24 specific, fresh, and opinionated LinkedIn post topics for a builder focused on Business Analysis, Product Management, AI & AI agents, Product Strategy, and Career Pathways:",
-    "hook": "Standard user stories break down when writing requirements for AI agents that trigger enterprise API calls.",
-    "urn": "urn:li:ugcPost:7501334077795655680",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-04T03:31:44.673001+00:00",
     "topic": "Ransomware by AI: Is your product strategy ready for agentic threats?",
     "hook": "Most product teams secure AI agents at the API level, yet agentic ransomware operates through indirect prompt injection: bad actors embed malicious instructions inside unverified data sources that force an agent to manipulate files or leak keys.",
@@ -232,6 +223,16 @@
     "topic": "Why platform network effects fail when technical product managers optimize for feature velocity over core architecture stability",
     "hook": "Rushing out features to show quick wins on your AI roadmap usually destroys your platform stability.",
     "urn": "urn:li:share:7504382773965713408",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-12T14:06:29.130440+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
+    "hook": "Alignment sessions usually break down right after everyone nods and leaves the room. Business teams think they agreed on a simple workflow, while devs start building for three unmentioned edge cases.",
+    "urn": "urn:li:share:7504540944340434945",
     "likes": 0,
     "comments": 0,
     "engagement": 0
