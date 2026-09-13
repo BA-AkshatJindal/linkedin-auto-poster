@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-04T03:31:44.673001+00:00",
-    "topic": "Ransomware by AI: Is your product strategy ready for agentic threats?",
-    "hook": "Most product teams secure AI agents at the API level, yet agentic ransomware operates through indirect prompt injection: bad actors embed malicious instructions inside unverified data sources that force an agent to manipulate files or leak keys.",
-    "urn": "urn:li:share:7501482104002732032",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-04T08:42:49.874611+00:00",
     "topic": "AI's operational reality: Focus on ROI, not just hype.",
     "hook": "Most teams evaluate AI features by model accuracy scores instead of operational unit economics. Shipping a feature with 90% accuracy sounds great until the remaining 10% edge cases require manual human remediation that cancels out all cost savings.",
@@ -233,6 +224,16 @@
     "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
     "hook": "Alignment sessions usually break down right after everyone nods and leaves the room. Business teams think they agreed on a simple workflow, while devs start building for three unmentioned edge cases.",
     "urn": "urn:li:share:7504540944340434945",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-13T03:30:58.992791+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "The difference between an amateur BA who collects wishlists and a Technical BA who stress-tests data flows",
+    "hook": "Production APIs quietly fail when optional payload fields return unexpected nulls, triggering silent data drops downstream.",
+    "urn": "urn:li:share:7504743402962501632",
     "likes": 0,
     "comments": 0,
     "engagement": 0
