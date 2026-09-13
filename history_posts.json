@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-04T08:42:49.874611+00:00",
-    "topic": "AI's operational reality: Focus on ROI, not just hype.",
-    "hook": "Most teams evaluate AI features by model accuracy scores instead of operational unit economics. Shipping a feature with 90% accuracy sounds great until the remaining 10% edge cases require manual human remediation that cancels out all cost savings.",
-    "urn": "urn:li:share:7501560391626416128",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-04T14:05:09.506801+00:00",
     "topic": "Delegating to AI agents: Product managers, embrace the shift.",
     "hook": "Most PMs write specifications for AI agents like they are building deterministic microservices, then act surprised when production non-determinism breaks the workflow.",
@@ -234,6 +225,16 @@
     "topic": "The difference between an amateur BA who collects wishlists and a Technical BA who stress-tests data flows",
     "hook": "Production APIs quietly fail when optional payload fields return unexpected nulls, triggering silent data drops downstream.",
     "urn": "urn:li:share:7504743402962501632",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-13T14:02:51.266190+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "EHR/EMR data normalization: The critical difference between healthcare insight and operational chaos.",
+    "hook": "Claim rejections spike at the clearinghouse, but the billing engine shows zero internal errors. Teams waste days debugging payment APIs, looking in the wrong place.",
+    "urn": "urn:li:share:7504902418502008833",
     "likes": 0,
     "comments": 0,
     "engagement": 0
