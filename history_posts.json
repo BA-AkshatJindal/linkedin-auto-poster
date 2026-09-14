@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-04T14:05:09.506801+00:00",
-    "topic": "Delegating to AI agents: Product managers, embrace the shift.",
-    "hook": "Most PMs write specifications for AI agents like they are building deterministic microservices, then act surprised when production non-determinism breaks the workflow.",
-    "urn": "urn:li:share:7501641505560834048",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-04T17:30:30.548485+00:00",
     "topic": "Fragile LLM safety: Products must design for inherent risks.",
     "hook": "In late 2023, Chevrolet of Watsonville deployed an LLM-powered customer service assistant. Within hours, users manipulated the system prompt via prompt injection, tricking the bot into agreeing to sell a $58,000 Chevrolet Tahoe for $1.",
@@ -235,6 +226,16 @@
     "topic": "EHR/EMR data normalization: The critical difference between healthcare insight and operational chaos.",
     "hook": "Claim rejections spike at the clearinghouse, but the billing engine shows zero internal errors. Teams waste days debugging payment APIs, looking in the wrong place.",
     "urn": "urn:li:share:7504902418502008833",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-14T03:31:43.155061+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Why structured tool calling and deterministic state machines are replacing fragile free-form prompt engineering",
+    "hook": "Stop letting free-form prompts decide when to write to your database. Asking an AI to generate raw text and hoping it follows your workflow is a recipe for broken APIs.",
+    "urn": "urn:li:share:7505105975658479616",
     "likes": 0,
     "comments": 0,
     "engagement": 0
