@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-05T03:32:41.524718+00:00",
-    "topic": "AI-infused BA: Interpreting data, not just providing it.",
-    "hook": "Most junior business analysts treat AI agents as advanced search engines that merely retrieve data on demand. That passive approach turns high-value enterprise analysts into expensive query typists.",
-    "urn": "urn:li:share:7501844728880001024",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-05T08:13:46.002758+00:00",
     "topic": "Why every PM needs an AI agent incident response plan now.",
     "hook": "Most incident response playbooks assume software fails loudly through 500 status codes or memory spikes.",
@@ -237,6 +228,16 @@
     "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
     "hook": "Saying no to executive feature requests with a flat timeline reduction destroys team trust. The trick is never debating scope in a vacuum.",
     "urn": "urn:li:share:7505264469116342272",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-15T03:31:17.002036+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Sequence diagrams over 20-page requirement docs: why visual system handoffs prevent multi-week build rework",
+    "hook": "Teams endlessly debate whether to write twenty-page requirement docs or rely on brief text tickets. Long text hides missing steps, while vague tickets cause massive engineering rework.",
+    "urn": "urn:li:share:7505468253989707776",
     "likes": 0,
     "comments": 0,
     "engagement": 0
