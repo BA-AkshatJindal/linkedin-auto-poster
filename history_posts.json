@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-05T08:13:46.002758+00:00",
-    "topic": "Why every PM needs an AI agent incident response plan now.",
-    "hook": "Most incident response playbooks assume software fails loudly through 500 status codes or memory spikes.",
-    "urn": "urn:li:share:7501915463120154624",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-05T14:02:29.802272+00:00",
     "topic": "Product strategy in 2026: Agent oversight is the new competitive edge.",
     "hook": "Most junior PMs and BAs prep for AI strategy roles by highlighting agent autonomy\u2014building models that execute workflows with zero human intervention.",
@@ -238,6 +229,16 @@
     "topic": "Sequence diagrams over 20-page requirement docs: why visual system handoffs prevent multi-week build rework",
     "hook": "Teams endlessly debate whether to write twenty-page requirement docs or rely on brief text tickets. Long text hides missing steps, while vague tickets cause massive engineering rework.",
     "urn": "urn:li:share:7505468253989707776",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-15T05:22:54.563479+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "Happy Engineers Day: Honoring Sir M. Visvesvaraya and Everyday Problem-Solvers",
+    "hook": "Happy Engineers' Day to everyone who looks at a broken, messy problem and says: 'Let's figure out how to make this work.'",
+    "urn": "urn:li:share:7505496345340694528",
     "likes": 0,
     "comments": 0,
     "engagement": 0
