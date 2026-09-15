@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-05T14:02:29.802272+00:00",
-    "topic": "Product strategy in 2026: Agent oversight is the new competitive edge.",
-    "hook": "Most junior PMs and BAs prep for AI strategy roles by highlighting agent autonomy\u2014building models that execute workflows with zero human intervention.",
-    "urn": "urn:li:share:7502003222866444288",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-05T16:40:15.918329+00:00",
     "topic": "The real value of LLMs isn't scale; it's specialized, vertical AI agents.",
     "hook": "Chasing enterprise value by deploying massive, open-ended foundation models is a costly trap.",
@@ -239,6 +230,16 @@
     "topic": "Happy Engineers Day: Honoring Sir M. Visvesvaraya and Everyday Problem-Solvers",
     "hook": "Happy Engineers' Day to everyone who looks at a broken, messy problem and says: 'Let's figure out how to make this work.'",
     "urn": "urn:li:share:7505496345340694528",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-15T14:11:14.182306+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Voice agents in healthcare RCM: Where human empathy meets AI-driven efficiency for patient inquiries.",
+    "hook": "Teams building patient voice agents constantly argue: do we give the AI open conversational freedom, or lock it into strict deterministic flows for scheduling and billing?",
+    "urn": "urn:li:share:7505629303397568512",
     "likes": 0,
     "comments": 0,
     "engagement": 0
