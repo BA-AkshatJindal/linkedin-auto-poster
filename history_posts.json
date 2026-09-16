@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-06T03:32:47.852136+00:00",
-    "topic": "The real value of LLMs isn't scale; it's specialized, vertical AI agents.",
-    "hook": "General-purpose foundation models are terrible business analysts.",
-    "urn": "urn:li:share:7502207141362171904",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-06T08:32:49.224779+00:00",
     "topic": "Freshers: How AI agents reshape business analysis roles.",
     "hook": "Entry-level business analysis is no longer about documenting static software\u2014it is about designing non-deterministic workflows.",
@@ -241,6 +232,16 @@
     "topic": "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
     "hook": "Everyone wants to put an LLM behind every button, but nobody talks about the four-second wait that quietly kills user adoption.",
     "urn": "urn:li:share:7505830663791497216",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-16T14:02:29.923184+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "The operational danger of treating API payload contracts as negotiable guidelines rather than strict architectural agreements",
+    "hook": "Treating an API payload contract like a loose suggestion is a fast way to break production.",
+    "urn": "urn:li:share:7505989491506188288",
     "likes": 0,
     "comments": 0,
     "engagement": 0
