@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-05T16:40:15.918329+00:00",
-    "topic": "The real value of LLMs isn't scale; it's specialized, vertical AI agents.",
-    "hook": "Chasing enterprise value by deploying massive, open-ended foundation models is a costly trap.",
-    "urn": "urn:li:share:7502042927565598720",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-06T03:32:47.852136+00:00",
     "topic": "The real value of LLMs isn't scale; it's specialized, vertical AI agents.",
     "hook": "General-purpose foundation models are terrible business analysts.",
@@ -240,6 +231,16 @@
     "topic": "Voice agents in healthcare RCM: Where human empathy meets AI-driven efficiency for patient inquiries.",
     "hook": "Teams building patient voice agents constantly argue: do we give the AI open conversational freedom, or lock it into strict deterministic flows for scheduling and billing?",
     "urn": "urn:li:share:7505629303397568512",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-16T03:31:22.299725+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
+    "hook": "Everyone wants to put an LLM behind every button, but nobody talks about the four-second wait that quietly kills user adoption.",
+    "urn": "urn:li:share:7505830663791497216",
     "likes": 0,
     "comments": 0,
     "engagement": 0
