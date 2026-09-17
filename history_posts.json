@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-06T08:32:49.224779+00:00",
-    "topic": "Freshers: How AI agents reshape business analysis roles.",
-    "hook": "Entry-level business analysis is no longer about documenting static software\u2014it is about designing non-deterministic workflows.",
-    "urn": "urn:li:share:7502282647260348416",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-06T14:04:50.431109+00:00",
     "topic": "AI agent failures reveal flaws in our product's trust models.",
     "hook": "In Moffatt v. Air Canada, an AI agent promised a customer a retroactive bereavement discount that contradicted official airline policy.",
@@ -242,6 +233,16 @@
     "topic": "The operational danger of treating API payload contracts as negotiable guidelines rather than strict architectural agreements",
     "hook": "Treating an API payload contract like a loose suggestion is a fast way to break production.",
     "urn": "urn:li:share:7505989491506188288",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-17T03:31:13.129496+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "Why Given-When-Then acceptance criteria eliminate 80% of sprint QA churn",
+    "hook": "Writing detailed paragraph specs will not stop sprint QA churn. It just hides missing assumptions.",
+    "urn": "urn:li:share:7506193013401018368",
     "likes": 0,
     "comments": 0,
     "engagement": 0
