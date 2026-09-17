@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-06T14:04:50.431109+00:00",
-    "topic": "AI agent failures reveal flaws in our product's trust models.",
-    "hook": "In Moffatt v. Air Canada, an AI agent promised a customer a retroactive bereavement discount that contradicted official airline policy.",
-    "urn": "urn:li:ugcPost:7502366202581839872",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-07T03:31:31.937579+00:00",
     "topic": "Open-source AI agents: The next big product disruption?",
     "hook": "Choosing between open-source agent frameworks, proprietary managed APIs, or traditional deterministic code is the core architecture decision facing product builders today.",
@@ -243,6 +234,16 @@
     "topic": "Why Given-When-Then acceptance criteria eliminate 80% of sprint QA churn",
     "hook": "Writing detailed paragraph specs will not stop sprint QA churn. It just hides missing assumptions.",
     "urn": "urn:li:share:7506193013401018368",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-17T14:02:58.378138+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "The often-overlooked resilience requirements for modern electronic trading platforms",
+    "hook": "Teams building electronic trading platforms endlessly debate: do we run pre-trade compliance checks synchronously to guarantee safety, or push them async to protect low latency?",
+    "urn": "urn:li:share:7506351998133411840",
     "likes": 0,
     "comments": 0,
     "engagement": 0
