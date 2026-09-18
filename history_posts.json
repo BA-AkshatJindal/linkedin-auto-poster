@@ -1,14 +1,5 @@
 [
   {
-    "timestamp": "2026-09-07T03:31:31.937579+00:00",
-    "topic": "Open-source AI agents: The next big product disruption?",
-    "hook": "Choosing between open-source agent frameworks, proprietary managed APIs, or traditional deterministic code is the core architecture decision facing product builders today.",
-    "urn": "urn:li:ugcPost:7502569214017372160",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-07T14:01:17.058683+00:00",
     "track_id": "applied_ai",
     "topic": "Beyond the hype: Real ROI from applied AI initiatives.",
@@ -244,6 +235,16 @@
     "topic": "The often-overlooked resilience requirements for modern electronic trading platforms",
     "hook": "Teams building electronic trading platforms endlessly debate: do we run pre-trade compliance checks synchronously to guarantee safety, or push them async to protect low latency?",
     "urn": "urn:li:share:7506351998133411840",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-18T03:33:09.106532+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "RAG on internal documents: Unlocking enterprise knowledge without hallucination",
+    "hook": "Teams building enterprise RAG systems constantly debate how to stop the AI from making things up. The common trap is tweaking prompts or upgrading to a bigger model.",
+    "urn": "urn:li:share:7506555887822553088",
     "likes": 0,
     "comments": 0,
     "engagement": 0
