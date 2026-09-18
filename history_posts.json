@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-07T14:01:17.058683+00:00",
-    "track_id": "applied_ai",
-    "topic": "Beyond the hype: Real ROI from applied AI initiatives.",
-    "hook": "Every product team faces the same dilemma when hunting for real AI ROI: do we build flashy customer-facing generation features, or fix unsexy internal workflow bottlenecks?",
-    "urn": "urn:li:share:7502727696062267393",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-07T17:31:31.746548+00:00",
     "track_id": "ba_to_product_journey",
     "topic": "Prioritizing complexity: ADAS lessons for any product roadmap",
@@ -245,6 +235,16 @@
     "topic": "RAG on internal documents: Unlocking enterprise knowledge without hallucination",
     "hook": "Teams building enterprise RAG systems constantly debate how to stop the AI from making things up. The common trap is tweaking prompts or upgrading to a bigger model.",
     "urn": "urn:li:share:7506555887822553088",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-18T14:06:44.622280+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
+    "hook": "When a stakeholder marks every single requirement as a Must Have under MoSCoW, prioritization completely breaks. Your backlog turns into an inflated dumping ground of everything the business wants yesterday.",
+    "urn": "urn:li:share:7506715336239398914",
     "likes": 0,
     "comments": 0,
     "engagement": 0
