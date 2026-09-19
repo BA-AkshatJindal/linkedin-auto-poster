@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-08T03:31:22.409757+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "From domain expert to compelling product strategist.",
-    "hook": "Domain experts building AI workflows often make a quiet mistake: they try to dump ten years of industry edge cases into one massive prompt.",
-    "urn": "urn:li:share:7502931561277980672",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-08T14:03:44.951125+00:00",
     "track_id": "technical_product_leadership",
     "topic": "The difference between feature velocity and value velocity: why shipping fewer, tighter specs wins",
@@ -245,6 +235,16 @@
     "topic": "The uncomfortable truth: Scope negotiation isn't about saying 'no', it's about 'how much value, by when'",
     "hook": "Scope negotiation is not about learning how to say no. It is about shifting the entire debate away from arbitrary deadlines and onto value and timing.",
     "urn": "urn:li:share:7506918124286275584",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-19T14:01:25.894738+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "EHR/EMR data normalization: The silent hero of accurate patient care and billing",
+    "hook": "Teams integrating EHR feeds endlessly debate: do we write custom transformation logic for every sloppy vendor payload, or enforce strict schema normalization right at the boundary?",
+    "urn": "urn:li:share:7507076387183325184",
     "likes": 0,
     "comments": 0,
     "engagement": 0
