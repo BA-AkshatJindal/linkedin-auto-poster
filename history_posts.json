@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-07T17:31:31.746548+00:00",
-    "track_id": "ba_to_product_journey",
-    "topic": "Prioritizing complexity: ADAS lessons for any product roadmap",
-    "hook": "When non-CS professionals transition into product roles, the steepest learning curve is rarely mastering project management tooling.",
-    "urn": "urn:li:share:7502780605319987200",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-08T03:31:22.409757+00:00",
     "track_id": "applied_ai_utility",
     "topic": "From domain expert to compelling product strategist.",
@@ -245,6 +235,16 @@
     "topic": "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
     "hook": "When a stakeholder marks every single requirement as a Must Have under MoSCoW, prioritization completely breaks. Your backlog turns into an inflated dumping ground of everything the business wants yesterday.",
     "urn": "urn:li:share:7506715336239398914",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-19T03:32:33.112487+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "The uncomfortable truth: Scope negotiation isn't about saying 'no', it's about 'how much value, by when'",
+    "hook": "Scope negotiation is not about learning how to say no. It is about shifting the entire debate away from arbitrary deadlines and onto value and timing.",
+    "urn": "urn:li:share:7506918124286275584",
     "likes": 0,
     "comments": 0,
     "engagement": 0
