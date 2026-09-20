@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-08T14:03:44.951125+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "The difference between feature velocity and value velocity: why shipping fewer, tighter specs wins",
-    "hook": "High sprint velocity is usually a sign of a dying system, not a healthy team.",
-    "urn": "urn:li:share:7503090704404017153",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-09T03:33:07.915852+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "Why 85% of production bugs are not bad code, but unhandled edge cases in the functional specification",
@@ -245,6 +235,16 @@
     "topic": "EHR/EMR data normalization: The silent hero of accurate patient care and billing",
     "hook": "Teams integrating EHR feeds endlessly debate: do we write custom transformation logic for every sloppy vendor payload, or enforce strict schema normalization right at the boundary?",
     "urn": "urn:li:share:7507076387183325184",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-20T03:31:34.344017+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Why 90% of enterprise GenAI success comes from clean data normalization and deterministic rules, not prompt wizardry",
+    "hook": "Spending weeks rewriting system prompts to fix bad outputs is a complete waste of engineering hours.",
+    "urn": "urn:li:share:7507280265963008000",
     "likes": 0,
     "comments": 0,
     "engagement": 0
