@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-09T14:05:20.527146+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "The Art of Reconciliation Pipelines: Ensuring Absolute Data Integrity in Financial Systems.",
-    "hook": "Most teams try to fix financial reconciliation breaks by building real-time streaming alerts and complex auto-retry loops.",
-    "urn": "urn:li:share:7503453493416882176",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-10T03:31:26.999919+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Building RAG for real operations: why chunking strategy and retrieval precision matter 10x more than model token size",
@@ -245,6 +235,16 @@
     "topic": "The art of data mapping: why field-level validation rules and exception queues matter more than pretty wireframes",
     "hook": "Teams endlessly debate whether to spend sprint hours building gorgeous wireframes or mapping out strict data validation rules.",
     "urn": "urn:li:share:7507438772565950464",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-21T03:31:37.440002+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "How to prioritize technical debt on a product roadmap using financial and operational risk scoring",
+    "hook": "Feature velocity suddenly grinds to a halt and production bug queues explode. The breakdown starts when engineers ask to clean up bad code, but frame it in technical terms rather than operational risk.",
+    "urn": "urn:li:share:7507642664582955008",
     "likes": 0,
     "comments": 0,
     "engagement": 0
