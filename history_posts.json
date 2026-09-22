@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-10T04:08:46.966131+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "The Future of Purchasing: Autonomous Agents in Retail",
-    "hook": "E-commerce search still forces you to do all the work.",
-    "urn": "urn:li:share:7503665750792921088",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-10T14:01:17.324872+00:00",
     "track_id": "technical_product_leadership",
     "topic": "Managing upward with clarity: how to present trade-off matrices to executives instead of open-ended ambiguity",
@@ -245,6 +235,16 @@
     "topic": "The Predictive Power of Data: Moving Beyond Reactive Drug Shortage Management.",
     "hook": "Hospitals do not run out of critical drugs because of sudden supply failure \u2014 they run out because inventory systems only alert teams after the shelf is already empty.",
     "urn": "urn:li:share:7507803383635009537",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-22T03:31:22.347300+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "The Unspoken Truth: Why Most Data Dictionaries Fail and How to Build One That Works.",
+    "hook": "Most data dictionaries are useless for AI workflows.",
+    "urn": "urn:li:share:7508004991199203328",
     "likes": 0,
     "comments": 0,
     "engagement": 0
