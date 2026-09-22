@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-10T14:01:17.324872+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "Managing upward with clarity: how to present trade-off matrices to executives instead of open-ended ambiguity",
-    "hook": "Engineering roadmaps stall in executive reviews when teams ask open-ended questions like: Should we rewrite the database schema or keep patching it?",
-    "urn": "urn:li:share:7503814860753838084",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-11T03:31:20.894277+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
@@ -245,6 +235,16 @@
     "topic": "The Unspoken Truth: Why Most Data Dictionaries Fail and How to Build One That Works.",
     "hook": "Most data dictionaries are useless for AI workflows.",
     "urn": "urn:li:share:7508004991199203328",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-22T14:06:18.035194+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
+    "hook": "Writing paragraphs of descriptive requirements will never stop sprint QA churn. It just hides missing edge cases behind corporate prose.",
+    "urn": "urn:li:share:7508164775739150336",
     "likes": 0,
     "comments": 0,
     "engagement": 0
