@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-11T14:05:39.737950+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
-    "hook": "Teams integrating EHRs constantly argue: do we normalize messy payload variations at the edge, or push custom parsing logic down to every payment and billing service?",
-    "urn": "urn:li:share:7504178349100052480",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-12T03:37:58.404292+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Why platform network effects fail when technical product managers optimize for feature velocity over core architecture stability",
@@ -245,6 +235,16 @@
     "topic": "How to decompose a 6-month monolith feature into 2-week independently shippable increments",
     "hook": "Decomposing a six-month monolith feature by slicing user journeys into smaller frontend stories usually breaks production.",
     "urn": "urn:li:share:7508367367458930689",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-23T14:07:35.722734+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Payer-specific workflow quirks: why Medicare and commercial insurers require completely distinct data validation paths",
+    "hook": "Assuming Medicare and commercial insurance claim workflows share the same validation logic is a fast track to endless error queues.",
+    "urn": "urn:li:share:7508527490110312448",
     "likes": 0,
     "comments": 0,
     "engagement": 0
