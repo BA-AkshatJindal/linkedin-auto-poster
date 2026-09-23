@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-11T03:31:20.894277+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
-    "hook": "\"It is just a simple UI button\" is the most dangerous line in sprint planning.",
-    "urn": "urn:li:share:7504018718780243968",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-11T14:05:39.737950+00:00",
     "track_id": "mission_critical_systems",
     "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
@@ -245,6 +235,16 @@
     "topic": "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
     "hook": "Writing paragraphs of descriptive requirements will never stop sprint QA churn. It just hides missing edge cases behind corporate prose.",
     "urn": "urn:li:share:7508164775739150336",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-23T03:31:19.533867+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "How to decompose a 6-month monolith feature into 2-week independently shippable increments",
+    "hook": "Decomposing a six-month monolith feature by slicing user journeys into smaller frontend stories usually breaks production.",
+    "urn": "urn:li:share:7508367367458930689",
     "likes": 0,
     "comments": 0,
     "engagement": 0
