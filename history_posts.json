@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-12T14:06:29.130440+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
-    "hook": "Alignment sessions usually break down right after everyone nods and leaves the room. Business teams think they agreed on a simple workflow, while devs start building for three unmentioned edge cases.",
-    "urn": "urn:li:share:7504540944340434945",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-13T03:30:58.992791+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "The difference between an amateur BA who collects wishlists and a Technical BA who stress-tests data flows",
@@ -245,6 +235,16 @@
     "topic": "Why we need golden evaluation test sets before deploying any AI feature to production",
     "hook": "Teams launch AI features to production, notice random output drift a week later, and scramble to rewrite system prompts. The root failure happens upstream.",
     "urn": "urn:li:share:7508729736500506626",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-24T14:05:20.591240+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Why mapping the messy Current State accurately is twice as valuable as imagining an idealized Future State",
+    "hook": "Stop sketching ideal future states. You are wasting time.",
+    "urn": "urn:li:share:7508889310725726208",
     "likes": 0,
     "comments": 0,
     "engagement": 0
