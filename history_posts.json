@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-13T14:02:51.266190+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "EHR/EMR data normalization: The critical difference between healthcare insight and operational chaos.",
-    "hook": "Claim rejections spike at the clearinghouse, but the billing engine shows zero internal errors. Teams waste days debugging payment APIs, looking in the wrong place.",
-    "urn": "urn:li:share:7504902418502008833",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-14T03:31:43.155061+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Why structured tool calling and deterministic state machines are replacing fragile free-form prompt engineering",
@@ -245,6 +235,16 @@
     "topic": "Moving from requirement-taker to product outcome owner: how to frame technical debt in terms of business risk",
     "hook": "Feature velocity suddenly drops to zero, and engineering blames old architecture. The real breakdown starts when technical debt is framed as a coding preference rather than a business risk.",
     "urn": "urn:li:share:7509092255585067009",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-25T14:08:27.145356+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Why regulated financial journeys cannot afford vague business rules: designing deterministic state machines for onboarding",
+    "hook": "FinTech onboarding never breaks down because of the database. It breaks down because teams treat user identity status like a loose suggestion instead of a strict state machine.",
+    "urn": "urn:li:share:7509252480950722560",
     "likes": 0,
     "comments": 0,
     "engagement": 0
