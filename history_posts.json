@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-13T03:30:58.992791+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "The difference between an amateur BA who collects wishlists and a Technical BA who stress-tests data flows",
-    "hook": "Production APIs quietly fail when optional payload fields return unexpected nulls, triggering silent data drops downstream.",
-    "urn": "urn:li:share:7504743402962501632",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-13T14:02:51.266190+00:00",
     "track_id": "mission_critical_systems",
     "topic": "EHR/EMR data normalization: The critical difference between healthcare insight and operational chaos.",
@@ -245,6 +235,16 @@
     "topic": "Why mapping the messy Current State accurately is twice as valuable as imagining an idealized Future State",
     "hook": "Stop sketching ideal future states. You are wasting time.",
     "urn": "urn:li:share:7508889310725726208",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-25T03:31:46.200040+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "Moving from requirement-taker to product outcome owner: how to frame technical debt in terms of business risk",
+    "hook": "Feature velocity suddenly drops to zero, and engineering blames old architecture. The real breakdown starts when technical debt is framed as a coding preference rather than a business risk.",
+    "urn": "urn:li:share:7509092255585067009",
     "likes": 0,
     "comments": 0,
     "engagement": 0
