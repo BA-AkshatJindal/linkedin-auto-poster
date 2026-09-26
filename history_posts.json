@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-14T14:01:30.927041+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
-    "hook": "Saying no to executive feature requests with a flat timeline reduction destroys team trust. The trick is never debating scope in a vacuum.",
-    "urn": "urn:li:share:7505264469116342272",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-15T03:31:17.002036+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "Sequence diagrams over 20-page requirement docs: why visual system handoffs prevent multi-week build rework",
@@ -245,6 +235,16 @@
     "topic": "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
     "hook": "Teams endlessly debate model benchmarks and read technical whitepapers while trying to scope AI features. But reading fifty papers tells you nothing about how your system handles bad PDFs, API rate limits, or silent failures.",
     "urn": "urn:li:share:7509454494670270464",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-26T14:01:47.834828+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Designing for failure: why your requirement spec must define what happens when a third-party API times out",
+    "hook": "Teams endlessly debate happy-path UI components while ignoring what happens when a third-party API times out. If your requirements spec does not explicitly define retry limits, circuit breakers, and fallback states, your engineers are just guessing under pressure.",
+    "urn": "urn:li:share:7509613194274009089",
     "likes": 0,
     "comments": 0,
     "engagement": 0
