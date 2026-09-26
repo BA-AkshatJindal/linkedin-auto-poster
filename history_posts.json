@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-14T03:31:43.155061+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "Why structured tool calling and deterministic state machines are replacing fragile free-form prompt engineering",
-    "hook": "Stop letting free-form prompts decide when to write to your database. Asking an AI to generate raw text and hoping it follows your workflow is a recipe for broken APIs.",
-    "urn": "urn:li:share:7505105975658479616",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-14T14:01:30.927041+00:00",
     "track_id": "technical_product_leadership",
     "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
@@ -245,6 +235,16 @@
     "topic": "Why regulated financial journeys cannot afford vague business rules: designing deterministic state machines for onboarding",
     "hook": "FinTech onboarding never breaks down because of the database. It breaks down because teams treat user identity status like a loose suggestion instead of a strict state machine.",
     "urn": "urn:li:share:7509252480950722560",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-26T03:31:10.851029+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
+    "hook": "Teams endlessly debate model benchmarks and read technical whitepapers while trying to scope AI features. But reading fifty papers tells you nothing about how your system handles bad PDFs, API rate limits, or silent failures.",
+    "urn": "urn:li:share:7509454494670270464",
     "likes": 0,
     "comments": 0,
     "engagement": 0
