@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-15T05:22:54.563479+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "Happy Engineers Day: Honoring Sir M. Visvesvaraya and Everyday Problem-Solvers",
-    "hook": "Happy Engineers' Day to everyone who looks at a broken, messy problem and says: 'Let's figure out how to make this work.'",
-    "urn": "urn:li:share:7505496345340694528",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-15T14:11:14.182306+00:00",
     "track_id": "mission_critical_systems",
     "topic": "Voice agents in healthcare RCM: Where human empathy meets AI-driven efficiency for patient inquiries.",
@@ -245,6 +235,16 @@
     "topic": "The silent killer of Agile delivery: jumping straight to wireframes before system integration flows are validated",
     "hook": "Designing UI wireframes before validating backend integration flows is a fast way to burn sprint cycles.",
     "urn": "urn:li:share:7509816863057461248",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-27T14:02:54.091231+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "In US Healthcare RCM, when an EHR integration sends malformed claim data, thousands of dollars get lost in denials: why upstream intake fixes beat downstream rework",
+    "hook": "Thousands of dollars disappear in US Healthcare RCM every day when malformed claim data hits billing queues. Chasing those rejections downstream in the billing office is a massive waste of human hours.",
+    "urn": "urn:li:share:7509975860213522433",
     "likes": 0,
     "comments": 0,
     "engagement": 0
