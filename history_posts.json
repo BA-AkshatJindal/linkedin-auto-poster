@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-15T03:31:17.002036+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "Sequence diagrams over 20-page requirement docs: why visual system handoffs prevent multi-week build rework",
-    "hook": "Teams endlessly debate whether to write twenty-page requirement docs or rely on brief text tickets. Long text hides missing steps, while vague tickets cause massive engineering rework.",
-    "urn": "urn:li:share:7505468253989707776",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-15T05:22:54.563479+00:00",
     "track_id": "technical_product_leadership",
     "topic": "Happy Engineers Day: Honoring Sir M. Visvesvaraya and Everyday Problem-Solvers",
@@ -245,6 +235,16 @@
     "topic": "Designing for failure: why your requirement spec must define what happens when a third-party API times out",
     "hook": "Teams endlessly debate happy-path UI components while ignoring what happens when a third-party API times out. If your requirements spec does not explicitly define retry limits, circuit breakers, and fallback states, your engineers are just guessing under pressure.",
     "urn": "urn:li:share:7509613194274009089",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-27T03:31:06.146522+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "The silent killer of Agile delivery: jumping straight to wireframes before system integration flows are validated",
+    "hook": "Designing UI wireframes before validating backend integration flows is a fast way to burn sprint cycles.",
+    "urn": "urn:li:share:7509816863057461248",
     "likes": 0,
     "comments": 0,
     "engagement": 0
