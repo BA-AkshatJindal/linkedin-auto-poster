@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-16T03:31:22.299725+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
-    "hook": "Everyone wants to put an LLM behind every button, but nobody talks about the four-second wait that quietly kills user adoption.",
-    "urn": "urn:li:share:7505830663791497216",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-16T14:02:29.923184+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "The operational danger of treating API payload contracts as negotiable guidelines rather than strict architectural agreements",
@@ -245,6 +235,16 @@
     "topic": "Context window bloat: why stuffing 500k tokens into an LLM often degrades search accuracy and inflates cloud costs",
     "hook": "Stuffing 500k tokens into a prompt feels like an easy win, but it quietly destroys your production workflow.",
     "urn": "urn:li:share:7510179306212581376",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-28T14:03:21.960911+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Crafting API Payload Contracts That Developers Actually Love (and Understand).",
+    "hook": "When integration sprints turn into endless Q&A sessions, the problem usually isn't bad code. It's often an API payload contract that left too much to interpretation.",
+    "urn": "urn:li:share:7510338364890353664",
     "likes": 0,
     "comments": 0,
     "engagement": 0
