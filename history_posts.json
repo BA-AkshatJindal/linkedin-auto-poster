@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-15T14:11:14.182306+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "Voice agents in healthcare RCM: Where human empathy meets AI-driven efficiency for patient inquiries.",
-    "hook": "Teams building patient voice agents constantly argue: do we give the AI open conversational freedom, or lock it into strict deterministic flows for scheduling and billing?",
-    "urn": "urn:li:share:7505629303397568512",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-16T03:31:22.299725+00:00",
     "track_id": "applied_ai_utility",
     "topic": "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
@@ -245,6 +235,16 @@
     "topic": "In US Healthcare RCM, when an EHR integration sends malformed claim data, thousands of dollars get lost in denials: why upstream intake fixes beat downstream rework",
     "hook": "Thousands of dollars disappear in US Healthcare RCM every day when malformed claim data hits billing queues. Chasing those rejections downstream in the billing office is a massive waste of human hours.",
     "urn": "urn:li:share:7509975860213522433",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-28T03:31:19.536135+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Context window bloat: why stuffing 500k tokens into an LLM often degrades search accuracy and inflates cloud costs",
+    "hook": "Stuffing 500k tokens into a prompt feels like an easy win, but it quietly destroys your production workflow.",
+    "urn": "urn:li:share:7510179306212581376",
     "likes": 0,
     "comments": 0,
     "engagement": 0
