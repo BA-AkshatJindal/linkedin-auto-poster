@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-17T03:31:13.129496+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "Why Given-When-Then acceptance criteria eliminate 80% of sprint QA churn",
-    "hook": "Writing detailed paragraph specs will not stop sprint QA churn. It just hides missing assumptions.",
-    "urn": "urn:li:share:7506193013401018368",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-17T14:02:58.378138+00:00",
     "track_id": "mission_critical_systems",
     "topic": "The often-overlooked resilience requirements for modern electronic trading platforms",
@@ -245,6 +235,16 @@
     "topic": "Platforms and Network Effects: Applying Systems Thinking to Business Model Innovation.",
     "hook": "Most platform teams treat network effects like a magic marketing trick rather than a structural systems problem. When you bolt user growth metrics onto an architecture that cannot handle recursive interactions, the database buckles and latency spikes.",
     "urn": "urn:li:share:7510542021137317888",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-29T14:05:22.290680+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "The hidden cost of legacy tech in healthcare RCM and how to quantify it for stakeholders.",
+    "hook": "Legacy tech in healthcare revenue cycle management rarely fails with a dramatic crash. It leaks margin quietly.",
+    "urn": "urn:li:share:7510701257406234625",
     "likes": 0,
     "comments": 0,
     "engagement": 0
