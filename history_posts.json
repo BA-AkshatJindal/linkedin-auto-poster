@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-18T03:33:09.106532+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "RAG on internal documents: Unlocking enterprise knowledge without hallucination",
-    "hook": "Teams building enterprise RAG systems constantly debate how to stop the AI from making things up. The common trap is tweaking prompts or upgrading to a bigger model.",
-    "urn": "urn:li:share:7506555887822553088",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-18T14:06:44.622280+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
@@ -245,6 +235,16 @@
     "topic": "The hidden trap of multilingual voice agents: what happens when users code-switch in real calls and how to design graceful fallbacks",
     "hook": "Multilingual voice bots constantly break when callers switch languages mid-sentence. Teams endlessly debate whether to build complex multi-language prompts or run separate speech models simultaneously.",
     "urn": "urn:li:share:7510904199375687680",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-30T14:01:24.683144+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "The hidden cost of undocumented business rules living inside legacy Excel sheets",
+    "hook": "When system migrations stall or custom APIs throw wrong calculations, look for the missing Excel file.",
+    "urn": "urn:li:share:7511062648990416897",
     "likes": 0,
     "comments": 0,
     "engagement": 0
