@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-17T14:02:58.378138+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "The often-overlooked resilience requirements for modern electronic trading platforms",
-    "hook": "Teams building electronic trading platforms endlessly debate: do we run pre-trade compliance checks synchronously to guarantee safety, or push them async to protect low latency?",
-    "urn": "urn:li:share:7506351998133411840",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-18T03:33:09.106532+00:00",
     "track_id": "applied_ai_utility",
     "topic": "RAG on internal documents: Unlocking enterprise knowledge without hallucination",
@@ -245,6 +235,16 @@
     "topic": "The hidden cost of legacy tech in healthcare RCM and how to quantify it for stakeholders.",
     "hook": "Legacy tech in healthcare revenue cycle management rarely fails with a dramatic crash. It leaks margin quietly.",
     "urn": "urn:li:share:7510701257406234625",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-09-30T03:31:47.451522+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "The hidden trap of multilingual voice agents: what happens when users code-switch in real calls and how to design graceful fallbacks",
+    "hook": "Multilingual voice bots constantly break when callers switch languages mid-sentence. Teams endlessly debate whether to build complex multi-language prompts or run separate speech models simultaneously.",
+    "urn": "urn:li:share:7510904199375687680",
     "likes": 0,
     "comments": 0,
     "engagement": 0
