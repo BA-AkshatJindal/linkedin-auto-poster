@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-19T03:32:33.112487+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "The uncomfortable truth: Scope negotiation isn't about saying 'no', it's about 'how much value, by when'",
-    "hook": "Scope negotiation is not about learning how to say no. It is about shifting the entire debate away from arbitrary deadlines and onto value and timing.",
-    "urn": "urn:li:share:7506918124286275584",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-19T14:01:25.894738+00:00",
     "track_id": "mission_critical_systems",
     "topic": "EHR/EMR data normalization: The silent hero of accurate patient care and billing",
@@ -245,6 +235,16 @@
     "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
     "hook": "Sprint commitments usually collapse mid-cycle when teams quietly accept last-minute executive requests. The visible symptom is missed launch dates and exhausted engineers.",
     "urn": "urn:li:share:7511266674122235904",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-01T14:02:53.238087+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Why user adoption in billing and operations teams fails: designing systems for real human workflows, not idealized process diagrams",
+    "hook": "New billing portals often get ignored by operations teams within weeks of launch. Staff quiet-quit the platform, exporting raw data back into custom spreadsheets to process daily work.",
+    "urn": "urn:li:share:7511425405854089216",
     "likes": 0,
     "comments": 0,
     "engagement": 0
