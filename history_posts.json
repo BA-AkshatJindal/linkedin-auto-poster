@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-18T14:06:44.622280+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
-    "hook": "When a stakeholder marks every single requirement as a Must Have under MoSCoW, prioritization completely breaks. Your backlog turns into an inflated dumping ground of everything the business wants yesterday.",
-    "urn": "urn:li:share:7506715336239398914",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-19T03:32:33.112487+00:00",
     "track_id": "technical_product_leadership",
     "topic": "The uncomfortable truth: Scope negotiation isn't about saying 'no', it's about 'how much value, by when'",
@@ -245,6 +235,16 @@
     "topic": "The hidden cost of undocumented business rules living inside legacy Excel sheets",
     "hook": "When system migrations stall or custom APIs throw wrong calculations, look for the missing Excel file.",
     "urn": "urn:li:share:7511062648990416897",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-01T03:32:08.049708+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
+    "hook": "Sprint commitments usually collapse mid-cycle when teams quietly accept last-minute executive requests. The visible symptom is missed launch dates and exhausted engineers.",
+    "urn": "urn:li:share:7511266674122235904",
     "likes": 0,
     "comments": 0,
     "engagement": 0
