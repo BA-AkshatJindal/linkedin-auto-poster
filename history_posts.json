@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-20T03:31:34.344017+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "Why 90% of enterprise GenAI success comes from clean data normalization and deterministic rules, not prompt wizardry",
-    "hook": "Spending weeks rewriting system prompts to fix bad outputs is a complete waste of engineering hours.",
-    "urn": "urn:li:share:7507280265963008000",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-20T14:01:25.252656+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "The art of data mapping: why field-level validation rules and exception queues matter more than pretty wireframes",
@@ -245,6 +235,16 @@
     "topic": "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
     "hook": "Teams focus endlessly on model accuracy while ignoring response times. But making a user wait four seconds for an LLM output quietly destroys feature adoption.",
     "urn": "urn:li:share:7511628871721553920",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-02T14:03:01.827069+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Why 85% of production bugs are not bad code, but unhandled edge cases in the functional specification",
+    "hook": "Most production bugs aren't bad code. They are simply unhandled edge cases that nobody wrote down.",
+    "urn": "urn:li:share:7511787831283851264",
     "likes": 0,
     "comments": 0,
     "engagement": 0
