@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-21T03:31:37.440002+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "How to prioritize technical debt on a product roadmap using financial and operational risk scoring",
-    "hook": "Feature velocity suddenly grinds to a halt and production bug queues explode. The breakdown starts when engineers ask to clean up bad code, but frame it in technical terms rather than operational risk.",
-    "urn": "urn:li:share:7507642664582955008",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-21T14:10:15.357107+00:00",
     "track_id": "mission_critical_systems",
     "topic": "The Predictive Power of Data: Moving Beyond Reactive Drug Shortage Management.",
@@ -245,6 +235,16 @@
     "topic": "Graceful degradation in product design: what modern software roadmaps can learn from safety-critical architectures",
     "hook": "Most feature roadmaps operate on a dangerous binary assumption: a system is either fully operational or totally broken.",
     "urn": "urn:li:share:7511991230122237952",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-03T14:02:46.223353+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "FinTech Compliance by Design: Building Regulatory Guardrails, Not Afterthoughts.",
+    "hook": "Most engineering teams treat compliance audits as a frantic last-minute scramble before product launch. They build features first and try to bolt on regulatory guardrails later.",
+    "urn": "urn:li:share:7512150154335137792",
     "likes": 0,
     "comments": 0,
     "engagement": 0
