@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-22T03:31:22.347300+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "The Unspoken Truth: Why Most Data Dictionaries Fail and How to Build One That Works.",
-    "hook": "Most data dictionaries are useless for AI workflows.",
-    "urn": "urn:li:share:7508004991199203328",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-22T14:06:18.035194+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
@@ -245,6 +235,16 @@
     "topic": "The Formula for Agentic AI Value: Moving from Hype to Measurable Outcomes.",
     "hook": "Teams keep launching autonomous AI agents expecting instant productivity gains, only to watch them stall in production error logs.",
     "urn": "urn:li:share:7512353725898719232",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-04T14:01:11.110348+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Stop asking stakeholders what features they want: ask what manual spreadsheet they hate the most",
+    "hook": "Asking business stakeholders for a feature wishlist usually produces over-engineered tools that nobody uses.",
+    "urn": "urn:li:share:7512512143196516352",
     "likes": 0,
     "comments": 0,
     "engagement": 0
