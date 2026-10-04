@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-21T14:10:15.357107+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "The Predictive Power of Data: Moving Beyond Reactive Drug Shortage Management.",
-    "hook": "Hospitals do not run out of critical drugs because of sudden supply failure \u2014 they run out because inventory systems only alert teams after the shelf is already empty.",
-    "urn": "urn:li:share:7507803383635009537",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-22T03:31:22.347300+00:00",
     "track_id": "applied_ai_utility",
     "topic": "The Unspoken Truth: Why Most Data Dictionaries Fail and How to Build One That Works.",
@@ -245,6 +235,16 @@
     "topic": "FinTech Compliance by Design: Building Regulatory Guardrails, Not Afterthoughts.",
     "hook": "Most engineering teams treat compliance audits as a frantic last-minute scramble before product launch. They build features first and try to bolt on regulatory guardrails later.",
     "urn": "urn:li:share:7512150154335137792",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-04T03:31:41.416331+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "The Formula for Agentic AI Value: Moving from Hype to Measurable Outcomes.",
+    "hook": "Teams keep launching autonomous AI agents expecting instant productivity gains, only to watch them stall in production error logs.",
+    "urn": "urn:li:share:7512353725898719232",
     "likes": 0,
     "comments": 0,
     "engagement": 0
