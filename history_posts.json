@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-23T03:31:19.533867+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "How to decompose a 6-month monolith feature into 2-week independently shippable increments",
-    "hook": "Decomposing a six-month monolith feature by slicing user journeys into smaller frontend stories usually breaks production.",
-    "urn": "urn:li:share:7508367367458930689",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-23T14:07:35.722734+00:00",
     "track_id": "mission_critical_systems",
     "topic": "Payer-specific workflow quirks: why Medicare and commercial insurers require completely distinct data validation paths",
@@ -245,6 +235,16 @@
     "topic": "Managing upward with clarity: how to present trade-off matrices to executives instead of open-ended ambiguity",
     "hook": "When technical teams ask leadership open-ended questions like should we rebuild the database or ship fast, decisions stall instantly.",
     "urn": "urn:li:share:7512715975985721344",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-05T14:01:48.912598+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
+    "hook": "Teams planning health-tech integrations often obsess over UI design and API speed. But the real bottleneck hides in the EHR data stream.",
+    "urn": "urn:li:share:7512874689690742784",
     "likes": 0,
     "comments": 0,
     "engagement": 0
