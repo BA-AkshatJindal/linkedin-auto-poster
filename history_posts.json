@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-22T14:06:18.035194+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
-    "hook": "Writing paragraphs of descriptive requirements will never stop sprint QA churn. It just hides missing edge cases behind corporate prose.",
-    "urn": "urn:li:share:7508164775739150336",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-23T03:31:19.533867+00:00",
     "track_id": "technical_product_leadership",
     "topic": "How to decompose a 6-month monolith feature into 2-week independently shippable increments",
@@ -245,6 +235,16 @@
     "topic": "Stop asking stakeholders what features they want: ask what manual spreadsheet they hate the most",
     "hook": "Asking business stakeholders for a feature wishlist usually produces over-engineered tools that nobody uses.",
     "urn": "urn:li:share:7512512143196516352",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-05T03:31:08.611316+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "Managing upward with clarity: how to present trade-off matrices to executives instead of open-ended ambiguity",
+    "hook": "When technical teams ask leadership open-ended questions like should we rebuild the database or ship fast, decisions stall instantly.",
+    "urn": "urn:li:share:7512715975985721344",
     "likes": 0,
     "comments": 0,
     "engagement": 0
