@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-24T03:31:15.127535+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "Why we need golden evaluation test sets before deploying any AI feature to production",
-    "hook": "Teams launch AI features to production, notice random output drift a week later, and scramble to rewrite system prompts. The root failure happens upstream.",
-    "urn": "urn:li:share:7508729736500506626",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-24T14:05:20.591240+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "Why mapping the messy Current State accurately is twice as valuable as imagining an idealized Future State",
@@ -245,6 +235,16 @@
     "topic": "Beyond prompt engineering: Building robust AI data pipelines for pragmatic utility, not just wizardry.",
     "hook": "AI workflows silently break in production when users upload real-world documents. The app returns wrong field extractions, skips key values, or hallucinates answers.",
     "urn": "urn:li:share:7513078882347147264",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-06T14:02:07.152029+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
+    "hook": "Acceptance criteria fail because teams treat Given-When-Then like creative writing instead of a test harness. Writing Given the user is happy When they click submit Then good things happen leaves every edge case open to developer guesswork.",
+    "urn": "urn:li:share:7513237153313644544",
     "likes": 0,
     "comments": 0,
     "engagement": 0
