@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-24T14:05:20.591240+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "Why mapping the messy Current State accurately is twice as valuable as imagining an idealized Future State",
-    "hook": "Stop sketching ideal future states. You are wasting time.",
-    "urn": "urn:li:share:7508889310725726208",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-25T03:31:46.200040+00:00",
     "track_id": "technical_product_leadership",
     "topic": "Moving from requirement-taker to product outcome owner: how to frame technical debt in terms of business risk",
@@ -245,6 +235,16 @@
     "topic": "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
     "hook": "Acceptance criteria fail because teams treat Given-When-Then like creative writing instead of a test harness. Writing Given the user is happy When they click submit Then good things happen leaves every edge case open to developer guesswork.",
     "urn": "urn:li:share:7513237153313644544",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-07T03:33:59.545316+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "True outcome ownership: Measuring success beyond feature launches to real business impact.",
+    "hook": "Engineering teams celebrate green sprint boards and successful deployments, yet key revenue metrics stay completely flat.",
+    "urn": "urn:li:share:7513441468431380481",
     "likes": 0,
     "comments": 0,
     "engagement": 0
