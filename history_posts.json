@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-25T03:31:46.200040+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "Moving from requirement-taker to product outcome owner: how to frame technical debt in terms of business risk",
-    "hook": "Feature velocity suddenly drops to zero, and engineering blames old architecture. The real breakdown starts when technical debt is framed as a coding preference rather than a business risk.",
-    "urn": "urn:li:share:7509092255585067009",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-25T14:08:27.145356+00:00",
     "track_id": "mission_critical_systems",
     "topic": "Why regulated financial journeys cannot afford vague business rules: designing deterministic state machines for onboarding",
@@ -245,6 +235,16 @@
     "topic": "True outcome ownership: Measuring success beyond feature launches to real business impact.",
     "hook": "Engineering teams celebrate green sprint boards and successful deployments, yet key revenue metrics stay completely flat.",
     "urn": "urn:li:share:7513441468431380481",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-08T03:33:04.543729+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "The hidden dangers of unnormalized EHR/EMR data in patient safety and claims accuracy.",
+    "hook": "AI won't fix your dirty clinical data. Sending raw EHR feeds straight into billing tools just scales your claim denials faster.",
+    "urn": "urn:li:share:7513803626046431232",
     "likes": 0,
     "comments": 0,
     "engagement": 0
