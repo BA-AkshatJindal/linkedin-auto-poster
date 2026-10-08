@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-25T14:08:27.145356+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "Why regulated financial journeys cannot afford vague business rules: designing deterministic state machines for onboarding",
-    "hook": "FinTech onboarding never breaks down because of the database. It breaks down because teams treat user identity status like a loose suggestion instead of a strict state machine.",
-    "urn": "urn:li:share:7509252480950722560",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-26T03:31:10.851029+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
@@ -245,6 +235,16 @@
     "topic": "The hidden dangers of unnormalized EHR/EMR data in patient safety and claims accuracy.",
     "hook": "AI won't fix your dirty clinical data. Sending raw EHR feeds straight into billing tools just scales your claim denials faster.",
     "urn": "urn:li:share:7513803626046431232",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-08T14:02:58.545243+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "SaaS in the age of agentic AI: Pause, pivot, or accelerate your product strategy.",
+    "hook": "Product strategy in the age of agentic AI often stalls because teams treat autonomous workflows like standard software features.",
+    "urn": "urn:li:share:7513962145278017536",
     "likes": 0,
     "comments": 0,
     "engagement": 0
