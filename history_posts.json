@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-26T03:31:10.851029+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
-    "hook": "Teams endlessly debate model benchmarks and read technical whitepapers while trying to scope AI features. But reading fifty papers tells you nothing about how your system handles bad PDFs, API rate limits, or silent failures.",
-    "urn": "urn:li:share:7509454494670270464",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-26T14:01:47.834828+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "Designing for failure: why your requirement spec must define what happens when a third-party API times out",
@@ -245,6 +235,16 @@
     "topic": "SaaS in the age of agentic AI: Pause, pivot, or accelerate your product strategy.",
     "hook": "Product strategy in the age of agentic AI often stalls because teams treat autonomous workflows like standard software features.",
     "urn": "urn:li:share:7513962145278017536",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-09T03:31:28.572708+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
+    "hook": "When every single business requirement is marked as must have under the MoSCoW framework, prioritization quietly collapses.",
+    "urn": "urn:li:share:7514165610491166721",
     "likes": 0,
     "comments": 0,
     "engagement": 0
