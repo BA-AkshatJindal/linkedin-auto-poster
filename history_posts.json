@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-27T14:02:54.091231+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "In US Healthcare RCM, when an EHR integration sends malformed claim data, thousands of dollars get lost in denials: why upstream intake fixes beat downstream rework",
-    "hook": "Thousands of dollars disappear in US Healthcare RCM every day when malformed claim data hits billing queues. Chasing those rejections downstream in the billing office is a massive waste of human hours.",
-    "urn": "urn:li:share:7509975860213522433",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-28T03:31:19.536135+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Context window bloat: why stuffing 500k tokens into an LLM often degrades search accuracy and inflates cloud costs",
@@ -245,6 +235,16 @@
     "topic": "The reality of US Healthcare claim denials: why the highest-ROI fix is tracing rejections back to root cause upstream in data intake",
     "hook": "Teams love celebrating automated appeals software while claim rejection rates quietly climb month over month. Buying another tool to chase denials downstream is a losing battle.",
     "urn": "urn:li:share:7514528356978212864",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-10T14:01:41.626039+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
+    "hook": "Teams debate advanced AI architectures for weeks before shipping a single line of code. They compare model benchmarks, read whitepapers, and argue over hypothetical edge cases.",
+    "urn": "urn:li:share:7514686597859053570",
     "likes": 0,
     "comments": 0,
     "engagement": 0
