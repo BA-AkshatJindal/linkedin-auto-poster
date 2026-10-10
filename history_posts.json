@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-27T03:31:06.146522+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "The silent killer of Agile delivery: jumping straight to wireframes before system integration flows are validated",
-    "hook": "Designing UI wireframes before validating backend integration flows is a fast way to burn sprint cycles.",
-    "urn": "urn:li:share:7509816863057461248",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-27T14:02:54.091231+00:00",
     "track_id": "mission_critical_systems",
     "topic": "In US Healthcare RCM, when an EHR integration sends malformed claim data, thousands of dollars get lost in denials: why upstream intake fixes beat downstream rework",
@@ -245,6 +235,16 @@
     "topic": "Why the best Product Managers understand data models: how database schemas dictate feature feasibility",
     "hook": "Too many product managers treat database schemas as an engineering black box. They sketch UI mockups and write user stories without knowing how the underlying data model handles constraints.",
     "urn": "urn:li:share:7514324550910820352",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-10T03:32:54.008733+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "The reality of US Healthcare claim denials: why the highest-ROI fix is tracing rejections back to root cause upstream in data intake",
+    "hook": "Teams love celebrating automated appeals software while claim rejection rates quietly climb month over month. Buying another tool to chase denials downstream is a losing battle.",
+    "urn": "urn:li:share:7514528356978212864",
     "likes": 0,
     "comments": 0,
     "engagement": 0
