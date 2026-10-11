@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-28T03:31:19.536135+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "Context window bloat: why stuffing 500k tokens into an LLM often degrades search accuracy and inflates cloud costs",
-    "hook": "Stuffing 500k tokens into a prompt feels like an easy win, but it quietly destroys your production workflow.",
-    "urn": "urn:li:share:7510179306212581376",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-28T14:03:21.960911+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "Crafting API Payload Contracts That Developers Actually Love (and Understand).",
@@ -245,6 +235,16 @@
     "topic": "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
     "hook": "Teams debate advanced AI architectures for weeks before shipping a single line of code. They compare model benchmarks, read whitepapers, and argue over hypothetical edge cases.",
     "urn": "urn:li:share:7514686597859053570",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-11T03:32:13.345984+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Data mapping isn't just busywork; it's the blueprint for system integrity.",
+    "hook": "Data mapping is often treated as tedious busywork assigned to junior analysts right before a sprint starts. That is a massive mistake.",
+    "urn": "urn:li:share:7514890574110339072",
     "likes": 0,
     "comments": 0,
     "engagement": 0
