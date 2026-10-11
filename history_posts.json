@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-28T14:03:21.960911+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "Crafting API Payload Contracts That Developers Actually Love (and Understand).",
-    "hook": "When integration sprints turn into endless Q&A sessions, the problem usually isn't bad code. It's often an API payload contract that left too much to interpretation.",
-    "urn": "urn:li:share:7510338364890353664",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-29T03:32:37.940597+00:00",
     "track_id": "technical_product_leadership",
     "topic": "Platforms and Network Effects: Applying Systems Thinking to Business Model Innovation.",
@@ -245,6 +235,16 @@
     "topic": "Data mapping isn't just busywork; it's the blueprint for system integrity.",
     "hook": "Data mapping is often treated as tedious busywork assigned to junior analysts right before a sprint starts. That is a massive mistake.",
     "urn": "urn:li:share:7514890574110339072",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-11T14:01:14.321484+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
+    "hook": "Alignment meetings often end with everyone nodding, yet sprint builds stall instantly over missing logic.",
+    "urn": "urn:li:share:7515048869370597376",
     "likes": 0,
     "comments": 0,
     "engagement": 0
