@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-29T03:32:37.940597+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "Platforms and Network Effects: Applying Systems Thinking to Business Model Innovation.",
-    "hook": "Most platform teams treat network effects like a magic marketing trick rather than a structural systems problem. When you bolt user growth metrics onto an architecture that cannot handle recursive interactions, the database buckles and latency spikes.",
-    "urn": "urn:li:share:7510542021137317888",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-29T14:05:22.290680+00:00",
     "track_id": "mission_critical_systems",
     "topic": "The hidden cost of legacy tech in healthcare RCM and how to quantify it for stakeholders.",
@@ -245,6 +235,16 @@
     "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
     "hook": "Alignment meetings often end with everyone nodding, yet sprint builds stall instantly over missing logic.",
     "urn": "urn:li:share:7515048869370597376",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-12T03:33:00.452570+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Intelligent work routing with AI: Optimizing operational efficiency without over-automating human expertise.",
+    "hook": "Trying to fully automate complex claims or financial disputes with AI usually backfires. Teams build models to auto-resolve rejections, only to create silent revenue leaks when the AI guesses wrong.",
+    "urn": "urn:li:share:7515253159808757760",
     "likes": 0,
     "comments": 0,
     "engagement": 0
