@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-29T14:05:22.290680+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "The hidden cost of legacy tech in healthcare RCM and how to quantify it for stakeholders.",
-    "hook": "Legacy tech in healthcare revenue cycle management rarely fails with a dramatic crash. It leaks margin quietly.",
-    "urn": "urn:li:share:7510701257406234625",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-30T03:31:47.451522+00:00",
     "track_id": "applied_ai_utility",
     "topic": "The hidden trap of multilingual voice agents: what happens when users code-switch in real calls and how to design graceful fallbacks",
@@ -245,6 +235,16 @@
     "topic": "Intelligent work routing with AI: Optimizing operational efficiency without over-automating human expertise.",
     "hook": "Trying to fully automate complex claims or financial disputes with AI usually backfires. Teams build models to auto-resolve rejections, only to create silent revenue leaks when the AI guesses wrong.",
     "urn": "urn:li:share:7515253159808757760",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-12T14:03:35.686113+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Leveraging platform business models and network effects for strategic product growth and competitive advantage.",
+    "hook": "Teams waste weeks debating whether to build custom routing logic or plug in a pre-packaged AI agent. They worry about model drift, latency, and handling edge cases.",
+    "urn": "urn:li:share:7515411852701663232",
     "likes": 0,
     "comments": 0,
     "engagement": 0
