@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-30T03:31:47.451522+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "The hidden trap of multilingual voice agents: what happens when users code-switch in real calls and how to design graceful fallbacks",
-    "hook": "Multilingual voice bots constantly break when callers switch languages mid-sentence. Teams endlessly debate whether to build complex multi-language prompts or run separate speech models simultaneously.",
-    "urn": "urn:li:share:7510904199375687680",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-09-30T14:01:24.683144+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "The hidden cost of undocumented business rules living inside legacy Excel sheets",
@@ -245,6 +235,16 @@
     "topic": "Leveraging platform business models and network effects for strategic product growth and competitive advantage.",
     "hook": "Teams waste weeks debating whether to build custom routing logic or plug in a pre-packaged AI agent. They worry about model drift, latency, and handling edge cases.",
     "urn": "urn:li:share:7515411852701663232",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-13T03:31:40.960889+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
+    "hook": "Sprint planning hits a wall when someone calls a request just a simple UI button. Developers nod, business stakeholders relax, and nobody maps the payload.",
+    "urn": "urn:li:share:7515615213849841664",
     "likes": 0,
     "comments": 0,
     "engagement": 0
