@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-09-30T14:01:24.683144+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "The hidden cost of undocumented business rules living inside legacy Excel sheets",
-    "hook": "When system migrations stall or custom APIs throw wrong calculations, look for the missing Excel file.",
-    "urn": "urn:li:share:7511062648990416897",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-01T03:32:08.049708+00:00",
     "track_id": "technical_product_leadership",
     "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
@@ -245,6 +235,16 @@
     "topic": "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
     "hook": "Sprint planning hits a wall when someone calls a request just a simple UI button. Developers nod, business stakeholders relax, and nobody maps the payload.",
     "urn": "urn:li:share:7515615213849841664",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-13T14:04:29.971411+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "How to prioritize technical debt on a product roadmap using financial and operational risk scoring",
+    "hook": "Treating technical debt like a vague backlog graveyard is why tech leads and product managers never secure budget to fix it.",
+    "urn": "urn:li:share:7515774467827048449",
     "likes": 0,
     "comments": 0,
     "engagement": 0
