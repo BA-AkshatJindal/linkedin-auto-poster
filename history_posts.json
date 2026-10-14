@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-01T03:32:08.049708+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
-    "hook": "Sprint commitments usually collapse mid-cycle when teams quietly accept last-minute executive requests. The visible symptom is missed launch dates and exhausted engineers.",
-    "urn": "urn:li:share:7511266674122235904",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-01T14:02:53.238087+00:00",
     "track_id": "mission_critical_systems",
     "topic": "Why user adoption in billing and operations teams fails: designing systems for real human workflows, not idealized process diagrams",
@@ -245,6 +235,16 @@
     "topic": "How to prioritize technical debt on a product roadmap using financial and operational risk scoring",
     "hook": "Treating technical debt like a vague backlog graveyard is why tech leads and product managers never secure budget to fix it.",
     "urn": "urn:li:share:7515774467827048449",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-14T03:31:47.913617+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Compliance by design: why bolting on regulatory checks at the end of a FinTech onboarding flow guarantees customer churn",
+    "hook": "Bolting compliance checks onto the end of a FinTech onboarding flow is a fast track to user drop-off. When teams treat identity verification and AML screening as final-step hurdles, users hit surprise roadblocks right before conversion.",
+    "urn": "urn:li:share:7515977632207863808",
     "likes": 0,
     "comments": 0,
     "engagement": 0
