@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-01T14:02:53.238087+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "Why user adoption in billing and operations teams fails: designing systems for real human workflows, not idealized process diagrams",
-    "hook": "New billing portals often get ignored by operations teams within weeks of launch. Staff quiet-quit the platform, exporting raw data back into custom spreadsheets to process daily work.",
-    "urn": "urn:li:share:7511425405854089216",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-02T03:31:22.710914+00:00",
     "track_id": "applied_ai_utility",
     "topic": "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
@@ -245,6 +235,16 @@
     "topic": "Compliance by design: why bolting on regulatory checks at the end of a FinTech onboarding flow guarantees customer churn",
     "hook": "Bolting compliance checks onto the end of a FinTech onboarding flow is a fast track to user drop-off. When teams treat identity verification and AML screening as final-step hurdles, users hit surprise roadblocks right before conversion.",
     "urn": "urn:li:share:7515977632207863808",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-14T14:02:02.288986+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Building RAG for real operations: why chunking strategy and retrieval precision matter 10x more than model token size",
+    "hook": "Teams waste weeks arguing over model sizes when setting up document search. They benchmark massive language models, hoping extra tokens will fix messy search results.",
+    "urn": "urn:li:share:7516136236252557313",
     "likes": 0,
     "comments": 0,
     "engagement": 0
