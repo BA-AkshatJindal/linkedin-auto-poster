@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-02T03:31:22.710914+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "The latency tax of generative AI: why making a user wait 4 seconds for an LLM response kills feature adoption",
-    "hook": "Teams focus endlessly on model accuracy while ignoring response times. But making a user wait four seconds for an LLM output quietly destroys feature adoption.",
-    "urn": "urn:li:share:7511628871721553920",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-02T14:03:01.827069+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "Why 85% of production bugs are not bad code, but unhandled edge cases in the functional specification",
@@ -245,6 +235,16 @@
     "topic": "Building RAG for real operations: why chunking strategy and retrieval precision matter 10x more than model token size",
     "hook": "Teams waste weeks arguing over model sizes when setting up document search. They benchmark massive language models, hoping extra tokens will fix messy search results.",
     "urn": "urn:li:share:7516136236252557313",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-15T03:32:12.063484+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Designing for failure: why your requirement spec must define what happens when a third-party API times out",
+    "hook": "Most requirements specs meticulously outline the happy path while ignoring what happens when a third-party API times out.",
+    "urn": "urn:li:share:7516340120552136704",
     "likes": 0,
     "comments": 0,
     "engagement": 0
