@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-03T14:02:46.223353+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "FinTech Compliance by Design: Building Regulatory Guardrails, Not Afterthoughts.",
-    "hook": "Most engineering teams treat compliance audits as a frantic last-minute scramble before product launch. They build features first and try to bolt on regulatory guardrails later.",
-    "urn": "urn:li:share:7512150154335137792",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-04T03:31:41.416331+00:00",
     "track_id": "applied_ai_utility",
     "topic": "The Formula for Agentic AI Value: Moving from Hype to Measurable Outcomes.",
@@ -245,6 +235,16 @@
     "topic": "In US Healthcare RCM, when an EHR integration sends malformed claim data, thousands of dollars get lost in denials: why upstream intake fixes beat downstream rework",
     "hook": "When an EHR integration spits out malformed claim data, thousands of dollars vanish in denials. Teams often rush to build flashy dashboards for appealing rejections downstream.",
     "urn": "urn:li:share:7516702444429578240",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-16T14:03:02.514432+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Context window bloat: why stuffing 500k tokens into an LLM often degrades search accuracy and inflates cloud costs",
+    "hook": "Stuffing half a million tokens into an LLM context window often backfires. Your search results get worse, not better.",
+    "urn": "urn:li:share:7516861264581550080",
     "likes": 0,
     "comments": 0,
     "engagement": 0
