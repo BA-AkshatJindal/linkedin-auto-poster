@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-03T03:31:15.728684+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "Graceful degradation in product design: what modern software roadmaps can learn from safety-critical architectures",
-    "hook": "Most feature roadmaps operate on a dangerous binary assumption: a system is either fully operational or totally broken.",
-    "urn": "urn:li:share:7511991230122237952",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-03T14:02:46.223353+00:00",
     "track_id": "mission_critical_systems",
     "topic": "FinTech Compliance by Design: Building Regulatory Guardrails, Not Afterthoughts.",
@@ -245,6 +235,16 @@
     "topic": "How to decompose a 6-month monolith feature into 2-week independently shippable increments",
     "hook": "Teams usually fail to decompose a six-month monolith feature because they slice the scope horizontally \u2014 building the entire database layer first, then the API, then the UI.",
     "urn": "urn:li:share:7516498519994744832",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-16T03:31:56.827989+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "In US Healthcare RCM, when an EHR integration sends malformed claim data, thousands of dollars get lost in denials: why upstream intake fixes beat downstream rework",
+    "hook": "When an EHR integration spits out malformed claim data, thousands of dollars vanish in denials. Teams often rush to build flashy dashboards for appealing rejections downstream.",
+    "urn": "urn:li:share:7516702444429578240",
     "likes": 0,
     "comments": 0,
     "engagement": 0
