@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-04T03:31:41.416331+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "The Formula for Agentic AI Value: Moving from Hype to Measurable Outcomes.",
-    "hook": "Teams keep launching autonomous AI agents expecting instant productivity gains, only to watch them stall in production error logs.",
-    "urn": "urn:li:share:7512353725898719232",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-04T14:01:11.110348+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "Stop asking stakeholders what features they want: ask what manual spreadsheet they hate the most",
@@ -245,6 +235,16 @@
     "topic": "Context window bloat: why stuffing 500k tokens into an LLM often degrades search accuracy and inflates cloud costs",
     "hook": "Stuffing half a million tokens into an LLM context window often backfires. Your search results get worse, not better.",
     "urn": "urn:li:share:7516861264581550080",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-17T03:31:12.897727+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "The hidden cost of undocumented business rules living inside legacy Excel sheets",
+    "hook": "Every sprint, critical business logic quietly hides inside a legacy Excel sheet owned by someone in operations. When developers build features based solely on Jira tickets, they miss the invisible calculation rules that power the actual workflow.",
+    "urn": "urn:li:share:7517064648001585152",
     "likes": 0,
     "comments": 0,
     "engagement": 0
