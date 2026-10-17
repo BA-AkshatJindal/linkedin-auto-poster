@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-04T14:01:11.110348+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "Stop asking stakeholders what features they want: ask what manual spreadsheet they hate the most",
-    "hook": "Asking business stakeholders for a feature wishlist usually produces over-engineered tools that nobody uses.",
-    "urn": "urn:li:share:7512512143196516352",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-05T03:31:08.611316+00:00",
     "track_id": "technical_product_leadership",
     "topic": "Managing upward with clarity: how to present trade-off matrices to executives instead of open-ended ambiguity",
@@ -245,6 +235,16 @@
     "topic": "The hidden cost of undocumented business rules living inside legacy Excel sheets",
     "hook": "Every sprint, critical business logic quietly hides inside a legacy Excel sheet owned by someone in operations. When developers build features based solely on Jira tickets, they miss the invisible calculation rules that power the actual workflow.",
     "urn": "urn:li:share:7517064648001585152",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-17T14:01:37.382944+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "Moving from requirement-taker to product outcome owner: how to frame technical debt in terms of business risk",
+    "hook": "Stop trying to pitch technical debt cleanup by lecturing stakeholders on code quality.",
+    "urn": "urn:li:share:7517223295650365440",
     "likes": 0,
     "comments": 0,
     "engagement": 0
