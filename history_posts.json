@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-05T14:01:48.912598+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
-    "hook": "Teams planning health-tech integrations often obsess over UI design and API speed. But the real bottleneck hides in the EHR data stream.",
-    "urn": "urn:li:share:7512874689690742784",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-06T03:33:12.263361+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Beyond prompt engineering: Building robust AI data pipelines for pragmatic utility, not just wizardry.",
@@ -245,6 +235,16 @@
     "topic": "The \"last mile\" of agentic AI: Bridging research to real-world business value and operational efficiency.",
     "hook": "Most teams treat agentic AI as a prompt engineering problem when building enterprise workflows. They tinker with system instructions and expect complex financial or clinical tasks to just work.",
     "urn": "urn:li:share:7517427304843644928",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-18T14:01:10.112305+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Beyond prompt engineering: Building robust data pipelines for pragmatic AI utility, not just wizardry.",
+    "hook": "Teams spend weeks endlessly tweaking system prompts when an AI workflow outputs bad results.",
+    "urn": "urn:li:share:7517585569036636160",
     "likes": 0,
     "comments": 0,
     "engagement": 0
