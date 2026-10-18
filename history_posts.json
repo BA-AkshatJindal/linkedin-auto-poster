@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-05T03:31:08.611316+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "Managing upward with clarity: how to present trade-off matrices to executives instead of open-ended ambiguity",
-    "hook": "When technical teams ask leadership open-ended questions like should we rebuild the database or ship fast, decisions stall instantly.",
-    "urn": "urn:li:share:7512715975985721344",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-05T14:01:48.912598+00:00",
     "track_id": "mission_critical_systems",
     "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
@@ -245,6 +235,16 @@
     "topic": "Moving from requirement-taker to product outcome owner: how to frame technical debt in terms of business risk",
     "hook": "Stop trying to pitch technical debt cleanup by lecturing stakeholders on code quality.",
     "urn": "urn:li:share:7517223295650365440",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-18T03:32:16.995910+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "The \"last mile\" of agentic AI: Bridging research to real-world business value and operational efficiency.",
+    "hook": "Most teams treat agentic AI as a prompt engineering problem when building enterprise workflows. They tinker with system instructions and expect complex financial or clinical tasks to just work.",
+    "urn": "urn:li:share:7517427304843644928",
     "likes": 0,
     "comments": 0,
     "engagement": 0
