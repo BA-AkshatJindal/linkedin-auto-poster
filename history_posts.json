@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-06T14:02:07.152029+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "How to write Given-When-Then acceptance criteria that engineers love and QA actually relies on",
-    "hook": "Acceptance criteria fail because teams treat Given-When-Then like creative writing instead of a test harness. Writing Given the user is happy When they click submit Then good things happen leaves every edge case open to developer guesswork.",
-    "urn": "urn:li:share:7513237153313644544",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-07T03:33:59.545316+00:00",
     "track_id": "technical_product_leadership",
     "topic": "True outcome ownership: Measuring success beyond feature launches to real business impact.",
@@ -245,6 +235,16 @@
     "topic": "The art of data mapping: why field-level validation rules and exception queues matter more than pretty wireframes",
     "hook": "Pretty UI mockups make stakeholders happy, but systems run on strict data contracts. A shiny screen fails instantly if backend services get bad inputs.",
     "urn": "urn:li:share:7517789447770423296",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-19T14:01:30.107045+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
+    "hook": "Saying yes to every executive feature request to protect relationship capital is a trap that quietly wrecks your product velocity.",
+    "urn": "urn:li:share:7517948040041734144",
     "likes": 0,
     "comments": 0,
     "engagement": 0
