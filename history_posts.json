@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-08T03:33:04.543729+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "The hidden dangers of unnormalized EHR/EMR data in patient safety and claims accuracy.",
-    "hook": "AI won't fix your dirty clinical data. Sending raw EHR feeds straight into billing tools just scales your claim denials faster.",
-    "urn": "urn:li:share:7513803626046431232",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-08T14:02:58.545243+00:00",
     "track_id": "applied_ai_utility",
     "topic": "SaaS in the age of agentic AI: Pause, pivot, or accelerate your product strategy.",
@@ -245,6 +235,16 @@
     "topic": "Why user adoption in billing and operations teams fails: designing systems for real human workflows, not idealized process diagrams",
     "hook": "When a billing clerk covers their new software monitor in sticky notes with cheat codes, the system has already failed in production.",
     "urn": "urn:li:share:7518151948274089984",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-20T14:03:23.766025+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Why structured tool calling and deterministic state machines are replacing fragile free-form prompt engineering",
+    "hook": "Free-form prompt engineering is failing in enterprise production. Teams spend weeks tweaking system instructions, hoping an LLM will magically figure out messy business logic.",
+    "urn": "urn:li:share:7518310904011141121",
     "likes": 0,
     "comments": 0,
     "engagement": 0
