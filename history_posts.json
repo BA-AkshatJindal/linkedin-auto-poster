@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-07T03:33:59.545316+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "True outcome ownership: Measuring success beyond feature launches to real business impact.",
-    "hook": "Engineering teams celebrate green sprint boards and successful deployments, yet key revenue metrics stay completely flat.",
-    "urn": "urn:li:share:7513441468431380481",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-08T03:33:04.543729+00:00",
     "track_id": "mission_critical_systems",
     "topic": "The hidden dangers of unnormalized EHR/EMR data in patient safety and claims accuracy.",
@@ -245,6 +235,16 @@
     "topic": "The art of scope negotiation: how to protect sprint velocity without alienating executive stakeholders",
     "hook": "Saying yes to every executive feature request to protect relationship capital is a trap that quietly wrecks your product velocity.",
     "urn": "urn:li:share:7517948040041734144",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-20T03:31:45.579652+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Why user adoption in billing and operations teams fails: designing systems for real human workflows, not idealized process diagrams",
+    "hook": "When a billing clerk covers their new software monitor in sticky notes with cheat codes, the system has already failed in production.",
+    "urn": "urn:li:share:7518151948274089984",
     "likes": 0,
     "comments": 0,
     "engagement": 0
