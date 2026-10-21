@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-08T14:02:58.545243+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "SaaS in the age of agentic AI: Pause, pivot, or accelerate your product strategy.",
-    "hook": "Product strategy in the age of agentic AI often stalls because teams treat autonomous workflows like standard software features.",
-    "urn": "urn:li:share:7513962145278017536",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-09T03:31:28.572708+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
@@ -245,6 +235,16 @@
     "topic": "Why structured tool calling and deterministic state machines are replacing fragile free-form prompt engineering",
     "hook": "Free-form prompt engineering is failing in enterprise production. Teams spend weeks tweaking system instructions, hoping an LLM will magically figure out messy business logic.",
     "urn": "urn:li:share:7518310904011141121",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-21T03:33:30.032446+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "The BA's strategic role in sprint planning: Aligning technical execution with business value.",
+    "hook": "Teams waste valuable sprint cycles debating whether to build strict validation rules upfront or let messy data flow through and fix it downstream.",
+    "urn": "urn:li:share:7518514774687830017",
     "likes": 0,
     "comments": 0,
     "engagement": 0
