@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-09T03:31:28.572708+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "How to handle the loud stakeholder who marks every single requirement as 'Must Have' under MoSCoW",
-    "hook": "When every single business requirement is marked as must have under the MoSCoW framework, prioritization quietly collapses.",
-    "urn": "urn:li:share:7514165610491166721",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-09T14:03:02.714863+00:00",
     "track_id": "technical_product_leadership",
     "topic": "Why the best Product Managers understand data models: how database schemas dictate feature feasibility",
@@ -245,6 +235,16 @@
     "topic": "The BA's strategic role in sprint planning: Aligning technical execution with business value.",
     "hook": "Teams waste valuable sprint cycles debating whether to build strict validation rules upfront or let messy data flow through and fix it downstream.",
     "urn": "urn:li:share:7518514774687830017",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-21T14:07:43.957717+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "The difference between feature velocity and value velocity: why shipping fewer, tighter specs wins",
+    "hook": "Feature velocity creates the illusion of progress, while value velocity actually moves the needle. When teams chase raw output, they ship massive tickets full of vague requirements and half-baked edge cases.",
+    "urn": "urn:li:share:7518674384845291520",
     "likes": 0,
     "comments": 0,
     "engagement": 0
