@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-09T14:03:02.714863+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "Why the best Product Managers understand data models: how database schemas dictate feature feasibility",
-    "hook": "Too many product managers treat database schemas as an engineering black box. They sketch UI mockups and write user stories without knowing how the underlying data model handles constraints.",
-    "urn": "urn:li:share:7514324550910820352",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-10T03:32:54.008733+00:00",
     "track_id": "mission_critical_systems",
     "topic": "The reality of US Healthcare claim denials: why the highest-ROI fix is tracing rejections back to root cause upstream in data intake",
@@ -245,6 +235,16 @@
     "topic": "The difference between feature velocity and value velocity: why shipping fewer, tighter specs wins",
     "hook": "Feature velocity creates the illusion of progress, while value velocity actually moves the needle. When teams chase raw output, they ship massive tickets full of vague requirements and half-baked edge cases.",
     "urn": "urn:li:share:7518674384845291520",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-22T03:31:42.309617+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
+    "hook": "Symptom: A health-tech pipeline processes clinical data without errors, yet downstream billing runs into massive claim rejection spikes.",
+    "urn": "urn:li:share:7518876708805074945",
     "likes": 0,
     "comments": 0,
     "engagement": 0
