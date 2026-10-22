@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-10T03:32:54.008733+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "The reality of US Healthcare claim denials: why the highest-ROI fix is tracing rejections back to root cause upstream in data intake",
-    "hook": "Teams love celebrating automated appeals software while claim rejection rates quietly climb month over month. Buying another tool to chase denials downstream is a losing battle.",
-    "urn": "urn:li:share:7514528356978212864",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-10T14:01:41.626039+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
@@ -245,6 +235,16 @@
     "topic": "Integrating messy Electronic Health Records (EHR/EMR): why data normalization is 80% of the battle in health-tech",
     "hook": "Symptom: A health-tech pipeline processes clinical data without errors, yet downstream billing runs into massive claim rejection spikes.",
     "urn": "urn:li:share:7518876708805074945",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-22T14:01:28.268879+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Why 90% of enterprise GenAI success comes from clean data normalization and deterministic rules, not prompt wizardry",
+    "hook": "Enterprise GenAI setups fail because teams treat bad data as a prompt engineering issue. You cannot prompt your way out of inconsistent data schemas and missing field validation.",
+    "urn": "urn:li:share:7519035196726435841",
     "likes": 0,
     "comments": 0,
     "engagement": 0
