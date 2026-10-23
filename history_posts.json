@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-11T03:32:13.345984+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "Data mapping isn't just busywork; it's the blueprint for system integrity.",
-    "hook": "Data mapping is often treated as tedious busywork assigned to junior analysts right before a sprint starts. That is a massive mistake.",
-    "urn": "urn:li:share:7514890574110339072",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-11T14:01:14.321484+00:00",
     "track_id": "technical_product_leadership",
     "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
@@ -245,6 +235,16 @@
     "topic": "The Unsung Hero: Why Deep-Dive Data Mapping Prevents Project Disasters.",
     "hook": "Visible symptom: Production APIs silently drop customer records during night syncs, leaving support teams hunting missing data.",
     "urn": "urn:li:share:7519239234499768320",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-23T14:01:46.895293+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "The silent killer of Agile delivery: jumping straight to wireframes before system integration flows are validated",
+    "hook": "Teams waste weeks debating UI wireframes before verifying if backend APIs can even support the design. A shiny screen looks great in review, but if the underlying integration flow is broken, that UI is pure fiction.",
+    "urn": "urn:li:share:7519397662106873857",
     "likes": 0,
     "comments": 0,
     "engagement": 0
