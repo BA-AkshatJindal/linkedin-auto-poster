@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-10T14:01:41.626039+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "Proof of work over AI hype: why running an automated production pipeline teaches you more than reading 50 whitepapers",
-    "hook": "Teams debate advanced AI architectures for weeks before shipping a single line of code. They compare model benchmarks, read whitepapers, and argue over hypothetical edge cases.",
-    "urn": "urn:li:share:7514686597859053570",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-11T03:32:13.345984+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "Data mapping isn't just busywork; it's the blueprint for system integrity.",
@@ -245,6 +235,16 @@
     "topic": "Why 90% of enterprise GenAI success comes from clean data normalization and deterministic rules, not prompt wizardry",
     "hook": "Enterprise GenAI setups fail because teams treat bad data as a prompt engineering issue. You cannot prompt your way out of inconsistent data schemas and missing field validation.",
     "urn": "urn:li:share:7519035196726435841",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-23T03:32:14.709765+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "The Unsung Hero: Why Deep-Dive Data Mapping Prevents Project Disasters.",
+    "hook": "Visible symptom: Production APIs silently drop customer records during night syncs, leaving support teams hunting missing data.",
+    "urn": "urn:li:share:7519239234499768320",
     "likes": 0,
     "comments": 0,
     "engagement": 0
