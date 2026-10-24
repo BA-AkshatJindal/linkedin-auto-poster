@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-12T03:33:00.452570+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "Intelligent work routing with AI: Optimizing operational efficiency without over-automating human expertise.",
-    "hook": "Trying to fully automate complex claims or financial disputes with AI usually backfires. Teams build models to auto-resolve rejections, only to create silent revenue leaks when the AI guesses wrong.",
-    "urn": "urn:li:share:7515253159808757760",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-12T14:03:35.686113+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Leveraging platform business models and network effects for strategic product growth and competitive advantage.",
@@ -245,6 +235,16 @@
     "topic": "How automating claim work-queue allocation cuts 30% of manual triage overhead in operational teams",
     "hook": "Manual claim triage usually relies on messy spreadsheets and tribal assignment rules that waste hours every single day.",
     "urn": "urn:li:share:7519601638689488896",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-24T14:01:22.036079+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "Designing human-in-the-loop workflows: knowing the exact confidence threshold where an automated system must hand off to a human",
+    "hook": "Most teams set an arbitrary 90% confidence threshold for AI handoffs and hope for the best. Then operations breaks down.",
+    "urn": "urn:li:share:7519759943994920961",
     "likes": 0,
     "comments": 0,
     "engagement": 0
