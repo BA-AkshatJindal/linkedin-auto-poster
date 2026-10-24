@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-11T14:01:14.321484+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
-    "hook": "Alignment meetings often end with everyone nodding, yet sprint builds stall instantly over missing logic.",
-    "urn": "urn:li:share:7515048869370597376",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-12T03:33:00.452570+00:00",
     "track_id": "mission_critical_systems",
     "topic": "Intelligent work routing with AI: Optimizing operational efficiency without over-automating human expertise.",
@@ -245,6 +235,16 @@
     "topic": "The silent killer of Agile delivery: jumping straight to wireframes before system integration flows are validated",
     "hook": "Teams waste weeks debating UI wireframes before verifying if backend APIs can even support the design. A shiny screen looks great in review, but if the underlying integration flow is broken, that UI is pure fiction.",
     "urn": "urn:li:share:7519397662106873857",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-24T03:32:18.657025+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "How automating claim work-queue allocation cuts 30% of manual triage overhead in operational teams",
+    "hook": "Manual claim triage usually relies on messy spreadsheets and tribal assignment rules that waste hours every single day.",
+    "urn": "urn:li:share:7519601638689488896",
     "likes": 0,
     "comments": 0,
     "engagement": 0
