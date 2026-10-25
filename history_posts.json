@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-12T14:03:35.686113+00:00",
-    "track_id": "applied_ai_utility",
-    "topic": "Leveraging platform business models and network effects for strategic product growth and competitive advantage.",
-    "hook": "Teams waste weeks debating whether to build custom routing logic or plug in a pre-packaged AI agent. They worry about model drift, latency, and handling edge cases.",
-    "urn": "urn:li:share:7515411852701663232",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-13T03:31:40.960889+00:00",
     "track_id": "technical_ba_trenches",
     "topic": "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
@@ -245,6 +235,16 @@
     "topic": "Designing human-in-the-loop workflows: knowing the exact confidence threshold where an automated system must hand off to a human",
     "hook": "Most teams set an arbitrary 90% confidence threshold for AI handoffs and hope for the best. Then operations breaks down.",
     "urn": "urn:li:share:7519759943994920961",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-25T03:32:48.620826+00:00",
+    "track_id": "technical_ba_trenches",
+    "topic": "Framing tech debt as business risk: the language product leaders must master for executive buy-in.",
+    "hook": "Executives do not care about ugly code, but they panic when silent contract breaks freeze monthly billing.",
+    "urn": "urn:li:share:7519964152447094785",
     "likes": 0,
     "comments": 0,
     "engagement": 0
