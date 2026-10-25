@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-13T03:31:40.960889+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "The classic lie in sprint planning: 'It is just a simple UI button' and the 3 backend services it quietly breaks",
-    "hook": "Sprint planning hits a wall when someone calls a request just a simple UI button. Developers nod, business stakeholders relax, and nobody maps the payload.",
-    "urn": "urn:li:share:7515615213849841664",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-13T14:04:29.971411+00:00",
     "track_id": "technical_product_leadership",
     "topic": "How to prioritize technical debt on a product roadmap using financial and operational risk scoring",
@@ -245,6 +235,16 @@
     "topic": "Framing tech debt as business risk: the language product leaders must master for executive buy-in.",
     "hook": "Executives do not care about ugly code, but they panic when silent contract breaks freeze monthly billing.",
     "urn": "urn:li:share:7519964152447094785",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-25T14:03:30.713101+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
+    "hook": "Asking business stakeholders what they want built is the fastest way to derail a feature scope debate.",
+    "urn": "urn:li:share:7520122873190195200",
     "likes": 0,
     "comments": 0,
     "engagement": 0
