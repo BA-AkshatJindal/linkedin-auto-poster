@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-13T14:04:29.971411+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "How to prioritize technical debt on a product roadmap using financial and operational risk scoring",
-    "hook": "Treating technical debt like a vague backlog graveyard is why tech leads and product managers never secure budget to fix it.",
-    "urn": "urn:li:share:7515774467827048449",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-14T03:31:47.913617+00:00",
     "track_id": "mission_critical_systems",
     "topic": "Compliance by design: why bolting on regulatory checks at the end of a FinTech onboarding flow guarantees customer churn",
@@ -245,6 +235,16 @@
     "topic": "How to run cross-functional alignment sessions where developers and business stakeholders actually reach consensus",
     "hook": "Asking business stakeholders what they want built is the fastest way to derail a feature scope debate.",
     "urn": "urn:li:share:7520122873190195200",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-26T03:31:15.203182+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "The reality of US Healthcare claim denials: why the highest-ROI fix is tracing rejections back to root cause upstream in data intake",
+    "hook": "Claim denial spikes look like billing failures in production. Revenue operations teams waste hundreds of hours manually fixing rejected claims inside clearinghouse queues.",
+    "urn": "urn:li:share:7520326148225142784",
     "likes": 0,
     "comments": 0,
     "engagement": 0
