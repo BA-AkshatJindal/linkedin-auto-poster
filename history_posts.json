@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-14T03:31:47.913617+00:00",
-    "track_id": "mission_critical_systems",
-    "topic": "Compliance by design: why bolting on regulatory checks at the end of a FinTech onboarding flow guarantees customer churn",
-    "hook": "Bolting compliance checks onto the end of a FinTech onboarding flow is a fast track to user drop-off. When teams treat identity verification and AML screening as final-step hurdles, users hit surprise roadblocks right before conversion.",
-    "urn": "urn:li:share:7515977632207863808",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-14T14:02:02.288986+00:00",
     "track_id": "applied_ai_utility",
     "topic": "Building RAG for real operations: why chunking strategy and retrieval precision matter 10x more than model token size",
@@ -245,6 +235,16 @@
     "topic": "The reality of US Healthcare claim denials: why the highest-ROI fix is tracing rejections back to root cause upstream in data intake",
     "hook": "Claim denial spikes look like billing failures in production. Revenue operations teams waste hundreds of hours manually fixing rejected claims inside clearinghouse queues.",
     "urn": "urn:li:share:7520326148225142784",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-26T14:02:49.532081+00:00",
+    "track_id": "applied_ai_utility",
+    "topic": "RAG on internal knowledge: Unlocking enterprise data utility beyond generic chatbots",
+    "hook": "Enterprise search tools fail because teams dump bad PDFs into an index and expect smart answers. The breakdown is rarely the model.",
+    "urn": "urn:li:share:7520485088963395584",
     "likes": 0,
     "comments": 0,
     "engagement": 0
