@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-15T03:32:12.063484+00:00",
-    "track_id": "technical_ba_trenches",
-    "topic": "Designing for failure: why your requirement spec must define what happens when a third-party API times out",
-    "hook": "Most requirements specs meticulously outline the happy path while ignoring what happens when a third-party API times out.",
-    "urn": "urn:li:share:7516340120552136704",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-15T14:01:37.459513+00:00",
     "track_id": "technical_product_leadership",
     "topic": "How to decompose a 6-month monolith feature into 2-week independently shippable increments",
@@ -245,6 +235,16 @@
     "topic": "Why 85% of production bugs are not bad code, but unhandled edge cases in the functional specification",
     "hook": "Most production bugs are not written by developers writing bad code. They happen because the spec assumed the happy path and ignored what happens when data arrives late, null, or out of order.",
     "urn": "urn:li:share:7520688539118891008",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-27T14:02:40.235334+00:00",
+    "track_id": "technical_product_leadership",
+    "topic": "Framing tech debt as business risk: A product leader's guide to strategic conversations",
+    "hook": "Engineering claims a simple feature requires three sprints, but product promised it in two days. The breakdown is not poor estimation \u2014 it is unmanaged technical debt.",
+    "urn": "urn:li:share:7520847438035955714",
     "likes": 0,
     "comments": 0,
     "engagement": 0
