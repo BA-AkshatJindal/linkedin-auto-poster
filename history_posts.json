@@ -1,15 +1,5 @@
 [
   {
-    "timestamp": "2026-10-15T14:01:37.459513+00:00",
-    "track_id": "technical_product_leadership",
-    "topic": "How to decompose a 6-month monolith feature into 2-week independently shippable increments",
-    "hook": "Teams usually fail to decompose a six-month monolith feature because they slice the scope horizontally \u2014 building the entire database layer first, then the API, then the UI.",
-    "urn": "urn:li:share:7516498519994744832",
-    "likes": 0,
-    "comments": 0,
-    "engagement": 0
-  },
-  {
     "timestamp": "2026-10-16T03:31:56.827989+00:00",
     "track_id": "mission_critical_systems",
     "topic": "In US Healthcare RCM, when an EHR integration sends malformed claim data, thousands of dollars get lost in denials: why upstream intake fixes beat downstream rework",
@@ -245,6 +235,16 @@
     "topic": "Framing tech debt as business risk: A product leader's guide to strategic conversations",
     "hook": "Engineering claims a simple feature requires three sprints, but product promised it in two days. The breakdown is not poor estimation \u2014 it is unmanaged technical debt.",
     "urn": "urn:li:share:7520847438035955714",
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0
+  },
+  {
+    "timestamp": "2026-10-28T03:31:23.403932+00:00",
+    "track_id": "mission_critical_systems",
+    "topic": "Handling high-volume transactional data: why exception queues are the unsung hero of operational enterprise systems",
+    "hook": "Chasing 100% automated data pipelines is a dangerous trap.",
+    "urn": "urn:li:share:7521050958928281601",
     "likes": 0,
     "comments": 0,
     "engagement": 0
